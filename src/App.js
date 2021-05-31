@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-function App() {
+import LoginScreen from './screens/admin/Login Screen/LoginScreen'
+import HomeScreen from './screens/admin/HomeScreen'
+
+import dotenv from 'dotenv'
+
+const App = () => {
+  dotenv.config()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <Switch>
+        <Route path='/admin/login' exact component={LoginScreen} />
+        <Route path='/admin/' exact component={HomeScreen} />
+      </Switch>
+    </Router>
+  )
 }
 
-export default App;
+export default App
