@@ -3,6 +3,12 @@ import {
   CREATE_TEAM_FAILURE,
   CREATE_TEAM_REQUEST,
   CREATE_TEAM_SUCCESS,
+  DELETE_TEAM_FAILURE,
+  DELETE_TEAM_REQUEST,
+  DELETE_TEAM_SUCCESS,
+  GET_TEAMS_FAILURE,
+  GET_TEAMS_REQUEST,
+  GET_TEAMS_SUCCESS,
 } from '../constants/team-constants'
 
 export const createTeam =
@@ -38,3 +44,49 @@ export const createTeam =
       })
     }
   }
+
+export const getTeams = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_TEAMS_REQUEST,
+    })
+
+    const { data } = await axios.get('/teams/')
+
+    dispatch({
+      type: GET_TEAMS_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: GET_TEAMS_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const deleteTeam = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_TEAM_REQUEST,
+    })
+
+    const { data } = await axios.delete(`/teams/${id}/`)
+
+    dispatch({
+      type: DELETE_TEAM_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: DELETE_TEAM_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
