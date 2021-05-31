@@ -60,7 +60,7 @@ const HomeScreen = ({ history }) => {
                 </thead>
                 <tbody>
                   {teams.map((t) => (
-                    <tr>
+                    <tr key={t._id}>
                       <td>{++counter}</td>
                       <td>{t.name}</td>
                       <td>{t.region}</td>
@@ -70,9 +70,11 @@ const HomeScreen = ({ history }) => {
                         </Button>
                       </td>
                       <td>
-                        <Button variant='warning'>
-                          <i class='fas fa-edit'></i>
-                        </Button>
+                        <LinkContainer to={'/admin/teams/edit/' + t._id}>
+                          <Button variant='warning'>
+                            <i class='fas fa-edit'></i>
+                          </Button>
+                        </LinkContainer>
                       </td>
                       <td>
                         <Button
