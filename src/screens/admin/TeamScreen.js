@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Header from '../../components/Header'
 
@@ -20,7 +21,11 @@ const HomeScreen = ({ history }) => {
       <Container>
         <Row>
           <Col>
-            <h1>Welcome Home</h1>
+            <LinkContainer to='/admin/teams/create'>
+              <Button variant='primary' className='my-4'>
+                Create Team
+              </Button>
+            </LinkContainer>
           </Col>
         </Row>
       </Container>

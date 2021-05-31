@@ -32,6 +32,7 @@ export const login = (email, password) => async (dispatch) => {
 
     localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
+    console.log(error)
     dispatch({
       type: ADMIN_LOGIN_FAILURE,
       payload:

@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import LoginScreen from './screens/admin/Login Screen/LoginScreen'
-import HomeScreen from './screens/admin/HomeScreen'
+import TeamScreen from './screens/admin/TeamScreen'
+import CreateTeamScreen from './screens/admin/CreateTeamScreen'
 
 import dotenv from 'dotenv'
 
@@ -12,7 +13,8 @@ const App = () => {
     <Router>
       <Switch>
         <Route path='/admin/login' exact component={LoginScreen} />
-        <Route path='/admin/' exact component={HomeScreen} />
+        <Route path='/admin/' exact component={TeamScreen} />
+        <Route path='/admin/teams/create' exact component={CreateTeamScreen} />
       </Switch>
     </Router>
   )

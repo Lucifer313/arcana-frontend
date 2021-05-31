@@ -3,9 +3,11 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import userDetailsReducer from './reducers/admin-reducer'
+import teamDetailsReducer from './reducers/team-reducer'
 
 const reducers = combineReducers({
   userDetails: userDetailsReducer,
+  teamDetails: teamDetailsReducer,
 })
 
 const userInfoFromLocalStorage = localStorage.getItem('userInfo')
