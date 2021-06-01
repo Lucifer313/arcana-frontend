@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import Header from '../../components/Header'
+import store from '../../store'
 
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+
+import Header from '../../components/Header'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import Popup from '../../components/Popup'
 
 import { createTeam } from '../../actions/team-actions'
-import { LinkContainer } from 'react-router-bootstrap'
 
 const CreateTeamScreen = ({ history }) => {
+  //State variables
   const [name, setName] = useState('')
   const [region, setRegion] = useState('EU')
   const [tis_won, setTis] = useState(0)
@@ -38,6 +41,7 @@ const CreateTeamScreen = ({ history }) => {
     }
   }, [userInfo, history])
 
+  //To run everytime the SPA is rendered
   useEffect(() => {
     setShowModal(false)
     setErrorMessage('')
@@ -53,15 +57,27 @@ const CreateTeamScreen = ({ history }) => {
     } else if (tis_won < 0) {
       setErrorMessage('Number of TIs won should be 0 or more')
     } else {
-      dispatch(createTeam(name, region, description, tis_won, creationDate))
-      if (success) {
-        setErrorMessage('')
-        setShowModal(true)
-        resetForm()
-      }
+      //Dispatching the action to createTeam
+      dispatch(
+        createTeam(name, region, description, tis_won, creationDate)
+      ).then(() => {
+        //Actions to be performed on success or failure of dispatch
+        const { teamDetails } = store.getState()
+        const { success, error } = teamDetails
+
+        if (success) {
+          setShowModal(true)
+          resetForm()
+          setErrorMessage('')
+        } else {
+          setShowModal(false)
+          setErrorMessage(error)
+        }
+      })
     }
   }
 
+  //Function to reset the form
   const resetForm = () => {
     setName('')
     setRegion('EU')

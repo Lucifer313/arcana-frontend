@@ -47,7 +47,7 @@ const HomeScreen = ({ history }) => {
               </Button>
             </LinkContainer>
             {get_loading ? null : (
-              <Table>
+              <Table striped hover>
                 <thead>
                   <tr>
                     <th>Sr.</th>

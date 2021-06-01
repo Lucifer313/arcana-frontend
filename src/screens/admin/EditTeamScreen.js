@@ -16,7 +16,7 @@ const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
   const [region, setRegion] = useState('EU')
   const [tis_won, setTis] = useState(0)
-  const [creationDate, setCreationDate] = useState('')
+  const [creationDate, setCreationDate] = useState({})
   const [description, setDescription] = useState('')
 
   const [showModal, setShowModal] = useState(false)
@@ -38,7 +38,7 @@ const EditTeamScreen = ({ history, match }) => {
       history.push('/admin/login')
     }
   }, [userInfo, history])
-
+  /*-----------------------------------CAN BE OPTIMIZED-----------------------------------*/
   useEffect(() => {
     setShowModal(false)
     setErrorMessage('')
@@ -49,23 +49,24 @@ const EditTeamScreen = ({ history, match }) => {
   }, [])
 
   const getTeamById = async () => {
-    let filtered_team
     let team
 
     if (teams.length > 0) {
-      filtered_team = await teams.filter((team) => team._id === match.params.id)
-      team = filtered_team[0]
-      console.log(team.name)
+      //Since filter returns an array we only need first indexed object hence 0
+
+      team = await teams.filter((team) => team._id === match.params.id)[0]
+
+      //Setting the state
       setName(team.name)
       setRegion(team.region)
       setDescription(team.description)
-      setCreationDate(team.creationDate)
+      setCreationDate(team.creation_date)
       setTis(team.tis_won)
-      console.log(teams)
     }
   }
+  /*-------------------------------------------------------------------------------------------------------*/
   //Creating Team function
-  const handleSubmit = (e) => {
+  const handleUpdate = (e) => {
     if (name === '' || description === '' || creationDate === '') {
       setErrorMessage('Plese enter all the details properly')
     } else if (name.length < 2) {
@@ -87,7 +88,7 @@ const EditTeamScreen = ({ history, match }) => {
     setRegion('EU')
     setDescription('')
     setTis(0)
-    setCreationDate('')
+    setCreationDate({})
   }
 
   return (
@@ -176,8 +177,8 @@ const EditTeamScreen = ({ history, match }) => {
                   </Form.Group>
                   {loading ? <Loader className='my-3' /> : null}
                   <Form.Group>
-                    <Button variant='primary' onClick={handleSubmit}>
-                      Create
+                    <Button variant='primary' onClick={handleUpdate}>
+                      Update
                     </Button>
                     &nbsp; &nbsp; &nbsp;
                     <LinkContainer to='/admin'>

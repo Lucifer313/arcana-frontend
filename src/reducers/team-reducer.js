@@ -41,12 +41,14 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       return {
         ...state,
         get_loading: true,
+        success: false,
       }
     }
 
     case GET_TEAMS_SUCCESS: {
       return {
         ...state,
+        success: false,
         teams: action.payload,
         get_loading: false,
       }
