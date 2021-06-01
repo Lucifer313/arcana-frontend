@@ -6,6 +6,7 @@ import CreateTeamScreen from './screens/admin/CreateTeamScreen'
 import EditTeamScreen from './screens/admin/EditTeamScreen'
 
 import dotenv from 'dotenv'
+import TeamScreenTest from './screens/admin/TeamScreenTest'
 
 const App = () => {
   dotenv.config()
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/admin/' exact component={TeamScreen} />
         <Route path='/admin/teams/create' exact component={CreateTeamScreen} />
         <Route path='/admin/teams/edit/:id' exact component={EditTeamScreen} />
+        <Route path='/admin/test' exact component={TeamScreenTest} />
       </Switch>
     </Router>
   )

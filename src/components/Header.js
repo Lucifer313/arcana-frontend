@@ -1,4 +1,4 @@
-import { Container, Navbar, Nav } from 'react-bootstrap'
+import { Container, Navbar, Nav, Image } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { useDispatch } from 'react-redux'

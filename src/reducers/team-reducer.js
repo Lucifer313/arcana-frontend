@@ -8,6 +8,9 @@ import {
   GET_TEAMS_FAILURE,
   GET_TEAMS_REQUEST,
   GET_TEAMS_SUCCESS,
+  UPDATE_TEAM_FAILURE,
+  UPDATE_TEAM_REQUEST,
+  UPDATE_TEAM_SUCCESS,
 } from '../constants/team-constants'
 
 const teamDetailsReducer = (state = { teams: [] }, action) => {
@@ -62,10 +65,41 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       }
     }
 
+    case UPDATE_TEAM_REQUEST: {
+      return {
+        ...state,
+        updating: true,
+        updated: false,
+      }
+    }
+
+    case UPDATE_TEAM_SUCCESS: {
+      const updatedTeams = state.teams.filter(
+        (team) => team._id !== action.payload._id
+      )
+
+      return {
+        ...state,
+        updating: false,
+        updated: true,
+        teams: [...updatedTeams, action.payload],
+      }
+    }
+
+    case UPDATE_TEAM_FAILURE: {
+      return {
+        ...state,
+        updating: false,
+        updated: false,
+        error: action.payload,
+      }
+    }
+
     case DELETE_TEAM_REQUEST: {
       return {
         ...state,
         deleting: true,
+        deleted: false,
       }
     }
 
@@ -73,6 +107,7 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       return {
         teams: state.teams.filter((team) => team._id !== action.payload._id),
         deleting: false,
+        deleted: true,
       }
     }
 
@@ -81,6 +116,7 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
         ...state,
         deleting: false,
         error: action.payload,
+        deleted: false,
       }
     }
     default: {

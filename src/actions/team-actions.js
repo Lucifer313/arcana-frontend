@@ -9,6 +9,9 @@ import {
   GET_TEAMS_FAILURE,
   GET_TEAMS_REQUEST,
   GET_TEAMS_SUCCESS,
+  UPDATE_TEAM_FAILURE,
+  UPDATE_TEAM_REQUEST,
+  UPDATE_TEAM_SUCCESS,
 } from '../constants/team-constants'
 
 export const createTeam =
@@ -90,3 +93,37 @@ export const deleteTeam = (id) => async (dispatch) => {
     })
   }
 }
+
+export const updateTeam =
+  (id, name, region, description, tis_won, creation_date) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: UPDATE_TEAM_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+      const { data } = await axios.patch(
+        `/teams/${id}`,
+        { name, region, description, tis_won, creation_date },
+        config
+      )
+
+      dispatch({
+        type: UPDATE_TEAM_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: UPDATE_TEAM_FAILURE,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }

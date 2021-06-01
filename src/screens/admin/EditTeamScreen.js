@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
+import store from '../../store'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Header from '../../components/Header'
 
@@ -8,9 +8,8 @@ import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import Popup from '../../components/Popup'
 
-import { createTeam } from '../../actions/team-actions'
+import { updateTeam } from '../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
-import { matchPath } from 'react-router'
 
 const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
@@ -28,7 +27,7 @@ const EditTeamScreen = ({ history, match }) => {
 
   //Extracting TeamDetails slice from the store
   const teamDetails = useSelector((state) => state.teamDetails)
-  const { loading, success, error, teams } = teamDetails
+  const { updating, updated, error, teams } = teamDetails
 
   const dispatch = useDispatch()
 
@@ -42,7 +41,6 @@ const EditTeamScreen = ({ history, match }) => {
   useEffect(() => {
     setShowModal(false)
     setErrorMessage('')
-
     getTeamById()
 
     console.log(name)
@@ -66,7 +64,7 @@ const EditTeamScreen = ({ history, match }) => {
   }
   /*-------------------------------------------------------------------------------------------------------*/
   //Creating Team function
-  const handleUpdate = (e) => {
+  const handleUpdate = () => {
     if (name === '' || description === '' || creationDate === '') {
       setErrorMessage('Plese enter all the details properly')
     } else if (name.length < 2) {
@@ -74,12 +72,29 @@ const EditTeamScreen = ({ history, match }) => {
     } else if (tis_won < 0) {
       setErrorMessage('Number of TIs won should be 0 or more')
     } else {
-      dispatch(createTeam(name, region, description, tis_won, creationDate))
-      if (success) {
-        setErrorMessage('')
-        setShowModal(true)
-        resetForm()
-      }
+      dispatch(
+        updateTeam(
+          match.params.id,
+          name,
+          region,
+          description,
+          tis_won,
+          creationDate
+        )
+      ).then(() => {
+        //Actions to be performed on success or failure of dispatch
+        const { teamDetails } = store.getState()
+        const { updated, error } = teamDetails
+
+        if (updated) {
+          setShowModal(true)
+          resetForm()
+          setErrorMessage('')
+        } else {
+          setShowModal(false)
+          setErrorMessage(error)
+        }
+      })
     }
   }
 
@@ -91,104 +106,105 @@ const EditTeamScreen = ({ history, match }) => {
     setCreationDate({})
   }
 
+  const handleModalClose = () => {
+    setShowModal(false)
+    history.push('/admin/')
+  }
+
   return (
     <>
       <Header />
       <Container>
         <Row>
-          {name ? (
-            <>
-              <h3 className='mt-5'>Edit Team</h3>
-              <Col md='6'>
-                <Form className='mt-3'>
-                  {errorMessage ? (
-                    <Message variant='danger'>{errorMessage}</Message>
-                  ) : error ? (
-                    <Message variant='danger'>{error}</Message>
-                  ) : null}
-                  {showModal ? (
-                    <Popup
-                      title='Team Creation'
-                      body='Team created successfully'
-                      type='success'
-                      onClose={() => setShowModal(false)}
-                    />
-                  ) : null}
+          <>
+            <h3 className='mt-5'>Edit Team</h3>
+            <Col md='6'>
+              <Form className='mt-3'>
+                {errorMessage ? (
+                  <Message variant='danger'>{errorMessage}</Message>
+                ) : error ? (
+                  <Message variant='danger'>{error}</Message>
+                ) : null}
+                {showModal ? (
+                  <Popup
+                    title='Team Update'
+                    body='Team updated successfully'
+                    type='success'
+                    onClose={handleModalClose}
+                  />
+                ) : null}
 
-                  <Form.Group controlId='createTeam.teamName' className='my-3'>
-                    <Form.Label>Team Name</Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Enter the name of the team'
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId='createTeam.region' className='my-3'>
-                    <Form.Label>Playing Region</Form.Label>
-                    <Form.Control
-                      as='select'
-                      value={region}
-                      onChange={(e) => setRegion(e.target.value)}
-                    >
-                      <option>EU</option>
-                      <option>China</option>
-                      <option>SEA</option>
-                      <option>NA</option>
-                      <option>SA</option>
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group controlId='createTeam.tiswon' className='my-3'>
-                    <Form.Label>
-                      Number of TIs (The International won)
-                    </Form.Label>
-                    <Form.Control
-                      type='number'
-                      value={tis_won}
-                      onChange={(e) => setTis(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group
-                    controlId='createTeam.creation_date'
-                    className='my-3'
+                <Form.Group controlId='createTeam.teamName' className='my-3'>
+                  <Form.Label>Team Name</Form.Label>
+                  <Form.Control
+                    type='text'
+                    placeholder='Enter the name of the team'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group controlId='createTeam.region' className='my-3'>
+                  <Form.Label>Playing Region</Form.Label>
+                  <Form.Control
+                    as='select'
+                    value={region}
+                    onChange={(e) => setRegion(e.target.value)}
                   >
-                    <Form.Label>Team's foundation date</Form.Label>
-                    <Form.Control
-                      type='date'
-                      value={creationDate}
-                      onChange={(e) => setCreationDate(e.target.value)}
-                    />
-                  </Form.Group>
-                </Form>
-              </Col>
-              <Col md='6'>
-                <Form className='mt-3'>
-                  <Form.Group
-                    controlId='exampleForm.ControlTextarea1'
-                    className='my-3'
-                  >
-                    <Form.Label>Team Description / Bio</Form.Label>
-                    <Form.Control
-                      as='textarea'
-                      rows={6}
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                    />
-                  </Form.Group>
-                  {loading ? <Loader className='my-3' /> : null}
-                  <Form.Group>
-                    <Button variant='primary' onClick={handleUpdate}>
-                      Update
-                    </Button>
-                    &nbsp; &nbsp; &nbsp;
-                    <LinkContainer to='/admin'>
-                      <Button variant='danger'>Back</Button>
-                    </LinkContainer>
-                  </Form.Group>
-                </Form>
-              </Col>
-            </>
-          ) : null}
+                    <option>EU</option>
+                    <option>China</option>
+                    <option>SEA</option>
+                    <option>NA</option>
+                    <option>SA</option>
+                  </Form.Control>
+                </Form.Group>
+                <Form.Group controlId='createTeam.tiswon' className='my-3'>
+                  <Form.Label>Number of TIs (The International won)</Form.Label>
+                  <Form.Control
+                    type='number'
+                    value={tis_won}
+                    onChange={(e) => setTis(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  controlId='createTeam.creation_date'
+                  className='my-3'
+                >
+                  <Form.Label>Team's foundation date</Form.Label>
+                  <Form.Control
+                    type='date'
+                    value={creationDate}
+                    onChange={(e) => setCreationDate(e.target.value)}
+                  />
+                </Form.Group>
+              </Form>
+            </Col>
+            <Col md='6'>
+              <Form className='mt-3'>
+                <Form.Group
+                  controlId='exampleForm.ControlTextarea1'
+                  className='my-3'
+                >
+                  <Form.Label>Team Description / Bio</Form.Label>
+                  <Form.Control
+                    as='textarea'
+                    rows={6}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </Form.Group>
+                {updating ? <Loader className='my-3' /> : null}
+                <Form.Group>
+                  <Button variant='primary' onClick={handleUpdate}>
+                    Update
+                  </Button>
+                  &nbsp; &nbsp; &nbsp;
+                  <LinkContainer to='/admin'>
+                    <Button variant='danger'>Back</Button>
+                  </LinkContainer>
+                </Form.Group>
+              </Form>
+            </Col>
+          </>
         </Row>
         :
       </Container>
