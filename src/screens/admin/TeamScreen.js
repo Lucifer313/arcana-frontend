@@ -2,26 +2,27 @@ import { useEffect, useState } from 'react'
 import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import store from '../../store'
 
 import Header from '../../components/Header'
 import Popup from '../../components/Popup'
 
-import { deleteTeam, getTeams } from '../../actions/team-actions'
+import {
+  deleteTeam,
+  getTeams,
+  resetTeamDeletion,
+} from '../../actions/team-actions'
+import Loader from '../../components/Loader'
 
 const HomeScreen = ({ history }) => {
   const userDetails = useSelector((state) => state.userDetails)
   const { userInfo } = userDetails
 
   const teamDetails = useSelector((state) => state.teamDetails)
-  const { get_loading, error, teams, deleted } = teamDetails
+  const { loading, loaded, teams, error, deleted } = teamDetails
 
   const dispatch = useDispatch()
 
   let counter = 0
-
-  const [showModal, setShowModal] = useState(false)
-  const [teamsList, setTeamsList] = useState([])
 
   //Check if user is logged in or redirect
   useEffect(() => {
@@ -35,31 +36,15 @@ const HomeScreen = ({ history }) => {
   //To execute on every page load
   useEffect(() => {
     dispatch(getTeams())
-    setTeamsList(teams)
     counter = 0
   }, [])
 
-  const handleDelete = (id) => {
-    dispatch(deleteTeam(id)).then(() => {
-      const { teamDetails } = store.getState()
-      const { deleted } = teamDetails
-
-      if (deleted) {
-        setShowModal(true)
-      } else if (error) {
-        console.log(error)
-      }
-    })
-  }
+  /*const handleDelete = (id) => {
+    dispatch(deleteTeam(id))
+  }*/
 
   const handleRegionFilter = (e) => {
     console.log(e.target.value)
-    console.log(teamsList)
-    let filteredArray = teamsList.filter(
-      (team) => team.region != e.target.value
-    )
-    console.log(filteredArray)
-    setTeamsList(filteredArray)
   }
 
   return (
@@ -86,18 +71,20 @@ const HomeScreen = ({ history }) => {
               </Form.Control>
             </Form.Group>
           </Col>
-          {showModal ? (
+          {deleted ? (
             <Popup
-              title='Team Update'
-              body='Team updated successfully'
+              title='Team Deletion'
+              body='Team deleted successfully'
               type='success'
-              onClose={() => setShowModal(false)}
+              onClose={() => dispatch(resetTeamDeletion())}
             />
           ) : null}
         </Row>
         <Row>
           <Col>
-            {get_loading ? null : (
+            {loading ? (
+              <Loader />
+            ) : (
               <Table striped hover>
                 <thead>
                   <tr>
@@ -110,7 +97,7 @@ const HomeScreen = ({ history }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {teamsList.map((t) => (
+                  {teams.map((t) => (
                     <tr key={t._id}>
                       <td>{++counter}</td>
                       <td>{t.name}</td>
@@ -130,7 +117,7 @@ const HomeScreen = ({ history }) => {
                       <td>
                         <Button
                           variant='danger'
-                          onClick={() => handleDelete(t._id)}
+                          onClick={() => dispatch(deleteTeam(t._id))}
                         >
                           <i class='fas fa-trash-alt'></i>
                         </Button>

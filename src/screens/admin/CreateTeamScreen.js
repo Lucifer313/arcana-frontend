@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import store from '../../store'
-
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
@@ -11,7 +9,7 @@ import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import Popup from '../../components/Popup'
 
-import { createTeam } from '../../actions/team-actions'
+import { createTeam, resetTeamCreation } from '../../actions/team-actions'
 
 const CreateTeamScreen = ({ history }) => {
   //State variables
@@ -21,7 +19,6 @@ const CreateTeamScreen = ({ history }) => {
   const [creationDate, setCreationDate] = useState('')
   const [description, setDescription] = useState('')
 
-  const [showModal, setShowModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
   //Extract User Details slice from the Store
@@ -30,7 +27,7 @@ const CreateTeamScreen = ({ history }) => {
 
   //Extracting TeamDetails slice from the store
   const teamDetails = useSelector((state) => state.teamDetails)
-  const { loading, success, error } = teamDetails
+  const { creating, created, error } = teamDetails
 
   const dispatch = useDispatch()
 
@@ -43,13 +40,12 @@ const CreateTeamScreen = ({ history }) => {
 
   //To run everytime the SPA is rendered
   useEffect(() => {
-    setShowModal(false)
     setErrorMessage('')
     resetForm()
   }, [])
 
   //Creating Team function
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     if (name === '' || description === '' || creationDate === '') {
       setErrorMessage('Plese enter all the details properly')
     } else if (name.length < 2) {
@@ -58,23 +54,16 @@ const CreateTeamScreen = ({ history }) => {
       setErrorMessage('Number of TIs won should be 0 or more')
     } else {
       //Dispatching the action to createTeam
-      dispatch(
+      await dispatch(
         createTeam(name, region, description, tis_won, creationDate)
-      ).then(() => {
-        //Actions to be performed on success or failure of dispatch
-        const { teamDetails } = store.getState()
-        const { success, error } = teamDetails
-
-        if (success) {
-          setShowModal(true)
-          resetForm()
-          setErrorMessage('')
-        } else {
-          setShowModal(false)
-          setErrorMessage(error)
-        }
-      })
+      )
     }
+  }
+
+  //Function to close the success popup
+  const handleModalClose = () => {
+    resetForm()
+    dispatch(resetTeamCreation())
   }
 
   //Function to reset the form
@@ -84,6 +73,7 @@ const CreateTeamScreen = ({ history }) => {
     setDescription('')
     setTis(0)
     setCreationDate('')
+    setErrorMessage('')
   }
 
   return (
@@ -99,12 +89,12 @@ const CreateTeamScreen = ({ history }) => {
               ) : error ? (
                 <Message variant='danger'>{error}</Message>
               ) : null}
-              {showModal ? (
+              {created ? (
                 <Popup
                   title='Team Creation'
                   body='Team created successfully'
                   type='success'
-                  onClose={() => setShowModal(false)}
+                  onClose={handleModalClose}
                 />
               ) : null}
 
@@ -151,10 +141,7 @@ const CreateTeamScreen = ({ history }) => {
           </Col>
           <Col md='6'>
             <Form className='mt-3'>
-              <Form.Group
-                controlId='exampleForm.ControlTextarea1'
-                className='my-3'
-              >
+              <Form.Group controlId='createTeam.description' className='my-3'>
                 <Form.Label>Team Description / Bio</Form.Label>
                 <Form.Control
                   as='textarea'
@@ -163,7 +150,7 @@ const CreateTeamScreen = ({ history }) => {
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </Form.Group>
-              {loading ? <Loader className='my-3' /> : null}
+              {creating ? <Loader className='my-3' /> : null}
               <Form.Group>
                 <Button variant='primary' onClick={handleSubmit}>
                   Create

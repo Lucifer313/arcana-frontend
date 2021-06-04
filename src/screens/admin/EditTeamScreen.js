@@ -8,7 +8,7 @@ import Message from '../../components/Message'
 import Loader from '../../components/Loader'
 import Popup from '../../components/Popup'
 
-import { updateTeam } from '../../actions/team-actions'
+import { resetTeamUpdate, updateTeam } from '../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
 
 const EditTeamScreen = ({ history, match }) => {
@@ -18,7 +18,6 @@ const EditTeamScreen = ({ history, match }) => {
   const [creationDate, setCreationDate] = useState({})
   const [description, setDescription] = useState('')
 
-  const [showModal, setShowModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
   //Extract User Details slice from the Store
@@ -39,11 +38,7 @@ const EditTeamScreen = ({ history, match }) => {
   }, [userInfo, history])
   /*-----------------------------------CAN BE OPTIMIZED-----------------------------------*/
   useEffect(() => {
-    setShowModal(false)
-    setErrorMessage('')
     getTeamById()
-
-    console.log(name)
   }, [])
 
   const getTeamById = async () => {
@@ -51,9 +46,7 @@ const EditTeamScreen = ({ history, match }) => {
 
     if (teams.length > 0) {
       //Since filter returns an array we only need first indexed object hence 0
-
       team = await teams.filter((team) => team._id === match.params.id)[0]
-
       //Setting the state
       setName(team.name)
       setRegion(team.region)
@@ -64,7 +57,7 @@ const EditTeamScreen = ({ history, match }) => {
   }
   /*-------------------------------------------------------------------------------------------------------*/
   //Creating Team function
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (name === '' || description === '' || creationDate === '') {
       setErrorMessage('Plese enter all the details properly')
     } else if (name.length < 2) {
@@ -72,7 +65,7 @@ const EditTeamScreen = ({ history, match }) => {
     } else if (tis_won < 0) {
       setErrorMessage('Number of TIs won should be 0 or more')
     } else {
-      dispatch(
+      await dispatch(
         updateTeam(
           match.params.id,
           name,
@@ -81,20 +74,7 @@ const EditTeamScreen = ({ history, match }) => {
           tis_won,
           creationDate
         )
-      ).then(() => {
-        //Actions to be performed on success or failure of dispatch
-        const { teamDetails } = store.getState()
-        const { updated, error } = teamDetails
-
-        if (updated) {
-          setShowModal(true)
-          resetForm()
-          setErrorMessage('')
-        } else {
-          setShowModal(false)
-          setErrorMessage(error)
-        }
-      })
+      )
     }
   }
 
@@ -107,7 +87,8 @@ const EditTeamScreen = ({ history, match }) => {
   }
 
   const handleModalClose = () => {
-    setShowModal(false)
+    resetForm()
+    dispatch(resetTeamUpdate())
     history.push('/admin/')
   }
 
@@ -125,7 +106,7 @@ const EditTeamScreen = ({ history, match }) => {
                 ) : error ? (
                   <Message variant='danger'>{error}</Message>
                 ) : null}
-                {showModal ? (
+                {updated ? (
                   <Popup
                     title='Team Update'
                     body='Team updated successfully'
@@ -134,7 +115,7 @@ const EditTeamScreen = ({ history, match }) => {
                   />
                 ) : null}
 
-                <Form.Group controlId='createTeam.teamName' className='my-3'>
+                <Form.Group controlId='updateTeam.teamName' className='my-3'>
                   <Form.Label>Team Name</Form.Label>
                   <Form.Control
                     type='text'
@@ -143,7 +124,7 @@ const EditTeamScreen = ({ history, match }) => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group controlId='createTeam.region' className='my-3'>
+                <Form.Group controlId='updateTeam.region' className='my-3'>
                   <Form.Label>Playing Region</Form.Label>
                   <Form.Control
                     as='select'
@@ -157,7 +138,7 @@ const EditTeamScreen = ({ history, match }) => {
                     <option>SA</option>
                   </Form.Control>
                 </Form.Group>
-                <Form.Group controlId='createTeam.tiswon' className='my-3'>
+                <Form.Group controlId='updateTeam.tiswon' className='my-3'>
                   <Form.Label>Number of TIs (The International won)</Form.Label>
                   <Form.Control
                     type='number'
@@ -166,7 +147,7 @@ const EditTeamScreen = ({ history, match }) => {
                   />
                 </Form.Group>
                 <Form.Group
-                  controlId='createTeam.creation_date'
+                  controlId='updateTeam.creation_date'
                   className='my-3'
                 >
                   <Form.Label>Team's foundation date</Form.Label>
@@ -180,10 +161,7 @@ const EditTeamScreen = ({ history, match }) => {
             </Col>
             <Col md='6'>
               <Form className='mt-3'>
-                <Form.Group
-                  controlId='exampleForm.ControlTextarea1'
-                  className='my-3'
-                >
+                <Form.Group controlId='updateTeam.description' className='my-3'>
                   <Form.Label>Team Description / Bio</Form.Label>
                   <Form.Control
                     as='textarea'

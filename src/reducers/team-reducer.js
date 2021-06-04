@@ -2,15 +2,18 @@ import {
   CREATE_TEAM_FAILURE,
   CREATE_TEAM_REQUEST,
   CREATE_TEAM_SUCCESS,
+  CREATE_TEAM_RESET,
   DELETE_TEAM_FAILURE,
   DELETE_TEAM_REQUEST,
   DELETE_TEAM_SUCCESS,
+  DELETE_TEAM_RESET,
   GET_TEAMS_FAILURE,
   GET_TEAMS_REQUEST,
   GET_TEAMS_SUCCESS,
   UPDATE_TEAM_FAILURE,
   UPDATE_TEAM_REQUEST,
   UPDATE_TEAM_SUCCESS,
+  UPDATE_TEAM_RESET,
 } from '../constants/team-constants'
 
 const teamDetailsReducer = (state = { teams: [] }, action) => {
@@ -18,15 +21,15 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
     case CREATE_TEAM_REQUEST: {
       return {
         ...state,
-        success: false,
-        loading: true,
+        created: false,
+        creating: true,
       }
     }
 
     case CREATE_TEAM_SUCCESS: {
       return {
-        loading: false,
-        success: true,
+        creating: false,
+        created: true,
         teams: [...state.teams, action.payload],
         error: '',
       }
@@ -34,34 +37,48 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
 
     case CREATE_TEAM_FAILURE: {
       return {
-        loading: false,
-        success: false,
+        ...state,
+        creating: false,
+        created: false,
         error: action.payload,
+      }
+    }
+
+    case CREATE_TEAM_RESET: {
+      return {
+        ...state,
+        created: false,
+        error: '',
       }
     }
 
     case GET_TEAMS_REQUEST: {
       return {
         ...state,
-        get_loading: true,
-        success: false,
+        loading: true,
+        loaded: false,
+        teams: [],
+        error: '',
       }
     }
 
     case GET_TEAMS_SUCCESS: {
       return {
         ...state,
-        success: false,
+        loading: false,
+        loaded: true,
         teams: action.payload,
-        get_loading: false,
+        error: '',
       }
     }
 
     case GET_TEAMS_FAILURE: {
       return {
         ...state,
+        loading: false,
+        loaded: false,
+        teams: [],
         error: action.payload,
-        get_loading: false,
       }
     }
 
@@ -95,6 +112,14 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       }
     }
 
+    case UPDATE_TEAM_RESET: {
+      return {
+        ...state,
+        updated: false,
+        error: '',
+      }
+    }
+
     case DELETE_TEAM_REQUEST: {
       return {
         ...state,
@@ -115,8 +140,16 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       return {
         ...state,
         deleting: false,
-        error: action.payload,
         deleted: false,
+        error: action.payload,
+      }
+    }
+
+    case DELETE_TEAM_RESET: {
+      return {
+        ...state,
+        deleted: false,
+        error: '',
       }
     }
     default: {

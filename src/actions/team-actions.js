@@ -2,16 +2,19 @@ import axios from '../axios-config'
 import {
   CREATE_TEAM_FAILURE,
   CREATE_TEAM_REQUEST,
+  CREATE_TEAM_RESET,
   CREATE_TEAM_SUCCESS,
   DELETE_TEAM_FAILURE,
   DELETE_TEAM_REQUEST,
   DELETE_TEAM_SUCCESS,
+  DELETE_TEAM_RESET,
   GET_TEAMS_FAILURE,
   GET_TEAMS_REQUEST,
   GET_TEAMS_SUCCESS,
   UPDATE_TEAM_FAILURE,
   UPDATE_TEAM_REQUEST,
   UPDATE_TEAM_SUCCESS,
+  UPDATE_TEAM_RESET,
 } from '../constants/team-constants'
 
 export const createTeam =
@@ -47,6 +50,16 @@ export const createTeam =
       })
     }
   }
+
+export const resetTeamCreation = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: CREATE_TEAM_RESET,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const getTeams = () => async (dispatch) => {
   try {
@@ -94,6 +107,16 @@ export const deleteTeam = (id) => async (dispatch) => {
   }
 }
 
+export const resetTeamDeletion = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: DELETE_TEAM_RESET,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const updateTeam =
   (id, name, region, description, tis_won, creation_date) =>
   async (dispatch) => {
@@ -127,3 +150,13 @@ export const updateTeam =
       })
     }
   }
+
+export const resetTeamUpdate = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_TEAM_RESET,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
