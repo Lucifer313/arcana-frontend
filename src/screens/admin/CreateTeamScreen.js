@@ -10,6 +10,7 @@ import Loader from '../../components/Loader'
 import Popup from '../../components/Popup'
 
 import { createTeam, resetTeamCreation } from '../../actions/team-actions'
+import Footer from '../../components/Footer'
 
 const CreateTeamScreen = ({ history }) => {
   //State variables
@@ -18,6 +19,7 @@ const CreateTeamScreen = ({ history }) => {
   const [tis_won, setTis] = useState(0)
   const [creationDate, setCreationDate] = useState('')
   const [description, setDescription] = useState('')
+  const [logo, setLogo] = useState('')
 
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -54,9 +56,15 @@ const CreateTeamScreen = ({ history }) => {
       setErrorMessage('Number of TIs won should be 0 or more')
     } else {
       //Dispatching the action to createTeam
-      await dispatch(
-        createTeam(name, region, description, tis_won, creationDate)
-      )
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('region', region)
+      formData.append('description', description)
+      formData.append('logo', logo)
+      formData.append('tis_won', tis_won)
+      formData.append('creation_date', creationDate)
+
+      dispatch(createTeam(formData))
     }
   }
 
@@ -79,7 +87,7 @@ const CreateTeamScreen = ({ history }) => {
   return (
     <>
       <Header />
-      <Container>
+      <Container style={{ minHeight: '82vh' }}>
         <Row>
           <h3 className='mt-5'>Create New Team</h3>
           <Col md='6'>
@@ -140,6 +148,14 @@ const CreateTeamScreen = ({ history }) => {
             </Form>
           </Col>
           <Col md='6'>
+            <Form.Group>
+              <Form.File
+                id='logoUpload'
+                label='Team Logo'
+                onChange={(e) => setLogo(e.target.files[0])}
+                accept='.jpg, .jpeg, .png'
+              />
+            </Form.Group>
             <Form className='mt-3'>
               <Form.Group controlId='createTeam.description' className='my-3'>
                 <Form.Label>Team Description / Bio</Form.Label>
@@ -164,6 +180,7 @@ const CreateTeamScreen = ({ history }) => {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   )
 }

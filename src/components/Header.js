@@ -17,7 +17,9 @@ const Header = () => {
     <Navbar bg='primary' variant='dark'>
       <Container>
         <LinkContainer to='/admin/'>
-          <Navbar.Brand>Arcana League</Navbar.Brand>
+          <Navbar.Brand>
+            <img src='http://localhost:3000/media/images/site/arcana_a_logo_white.png' />
+          </Navbar.Brand>
         </LinkContainer>
         <Nav className='ml-auto'>
           <LinkContainer to='/admin/teams'>

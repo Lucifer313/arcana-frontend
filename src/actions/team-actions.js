@@ -17,39 +17,34 @@ import {
   UPDATE_TEAM_RESET,
 } from '../constants/team-constants'
 
-export const createTeam =
-  (name, region, description, tis_won, creation_date) => async (dispatch) => {
-    try {
-      dispatch({
-        type: CREATE_TEAM_REQUEST,
-      })
+export const createTeam = (formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: CREATE_TEAM_REQUEST,
+    })
 
-      const config = {
-        headers: {
-          'Content-type': 'application/json',
-        },
-      }
-
-      const { data } = await axios.post(
-        '/teams/create',
-        { name, region, description, tis_won, creation_date },
-        config
-      )
-
-      dispatch({
-        type: CREATE_TEAM_SUCCESS,
-        payload: data,
-      })
-    } catch (error) {
-      dispatch({
-        type: CREATE_TEAM_FAILURE,
-        payload:
-          error.message && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      })
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     }
+
+    const { data } = await axios.post('/teams/create', formData, config)
+
+    dispatch({
+      type: CREATE_TEAM_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: CREATE_TEAM_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
   }
+}
 
 export const resetTeamCreation = () => async (dispatch) => {
   try {

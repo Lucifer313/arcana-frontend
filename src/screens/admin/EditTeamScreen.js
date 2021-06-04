@@ -10,6 +10,7 @@ import Popup from '../../components/Popup'
 
 import { resetTeamUpdate, updateTeam } from '../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
+import Footer from '../../components/Footer'
 
 const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
@@ -95,7 +96,7 @@ const EditTeamScreen = ({ history, match }) => {
   return (
     <>
       <Header />
-      <Container>
+      <Container style={{ minHeight: '82vh' }}>
         <Row>
           <>
             <h3 className='mt-5'>Edit Team</h3>
@@ -186,6 +187,7 @@ const EditTeamScreen = ({ history, match }) => {
         </Row>
         :
       </Container>
+      <Footer />
     </>
   )
 }

@@ -28,9 +28,7 @@ const userDetailsReducer = (state = {}, action) => {
     }
 
     case USER_LOGOUT: {
-      return {
-        userDetails: {},
-      }
+      return {}
     }
 
     default: {

@@ -12,6 +12,8 @@ import {
   resetTeamDeletion,
 } from '../../actions/team-actions'
 import Loader from '../../components/Loader'
+import Logo from '../../components/Logo'
+import Footer from '../../components/Footer'
 
 const HomeScreen = ({ history }) => {
   const userDetails = useSelector((state) => state.userDetails)
@@ -59,8 +61,8 @@ const HomeScreen = ({ history }) => {
 
   return (
     <>
-      <Header></Header>
-      <Container>
+      <Header />
+      <Container style={{ minHeight: '82vh' }}>
         <Row className='mt-5'>
           <Col md={3}>
             <LinkContainer to='/admin/teams/create'>
@@ -110,7 +112,7 @@ const HomeScreen = ({ history }) => {
                     <th>Sr.</th>
                     <th>Team Name</th>
                     <th>Region</th>
-                    <th>View</th>
+                    <th>Avatar</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -122,9 +124,7 @@ const HomeScreen = ({ history }) => {
                       <td>{t.name}</td>
                       <td>{t.region}</td>
                       <td>
-                        <Button variant='primary'>
-                          <i class='fas fa-eye'></i>
-                        </Button>
+                        <Logo path={t.logo} />
                       </td>
                       <td>
                         <LinkContainer to={'/admin/teams/edit/' + t._id}>
@@ -149,6 +149,7 @@ const HomeScreen = ({ history }) => {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </>
   )
 }
