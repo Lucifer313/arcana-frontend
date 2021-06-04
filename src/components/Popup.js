@@ -12,9 +12,9 @@ const MODAL_STYLES = {
   width: '100%',
 }
 
-export default function Popup({ title, body, onClose, type }) {
+export default function Popup({ title, body, onClose, onConfirm, type }) {
   return ReactDom.createPortal(
-    <Modal.Dialog style={MODAL_STYLES}>
+    <Modal.Dialog backdrop='static' style={MODAL_STYLES}>
       <Modal.Header>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -26,6 +26,15 @@ export default function Popup({ title, body, onClose, type }) {
           <Button variant='success' onClick={onClose}>
             Okay
           </Button>
+        ) : type === 'confirm' ? (
+          <>
+            <Button variant='success' onClick={onClose}>
+              No
+            </Button>
+            <Button variant='danger' onClick={onConfirm}>
+              Yes
+            </Button>
+          </>
         ) : null}
       </Modal.Footer>
     </Modal.Dialog>,

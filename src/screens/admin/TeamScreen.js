@@ -20,6 +20,9 @@ const HomeScreen = ({ history }) => {
   const teamDetails = useSelector((state) => state.teamDetails)
   const { loading, loaded, teams, error, deleted } = teamDetails
 
+  const [confirmationModal, setConfirmationModal] = useState(false)
+  const [deletionId, setDeletionId] = useState('')
+
   const dispatch = useDispatch()
 
   let counter = 0
@@ -39,9 +42,16 @@ const HomeScreen = ({ history }) => {
     counter = 0
   }, [])
 
-  /*const handleDelete = (id) => {
-    dispatch(deleteTeam(id))
-  }*/
+  const handleDelete = () => {
+    setDeletionId('')
+    setConfirmationModal(false)
+    dispatch(deleteTeam(deletionId))
+  }
+
+  const handleDeleteTeamModal = (id) => {
+    setDeletionId(id)
+    setConfirmationModal(true)
+  }
 
   const handleRegionFilter = (e) => {
     console.log(e.target.value)
@@ -71,6 +81,15 @@ const HomeScreen = ({ history }) => {
               </Form.Control>
             </Form.Group>
           </Col>
+          {confirmationModal ? (
+            <Popup
+              title='Team Deletion'
+              body='Are you sure you want to delete this team?'
+              type='confirm'
+              onClose={() => setConfirmationModal(false)}
+              onConfirm={handleDelete}
+            />
+          ) : null}
           {deleted ? (
             <Popup
               title='Team Deletion'
@@ -117,7 +136,7 @@ const HomeScreen = ({ history }) => {
                       <td>
                         <Button
                           variant='danger'
-                          onClick={() => dispatch(deleteTeam(t._id))}
+                          onClick={() => handleDeleteTeamModal(t._id)}
                         >
                           <i class='fas fa-trash-alt'></i>
                         </Button>
