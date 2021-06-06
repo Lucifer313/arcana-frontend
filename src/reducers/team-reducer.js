@@ -14,6 +14,7 @@ import {
   UPDATE_TEAM_REQUEST,
   UPDATE_TEAM_SUCCESS,
   UPDATE_TEAM_RESET,
+  FILTER_TEAM_BY_REGION,
 } from '../constants/team-constants'
 
 const teamDetailsReducer = (state = { teams: [] }, action) => {
@@ -55,6 +56,7 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
     case GET_TEAMS_REQUEST: {
       return {
         ...state,
+        filteredTeams: [],
         loading: true,
         loaded: false,
         teams: [],
@@ -152,6 +154,19 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
         error: '',
       }
     }
+
+    case FILTER_TEAM_BY_REGION: {
+      //let newState =Object.assign({}, state)
+      let region = action.payload
+      console.log('Region: ' + region)
+      let filteredTeams = state.teams.filter((t) => t.region === region)
+      console.log(state.teams)
+      return {
+        ...state,
+        filteredTeams: filteredTeams,
+      }
+    }
+
     default: {
       return state
     }

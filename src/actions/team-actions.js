@@ -15,6 +15,7 @@ import {
   UPDATE_TEAM_REQUEST,
   UPDATE_TEAM_SUCCESS,
   UPDATE_TEAM_RESET,
+  FILTER_TEAM_BY_REGION,
 } from '../constants/team-constants'
 
 export const createTeam = (formData) => async (dispatch) => {
@@ -150,6 +151,18 @@ export const resetTeamUpdate = () => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_TEAM_RESET,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const filterTeamByRegion = (region) => async (dispatch) => {
+  console.log('Region in action: ' + region)
+  try {
+    dispatch({
+      type: FILTER_TEAM_BY_REGION,
+      payload: region,
     })
   } catch (error) {
     console.log(error)
