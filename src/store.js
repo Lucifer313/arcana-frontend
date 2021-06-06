@@ -18,6 +18,10 @@ const initialState = {
   userDetails: {
     userInfo: userInfoFromLocalStorage,
   },
+  teamDetails: {
+    teams: [],
+    filteredTeams: [],
+  },
 }
 
 const middleware = [thunk]

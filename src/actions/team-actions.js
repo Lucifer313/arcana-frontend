@@ -16,6 +16,7 @@ import {
   UPDATE_TEAM_SUCCESS,
   UPDATE_TEAM_RESET,
   FILTER_TEAM_BY_REGION,
+  FILTER_TEAMS,
 } from '../constants/team-constants'
 
 export const createTeam = (formData) => async (dispatch) => {
@@ -157,14 +158,26 @@ export const resetTeamUpdate = () => async (dispatch) => {
   }
 }
 
-export const filterTeamByRegion = (region) => async (dispatch) => {
+export const filterTeams = (region, name) => async (dispatch) => {
   console.log('Region in action: ' + region)
   try {
     dispatch({
-      type: FILTER_TEAM_BY_REGION,
-      payload: region,
+      type: FILTER_TEAMS,
+      payload: { region, name },
     })
   } catch (error) {
     console.log(error)
   }
 }
+
+/*export const filterTeamByName = (name) => async (dispatch) => {
+  console.log('Name in action: ' + name)
+  try {
+    dispatch({
+      type: FILTER_TEAM_BY_NAME,
+      payload: name,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}*/

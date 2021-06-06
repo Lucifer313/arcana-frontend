@@ -14,7 +14,7 @@ import {
   UPDATE_TEAM_REQUEST,
   UPDATE_TEAM_SUCCESS,
   UPDATE_TEAM_RESET,
-  FILTER_TEAM_BY_REGION,
+  FILTER_TEAMS,
 } from '../constants/team-constants'
 
 const teamDetailsReducer = (state = { teams: [] }, action) => {
@@ -155,17 +155,52 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       }
     }
 
-    case FILTER_TEAM_BY_REGION: {
+    case FILTER_TEAMS: {
       //let newState =Object.assign({}, state)
-      let region = action.payload
-      console.log('Region: ' + region)
-      let filteredTeams = state.teams.filter((t) => t.region === region)
-      console.log(state.teams)
+      let region = action.payload.region
+      let name = action.payload.name
+      //Checking if teams are filtered use that array or use the original array
+      console.log(region)
+      let filteredTeams =
+        region !== 'All'
+          ? state.teams.filter((team) => team.region === region)
+          : state.teams
+      console.log(filteredTeams)
+
+      let newfilteredTeams =
+        name !== ''
+          ? filteredTeams.filter((t) =>
+              t.name.toLowerCase().includes(name.toLowerCase())
+            )
+          : filteredTeams
+      console.log(newfilteredTeams)
       return {
         ...state,
-        filteredTeams: filteredTeams,
+        filteredTeams: newfilteredTeams,
       }
     }
+
+    /*case FILTER_TEAM_BY_NAME: {
+      let name = action.payload
+      let filteredTeams
+      //Filter only when the name is not empty or the search field is not empty
+      if (name !== '') {
+        let teams =
+          state.filteredTeams.length > 0 ? state.filteredTeams : state.teams
+
+        filteredTeams = state.teams.filter((t) =>
+          t.name.toLowerCase().includes(name.toLowerCase())
+        )
+      }
+      //If search field is empty return the entire state of teams
+      else {
+        filteredTeams = state.teams
+      }
+      return {
+        ...state,
+        filteredTeam: filteredTeams,
+      }
+    }*/
 
     default: {
       return state

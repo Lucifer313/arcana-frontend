@@ -8,7 +8,7 @@ import Popup from '../../components/Popup'
 
 import {
   deleteTeam,
-  filterTeamByRegion,
+  filterTeams,
   getTeams,
   resetTeamDeletion,
 } from '../../actions/team-actions'
@@ -17,6 +17,7 @@ import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
 import FilterRegion from '../../components/Filters/FilterRegion'
 import { TeamList } from '../../components/TeamList'
+import FilterName from '../../components/Filters/FilterName'
 
 const HomeScreen = ({ history }) => {
   const userDetails = useSelector((state) => state.userDetails)
@@ -29,6 +30,7 @@ const HomeScreen = ({ history }) => {
   const [deletionId, setDeletionId] = useState('')
 
   const [region, setRegion] = useState('All')
+  const [name, setName] = useState('')
 
   const dispatch = useDispatch()
 
@@ -63,7 +65,13 @@ const HomeScreen = ({ history }) => {
   const handleRegionFilter = (e) => {
     console.log(e.target.value)
     setRegion(e.target.value)
-    dispatch(filterTeamByRegion(e.target.value))
+    dispatch(filterTeams(e.target.value, name))
+  }
+
+  const handleNameFilter = (e) => {
+    console.log(e.target.value)
+    setName(e.target.value)
+    dispatch(filterTeams(region, e.target.value))
   }
 
   return (
@@ -71,7 +79,7 @@ const HomeScreen = ({ history }) => {
       <Header />
       <Container style={{ minHeight: '82vh' }}>
         <Row className='mt-5'>
-          <Col md={3}>
+          <Col md={2}>
             <LinkContainer to='/admin/teams/create'>
               <Button variant='primary' className='my-4'>
                 Create Team
@@ -79,6 +87,7 @@ const HomeScreen = ({ history }) => {
             </LinkContainer>
           </Col>
           <FilterRegion filterRegion={handleRegionFilter} value={region} />
+          <FilterName change={handleNameFilter} value={name} />
           {confirmationModal ? (
             <Popup
               title='Team Deletion'
@@ -101,7 +110,7 @@ const HomeScreen = ({ history }) => {
           <Col>
             {loading ? (
               <Loader />
-            ) : filteredTeams.length > 0 ? (
+            ) : name !== '' || region !== 'All' ? (
               <TeamList
                 teams={filteredTeams}
                 deleteModal={handleDeleteTeamModal}

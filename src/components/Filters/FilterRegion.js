@@ -3,7 +3,7 @@ import { Col, Form } from 'react-bootstrap'
 
 const FilterRegion = ({ region, filterRegion }) => {
   return (
-    <Col md={3}>
+    <Col md={2}>
       <Form.Group controlId='regionFilter' className='mt-3'>
         <Form.Label>Filter by Region</Form.Label>
         <Form.Control as='select' value={region} onChange={filterRegion}>
