@@ -15,8 +15,8 @@ import {
   UPDATE_TEAM_REQUEST,
   UPDATE_TEAM_SUCCESS,
   UPDATE_TEAM_RESET,
-  FILTER_TEAM_BY_REGION,
   FILTER_TEAMS,
+  SORT_TEAMS,
 } from '../constants/team-constants'
 
 export const createTeam = (formData) => async (dispatch) => {
@@ -170,14 +170,13 @@ export const filterTeams = (region, name) => async (dispatch) => {
   }
 }
 
-/*export const filterTeamByName = (name) => async (dispatch) => {
-  console.log('Name in action: ' + name)
+export const sortTeams = (sortBy) => (dispatch) => {
   try {
     dispatch({
-      type: FILTER_TEAM_BY_NAME,
-      payload: name,
+      type: SORT_TEAMS,
+      payload: sortBy,
     })
   } catch (error) {
     console.log(error)
   }
-}*/
+}

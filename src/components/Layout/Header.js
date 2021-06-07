@@ -1,8 +1,8 @@
-import { Container, Navbar, Nav, Image } from 'react-bootstrap'
+import { Container, Navbar, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { useDispatch } from 'react-redux'
-import { logout } from '../actions/user-action'
+import { logout } from '../../actions/user-action'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -18,7 +18,10 @@ const Header = () => {
       <Container>
         <LinkContainer to='/admin/'>
           <Navbar.Brand>
-            <img src='http://localhost:3000/media/images/site/arcana_a_logo_white.png' />
+            <img
+              src='http://localhost:3000/media/images/site/arcana_a_logo_white.png'
+              alt='arcana-logo'
+            />
           </Navbar.Brand>
         </LinkContainer>
         <Nav className='ml-auto'>

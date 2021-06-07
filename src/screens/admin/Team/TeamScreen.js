@@ -1,41 +1,42 @@
 import { useEffect, useState } from 'react'
 
-import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import axios from '../../axios-config'
+import axios from '../../../axios-config'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Header from '../../components/Header'
-import Popup from '../../components/Popup'
+import Header from '../../../components/Layout/Header'
+import Popup from '../../../components/Popup'
 
 import {
   deleteTeam,
   filterTeams,
   getTeams,
   resetTeamDeletion,
-} from '../../actions/team-actions'
+  sortTeams,
+} from '../../../actions/team-actions'
 
-import Loader from '../../components/Loader'
-import Footer from '../../components/Footer'
-import FilterRegion from '../../components/Filters/FilterRegion'
-import { TeamList } from '../../components/TeamList'
-import FilterName from '../../components/Filters/FilterName'
+import Loader from '../../../components/Loader'
+import Footer from '../../../components/Layout/Footer'
+import FilterRegion from '../../../components/Filters/FilterRegion'
+import { TeamList } from '../../../components/TeamList'
+import FilterName from '../../../components/Filters/FilterName'
 
-import useLoginValidation from '../../hooks/loginValidatorHook'
+import useLoginValidation from '../../../hooks/loginValidatorHook'
+import Sorter from '../../../components/Filters/Sorter'
 
 const HomeScreen = ({ history }) => {
   const teamDetails = useSelector((state) => state.teamDetails)
-  const { loading, loaded, teams, error, deleted, filteredTeams } = teamDetails
+  const { loading, teams, deleted, filteredTeams } = teamDetails
 
   const [confirmationModal, setConfirmationModal] = useState(false)
   const [deletionId, setDeletionId] = useState('')
 
   const [region, setRegion] = useState('All')
   const [name, setName] = useState('')
+  const [sort, setSort] = useState('Default')
 
   const dispatch = useDispatch()
-
-  let counter = 0
 
   //Check if user is logged in or redirect
   useLoginValidation(history)
@@ -51,7 +52,6 @@ const HomeScreen = ({ history }) => {
       console.log(matchDetails)
     }
     getMatchById()
-    counter = 0
   }, [])
 
   const handleDelete = () => {
@@ -66,15 +66,29 @@ const HomeScreen = ({ history }) => {
   }
 
   const handleRegionFilter = (e) => {
-    console.log(e.target.value)
+    let name = e.target.name
+    console.log(e.target.name)
     setRegion(e.target.value)
     dispatch(filterTeams(e.target.value, name))
   }
 
   const handleNameFilter = (e) => {
-    console.log(e.target.value)
+    console.log(e.target.name)
     setName(e.target.value)
     dispatch(filterTeams(region, e.target.value))
+  }
+
+  const handleSorter = (e) => {
+    setSort(e.target.value)
+    dispatch(sortTeams(e.target.value))
+  }
+
+  const handleClearFilter = (e) => {
+    //e.preventDefault()
+    setSort('Default')
+    setRegion('All')
+    setName('')
+    console.log(sort)
   }
 
   return (
@@ -89,8 +103,33 @@ const HomeScreen = ({ history }) => {
               </Button>
             </LinkContainer>
           </Col>
+          <Col md={1}>
+            <br />
+            <p>Result: </p>
+            <p>
+              {name !== '' || region !== 'All'
+                ? filteredTeams.length
+                : teams.length}{' '}
+              Records
+            </p>
+          </Col>
           <FilterRegion filterRegion={handleRegionFilter} value={region} />
-          <FilterName change={handleNameFilter} value={name} />
+          <FilterName
+            change={handleNameFilter}
+            value={name}
+            label='Filter by Name'
+            placeholder='Enter the Team name'
+          />
+          <Sorter sortBy={handleSorter} value={sort} />
+          <Col md={2}>
+            <Button
+              variant='primary'
+              className='my-4'
+              onClick={handleClearFilter}
+            >
+              Clear
+            </Button>
+          </Col>
           {confirmationModal ? (
             <Popup
               title='Team Deletion'
@@ -113,7 +152,7 @@ const HomeScreen = ({ history }) => {
           <Col>
             {loading ? (
               <Loader />
-            ) : name !== '' || region !== 'All' ? (
+            ) : name !== '' || region !== 'All' || sort !== 'Default' ? (
               <TeamList
                 teams={filteredTeams}
                 deleteModal={handleDeleteTeamModal}

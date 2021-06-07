@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
-import Header from '../../components/Header'
-import Message from '../../components/Message'
-import Loader from '../../components/Loader'
-import Popup from '../../components/Popup'
+import Header from '../../../components/Layout/Header'
+import Message from '../../../components/Message'
+import Loader from '../../../components/Loader'
+import Popup from '../../../components/Popup'
 
-import { createTeam, resetTeamCreation } from '../../actions/team-actions'
-import Footer from '../../components/Footer'
-import useLoginValidation from '../../hooks/loginValidatorHook'
+import { createTeam, resetTeamCreation } from '../../../actions/team-actions'
+import Footer from '../../../components/Layout/Footer'
+import useLoginValidation from '../../../hooks/loginValidatorHook'
 
 const CreateTeamScreen = ({ history }) => {
   //State variables

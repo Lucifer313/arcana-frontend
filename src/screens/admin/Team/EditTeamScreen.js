@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import Header from '../../components/Header'
+import Header from '../../../components/Layout/Header'
 
-import Message from '../../components/Message'
-import Loader from '../../components/Loader'
-import Popup from '../../components/Popup'
+import Message from '../../../components/Message'
+import Loader from '../../../components/Loader'
+import Popup from '../../../components/Popup'
 
-import { resetTeamUpdate, updateTeam } from '../../actions/team-actions'
+import { resetTeamUpdate, updateTeam } from '../../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
-import Footer from '../../components/Footer'
-import useLoginValidation from '../../hooks/loginValidatorHook'
+import Footer from '../../../components/Layout/Footer'
+import useLoginValidation from '../../../hooks/loginValidatorHook'
 
 const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
@@ -32,8 +32,6 @@ const EditTeamScreen = ({ history, match }) => {
 
   /*-----------------------------------CAN BE OPTIMIZED-----------------------------------*/
   useEffect(() => {
-    getTeamById()
-
     const getTeamById = async () => {
       let team
 
@@ -48,6 +46,8 @@ const EditTeamScreen = ({ history, match }) => {
         setTis(team.tis_won)
       }
     }
+
+    getTeamById()
   }, [])
 
   /*-------------------------------------------------------------------------------------------------------*/

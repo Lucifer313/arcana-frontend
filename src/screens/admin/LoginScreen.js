@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Form, Row, Col, Button } from 'react-bootstrap'
 
-import Loader from '../../../components/Loader'
-import Message from '../../../components/Message'
+import Loader from '../../components/Loader'
+import Message from '../../components/Message'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { login } from '../../../actions/user-action'
+import { login } from '../../actions/user-action'
 
-import './../cyborg.css'
+import './cyborg.css'
 
 const LoginScreen = ({ history }) => {
   //Defining element states

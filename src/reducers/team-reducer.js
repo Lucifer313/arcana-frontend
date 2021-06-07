@@ -15,6 +15,7 @@ import {
   UPDATE_TEAM_SUCCESS,
   UPDATE_TEAM_RESET,
   FILTER_TEAMS,
+  SORT_TEAMS,
 } from '../constants/team-constants'
 
 const teamDetailsReducer = (state = { teams: [] }, action) => {
@@ -156,51 +157,68 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
     }
 
     case FILTER_TEAMS: {
-      //let newState =Object.assign({}, state)
       let region = action.payload.region
       let name = action.payload.name
-      //Checking if teams are filtered use that array or use the original array
-      console.log(region)
+
       let filteredTeams =
         region !== 'All'
           ? state.teams.filter((team) => team.region === region)
           : state.teams
-      console.log(filteredTeams)
 
-      let newfilteredTeams =
+      filteredTeams =
         name !== ''
           ? filteredTeams.filter((t) =>
               t.name.toLowerCase().includes(name.toLowerCase())
             )
           : filteredTeams
-      console.log(newfilteredTeams)
+
       return {
         ...state,
-        filteredTeams: newfilteredTeams,
+        filteredTeams: filteredTeams,
       }
     }
 
-    /*case FILTER_TEAM_BY_NAME: {
-      let name = action.payload
-      let filteredTeams
-      //Filter only when the name is not empty or the search field is not empty
-      if (name !== '') {
-        let teams =
-          state.filteredTeams.length > 0 ? state.filteredTeams : state.teams
+    case SORT_TEAMS: {
+      let sortBy = action.payload
 
-        filteredTeams = state.teams.filter((t) =>
-          t.name.toLowerCase().includes(name.toLowerCase())
-        )
+      let teams =
+        state.filteredTeams.length > 0 ? state.filteredTeams : state.teams
+
+      switch (sortBy) {
+        case 'Name ASC': {
+          teams.sort((a, b) => (a.name > b.name ? 1 : -1))
+          break
+        }
+
+        case 'Name DESC': {
+          teams.sort((a, b) => (a.name > b.name ? -1 : 1))
+          break
+        }
+
+        case 'Region ASC': {
+          teams.sort((a, b) => (a.region > b.region ? 1 : -1))
+          break
+        }
+
+        case 'Region DESC': {
+          teams.sort((a, b) => (a.region > b.region ? -1 : 1))
+          break
+        }
+
+        case 'Default': {
+          break
+        }
+
+        default: {
+          break
+        }
       }
-      //If search field is empty return the entire state of teams
-      else {
-        filteredTeams = state.teams
-      }
+
       return {
         ...state,
-        filteredTeam: filteredTeams,
+        filteredTeams: teams,
       }
-    }*/
+    }
 
     default: {
       return state

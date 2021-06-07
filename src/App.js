@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import LoginScreen from './screens/admin/Login Screen/LoginScreen'
-import TeamScreen from './screens/admin/TeamScreen'
-import CreateTeamScreen from './screens/admin/CreateTeamScreen'
-import EditTeamScreen from './screens/admin/EditTeamScreen'
+import LoginScreen from './screens/admin/LoginScreen'
+import TeamScreen from './screens/admin/Team/TeamScreen'
+import CreateTeamScreen from './screens/admin/Team/CreateTeamScreen'
+import EditTeamScreen from './screens/admin/Team/EditTeamScreen'
 
 import dotenv from 'dotenv'
 
