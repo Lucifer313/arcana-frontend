@@ -155,7 +155,7 @@ const HomeScreen = ({ history }) => {
             ) : name !== '' || region !== 'All' || sort !== 'Default' ? (
               <TeamList
                 teams={filteredTeams}
-                deleteModal={handleDeleteTeamModal}
+                deleteModal={(id) => handleDeleteTeamModal(id)}
               />
             ) : (
               <TeamList teams={teams} deleteModal={handleDeleteTeamModal} />

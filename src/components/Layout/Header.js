@@ -19,23 +19,32 @@ const Header = () => {
         <LinkContainer to='/admin/'>
           <Navbar.Brand>
             <img
-              src='http://localhost:3000/media/images/site/arcana_a_logo_white.png'
+              src='/assets/images/arcana_a_logo_white.png'
+              width='50px'
               alt='arcana-logo'
             />
           </Navbar.Brand>
         </LinkContainer>
         <Nav className='ml-auto'>
           <LinkContainer to='/admin/teams'>
-            <Nav.Link>Teams</Nav.Link>
+            <Nav.Link>
+              <i class='fas fa-user-friends'></i> Teams
+            </Nav.Link>
           </LinkContainer>
           <LinkContainer to='/admin/players'>
-            <Nav.Link>Players</Nav.Link>
+            <Nav.Link>
+              <i class='fas fa-user'></i> Players
+            </Nav.Link>
           </LinkContainer>
           <LinkContainer to='/admin/tournaments'>
-            <Nav.Link>Tournaments</Nav.Link>
+            <Nav.Link>
+              <i class='fas fa-chess'></i> Tournaments
+            </Nav.Link>
           </LinkContainer>
           <LinkContainer to='#'>
-            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+            <Nav.Link onClick={handleLogout}>
+              <i class='fas fa-power-off'></i> Logout
+            </Nav.Link>
           </LinkContainer>
         </Nav>
       </Container>

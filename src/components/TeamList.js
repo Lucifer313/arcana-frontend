@@ -36,7 +36,7 @@ export const TeamList = ({ teams, deleteModal }) => {
                 </LinkContainer>
               </td>
               <td>
-                <Button variant='danger' onClick={() => deleteModal}>
+                <Button variant='danger' onClick={() => deleteModal(t._id)}>
                   <i class='fas fa-trash-alt'></i>
                 </Button>
               </td>
