@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../../actions/user-action'
 
 import './../cyborg.css'
-import './loginscreen.css'
 
 const LoginScreen = ({ history }) => {
   //Defining element states
@@ -25,7 +24,7 @@ const LoginScreen = ({ history }) => {
   //Extracting the elements of userDetails state
   const { loading, userInfo, error } = userDetails
 
-  //Login to push to the name page if the userInfo state is populated
+  //Login to push to the landing page if the userInfo state is populated
   useEffect(() => {
     if (userInfo) {
       history.push('/admin/')

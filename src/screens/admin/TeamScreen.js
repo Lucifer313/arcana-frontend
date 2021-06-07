@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+
 import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import axios from '../../axios-config'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Header from '../../components/Header'
@@ -12,17 +14,16 @@ import {
   getTeams,
   resetTeamDeletion,
 } from '../../actions/team-actions'
+
 import Loader from '../../components/Loader'
-import Logo from '../../components/Logo'
 import Footer from '../../components/Footer'
 import FilterRegion from '../../components/Filters/FilterRegion'
 import { TeamList } from '../../components/TeamList'
 import FilterName from '../../components/Filters/FilterName'
 
-const HomeScreen = ({ history }) => {
-  const userDetails = useSelector((state) => state.userDetails)
-  const { userInfo } = userDetails
+import useLoginValidation from '../../hooks/loginValidatorHook'
 
+const HomeScreen = ({ history }) => {
   const teamDetails = useSelector((state) => state.teamDetails)
   const { loading, loaded, teams, error, deleted, filteredTeams } = teamDetails
 
@@ -37,17 +38,19 @@ const HomeScreen = ({ history }) => {
   let counter = 0
 
   //Check if user is logged in or redirect
-  useEffect(() => {
-    if (!userInfo) {
-      history.push('/admin/login')
-    } else {
-      dispatch(getTeams())
-    }
-  }, [userInfo, history, dispatch])
+  useLoginValidation(history)
 
   //To execute on every page load
   useEffect(() => {
     dispatch(getTeams())
+
+    const getMatchById = async () => {
+      let matchDetails = await axios.get(
+        'https://api.opendota.com/api/matches/6029614145'
+      )
+      console.log(matchDetails)
+    }
+    getMatchById()
     counter = 0
   }, [])
 

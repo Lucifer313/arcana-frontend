@@ -11,6 +11,7 @@ import Popup from '../../components/Popup'
 
 import { createTeam, resetTeamCreation } from '../../actions/team-actions'
 import Footer from '../../components/Footer'
+import useLoginValidation from '../../hooks/loginValidatorHook'
 
 const CreateTeamScreen = ({ history }) => {
   //State variables
@@ -23,10 +24,6 @@ const CreateTeamScreen = ({ history }) => {
 
   const [errorMessage, setErrorMessage] = useState('')
 
-  //Extract User Details slice from the Store
-  const userDetails = useSelector((state) => state.userDetails)
-  const { userInfo } = userDetails
-
   //Extracting TeamDetails slice from the store
   const teamDetails = useSelector((state) => state.teamDetails)
   const { creating, created, error } = teamDetails
@@ -34,11 +31,7 @@ const CreateTeamScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   //Redirection logic if not logged in
-  useEffect(() => {
-    if (!userInfo) {
-      history.push('/admin/login')
-    }
-  }, [userInfo, history])
+  useLoginValidation(history)
 
   //To run everytime the SPA is rendered
   useEffect(() => {

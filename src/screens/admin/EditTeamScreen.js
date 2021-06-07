@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import store from '../../store'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Header from '../../components/Header'
 
@@ -11,6 +10,7 @@ import Popup from '../../components/Popup'
 import { resetTeamUpdate, updateTeam } from '../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
 import Footer from '../../components/Footer'
+import useLoginValidation from '../../hooks/loginValidatorHook'
 
 const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
@@ -21,10 +21,6 @@ const EditTeamScreen = ({ history, match }) => {
 
   const [errorMessage, setErrorMessage] = useState('')
 
-  //Extract User Details slice from the Store
-  const userDetails = useSelector((state) => state.userDetails)
-  const { userInfo } = userDetails
-
   //Extracting TeamDetails slice from the store
   const teamDetails = useSelector((state) => state.teamDetails)
   const { updating, updated, error, teams } = teamDetails
@@ -32,30 +28,28 @@ const EditTeamScreen = ({ history, match }) => {
   const dispatch = useDispatch()
 
   //Redirection logic if not logged in
-  useEffect(() => {
-    if (!userInfo) {
-      history.push('/admin/login')
-    }
-  }, [userInfo, history])
+  useLoginValidation(history)
+
   /*-----------------------------------CAN BE OPTIMIZED-----------------------------------*/
   useEffect(() => {
     getTeamById()
+
+    const getTeamById = async () => {
+      let team
+
+      if (teams.length > 0) {
+        //Since filter returns an array we only need first indexed object hence 0
+        team = await teams.filter((team) => team._id === match.params.id)[0]
+        //Setting the state
+        setName(team.name)
+        setRegion(team.region)
+        setDescription(team.description)
+        setCreationDate(team.creation_date)
+        setTis(team.tis_won)
+      }
+    }
   }, [])
 
-  const getTeamById = async () => {
-    let team
-
-    if (teams.length > 0) {
-      //Since filter returns an array we only need first indexed object hence 0
-      team = await teams.filter((team) => team._id === match.params.id)[0]
-      //Setting the state
-      setName(team.name)
-      setRegion(team.region)
-      setDescription(team.description)
-      setCreationDate(team.creation_date)
-      setTis(team.tis_won)
-    }
-  }
   /*-------------------------------------------------------------------------------------------------------*/
   //Creating Team function
   const handleUpdate = async () => {
