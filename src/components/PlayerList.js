@@ -14,6 +14,7 @@ const PlayerList = ({ players, deleteModal }) => {
           <th>Name</th>
           <th>Region</th>
           <th>Avatar</th>
+          <th>Team</th>
           <th>Edit</th>
           <th>Delete</th>
         </tr>
@@ -27,6 +28,9 @@ const PlayerList = ({ players, deleteModal }) => {
               <td>{p.region}</td>
               <td>
                 <Logo path={p.profile_image} />
+              </td>
+              <td>
+                <Logo path={p.team.logo} />
               </td>
               <td>
                 <LinkContainer to={'/admin/players/edit/' + p._id}>

@@ -66,14 +66,11 @@ const TeamScreen = ({ history }) => {
   }
 
   const handleRegionFilter = (e) => {
-    let name = e.target.name
-    console.log(e.target.name)
     setRegion(e.target.value)
     dispatch(filterTeams(e.target.value, name))
   }
 
   const handleNameFilter = (e) => {
-    console.log(e.target.name)
     setName(e.target.value)
     dispatch(filterTeams(region, e.target.value))
   }

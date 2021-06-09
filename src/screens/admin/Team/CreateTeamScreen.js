@@ -13,6 +13,7 @@ import { createTeam, resetTeamCreation } from '../../../actions/team-actions'
 import Footer from '../../../components/Layout/Footer'
 import useLoginValidation from '../../../hooks/loginValidatorHook'
 import { CREATE_TEAM_RESET } from '../../../constants/team-constants'
+import ImagePreview from '../../../components/ImagePreview'
 
 const CreateTeamScreen = ({ history }) => {
   //State variables
@@ -24,6 +25,9 @@ const CreateTeamScreen = ({ history }) => {
   const [logo, setLogo] = useState('')
 
   const [errorMessage, setErrorMessage] = useState('')
+  const [previewImage, setImagePreview] = useState(
+    '/assets/images/preview_placeholder.png'
+  )
 
   //Extracting TeamDetails slice from the store
   const teamDetails = useSelector((state) => state.teamDetails)
@@ -74,18 +78,34 @@ const CreateTeamScreen = ({ history }) => {
     setRegion('EU')
     setDescription('')
     setTis(0)
+    setLogo('')
     setCreationDate('')
     setErrorMessage('')
+    setImagePreview('/assets/images/preview_placeholder.png')
+  }
+
+  //Image preview Handler
+  const imageHandler = (e) => {
+    setLogo(e.target.files[0])
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImagePreview(reader.result)
+      }
+    }
+
+    reader.readAsDataURL(e.target.files[0])
   }
 
   return (
     <>
       <Header />
-      <Container style={{ minHeight: '82vh' }}>
+      <Container style={{ minHeight: '82vh' }} className='mb-5'>
         <Row>
           <h3 className='mt-5'>Create New Team</h3>
           <Col md='6'>
-            <Form className='mt-3'>
+            <Form className='mt-3 mb-5'>
               {errorMessage ? (
                 <Message variant='danger'>{errorMessage}</Message>
               ) : error ? (
@@ -143,10 +163,14 @@ const CreateTeamScreen = ({ history }) => {
           </Col>
           <Col md='6'>
             <Form.Group>
+              <ImagePreview
+                path={previewImage}
+                alternate='logo-image'
+                title='Team Logo'
+              />
               <Form.File
                 id='logoUpload'
-                label='Team Logo'
-                onChange={(e) => setLogo(e.target.files[0])}
+                onChange={imageHandler}
                 accept='.jpg, .jpeg, .png'
               />
             </Form.Group>

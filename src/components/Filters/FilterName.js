@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Col } from 'react-bootstrap'
 import './filters.css'
 
 const FilterName = ({ name, change, label, placeholder }) => {
+  const [filterName, setFilterName] = useState('')
+
+  useEffect(() => {
+    console.log(name)
+    setFilterName(name)
+  })
+
   return (
     <Col md={2}>
       <Form.Group controlId='regionFilter' className='mt-3'>
@@ -10,7 +17,7 @@ const FilterName = ({ name, change, label, placeholder }) => {
         <Form.Control
           type='text'
           placeholder={placeholder}
-          value={name}
+          value={filterName}
           onChange={change}
           style={{ padding: '.5rem !important' }}
         />
