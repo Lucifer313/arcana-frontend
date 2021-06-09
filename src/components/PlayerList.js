@@ -3,7 +3,7 @@ import { Table, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import Logo from './Logo'
 
-const TeamList = ({ teams, deleteModal }) => {
+const PlayerList = ({ players, deleteModal }) => {
   let counter = 0
 
   return (
@@ -19,24 +19,24 @@ const TeamList = ({ teams, deleteModal }) => {
         </tr>
       </thead>
       <tbody>
-        {teams.length > 0 ? (
-          teams.map((t) => (
-            <tr key={t._id}>
+        {players.length > 0 ? (
+          players.map((p) => (
+            <tr key={p._id}>
               <td>{++counter}</td>
-              <td>{t.name}</td>
-              <td>{t.region}</td>
+              <td>{p.alias}</td>
+              <td>{p.region}</td>
               <td>
-                <Logo path={t.logo} />
+                <Logo path={p.profile_image} />
               </td>
               <td>
-                <LinkContainer to={'/admin/teams/edit/' + t._id}>
+                <LinkContainer to={'/admin/players/edit/' + p._id}>
                   <Button variant='warning'>
                     <i class='fas fa-edit'></i>
                   </Button>
                 </LinkContainer>
               </td>
               <td>
-                <Button variant='danger' onClick={() => deleteModal(t._id)}>
+                <Button variant='danger' onClick={() => deleteModal(p._id)}>
                   <i class='fas fa-trash-alt'></i>
                 </Button>
               </td>
@@ -54,4 +54,4 @@ const TeamList = ({ teams, deleteModal }) => {
   )
 }
 
-export default TeamList
+export default PlayerList

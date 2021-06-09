@@ -12,6 +12,7 @@ import Popup from '../../../components/Popup'
 import { createTeam, resetTeamCreation } from '../../../actions/team-actions'
 import Footer from '../../../components/Layout/Footer'
 import useLoginValidation from '../../../hooks/loginValidatorHook'
+import { CREATE_TEAM_RESET } from '../../../constants/team-constants'
 
 const CreateTeamScreen = ({ history }) => {
   //State variables
@@ -64,7 +65,7 @@ const CreateTeamScreen = ({ history }) => {
   //Function to close the success popup
   const handleModalClose = () => {
     resetForm()
-    dispatch(resetTeamCreation())
+    dispatch({ type: CREATE_TEAM_RESET })
   }
 
   //Function to reset the form

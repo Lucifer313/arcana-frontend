@@ -4,10 +4,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import userDetailsReducer from './reducers/admin-reducer'
 import teamDetailsReducer from './reducers/team-reducer'
+import playerDetailsReducer from './reducers/player-reducer'
 
 const reducers = combineReducers({
   userDetails: userDetailsReducer,
   teamDetails: teamDetailsReducer,
+  playerDetails: playerDetailsReducer,
 })
 
 const userInfoFromLocalStorage = localStorage.getItem('userInfo')
@@ -21,6 +23,11 @@ const initialState = {
   teamDetails: {
     teams: [],
     filteredTeams: [],
+  },
+
+  playerDetails: {
+    players: [],
+    filteredPlayers: [],
   },
 }
 

@@ -11,7 +11,6 @@ import Popup from '../../../components/Popup'
 import {
   deleteTeam,
   filterTeams,
-  getTeams,
   resetTeamDeletion,
   sortTeams,
 } from '../../../actions/team-actions'
@@ -19,15 +18,26 @@ import {
 import Loader from '../../../components/Loader'
 import Footer from '../../../components/Layout/Footer'
 import FilterRegion from '../../../components/Filters/FilterRegion'
-import TeamList from '../../../components/TeamList'
 import FilterName from '../../../components/Filters/FilterName'
 
 import useLoginValidation from '../../../hooks/loginValidatorHook'
 import Sorter from '../../../components/Filters/Sorter'
+import {
+  deletePlayer,
+  filterPlayers,
+  getPlayers,
+  sortPlayers,
+} from '../../../actions/player-action'
+import PlayerList from '../../../components/PlayerList'
+import { DELETE_TEAM_RESET } from '../../../constants/team-constants'
+import { DELETE_PLAYER_RESET } from '../../../constants/player-constants'
 
-const TeamScreen = ({ history }) => {
+const PlayerScreen = ({ history }) => {
   const teamDetails = useSelector((state) => state.teamDetails)
-  const { loading, teams, deleted, filteredTeams } = teamDetails
+  const { teams, filteredTeams } = teamDetails
+
+  const playerDetails = useSelector((state) => state.playerDetails)
+  const { loading, players, deleted, filteredPlayers } = playerDetails
 
   const [confirmationModal, setConfirmationModal] = useState(false)
   const [deletionId, setDeletionId] = useState('')
@@ -43,21 +53,13 @@ const TeamScreen = ({ history }) => {
 
   //To execute on every page load
   useEffect(() => {
-    dispatch(getTeams())
-
-    const getMatchById = async () => {
-      let matchDetails = await axios.get(
-        'https://api.opendota.com/api/matches/6029614145'
-      )
-      console.log(matchDetails)
-    }
-    getMatchById()
+    dispatch(getPlayers())
   }, [])
 
   const handleDelete = () => {
     setDeletionId('')
     setConfirmationModal(false)
-    dispatch(deleteTeam(deletionId))
+    dispatch(deletePlayer(deletionId))
   }
 
   const handleDeleteTeamModal = (id) => {
@@ -69,18 +71,18 @@ const TeamScreen = ({ history }) => {
     let name = e.target.name
     console.log(e.target.name)
     setRegion(e.target.value)
-    dispatch(filterTeams(e.target.value, name))
+    dispatch(filterPlayers(e.target.value, name))
   }
 
   const handleNameFilter = (e) => {
     console.log(e.target.name)
     setName(e.target.value)
-    dispatch(filterTeams(region, e.target.value))
+    dispatch(filterPlayers(region, e.target.value))
   }
 
   const handleSorter = (e) => {
     setSort(e.target.value)
-    dispatch(sortTeams(e.target.value))
+    dispatch(sortPlayers(e.target.value))
   }
 
   const handleClearFilter = (e) => {
@@ -97,9 +99,9 @@ const TeamScreen = ({ history }) => {
       <Container style={{ minHeight: '82vh' }}>
         <Row className='mt-5'>
           <Col md={2}>
-            <LinkContainer to='/admin/teams/create'>
+            <LinkContainer to='/admin/players/create'>
               <Button variant='primary' className='my-4'>
-                Create Team
+                Create Player
               </Button>
             </LinkContainer>
           </Col>
@@ -108,8 +110,8 @@ const TeamScreen = ({ history }) => {
             <p>Result: </p>
             <p>
               {name !== '' || region !== 'All'
-                ? filteredTeams.length
-                : teams.length}{' '}
+                ? filteredPlayers.length
+                : players.length}{' '}
               Records
             </p>
           </Col>
@@ -118,7 +120,7 @@ const TeamScreen = ({ history }) => {
             change={handleNameFilter}
             value={name}
             label='Filter by Name'
-            placeholder='Enter the Team name'
+            placeholder='Enter the Player name'
           />
           <Sorter sortBy={handleSorter} value={sort} />
           <Col md={2}>
@@ -132,8 +134,8 @@ const TeamScreen = ({ history }) => {
           </Col>
           {confirmationModal ? (
             <Popup
-              title='Team Deletion'
-              body='Are you sure you want to delete this team?'
+              title='Player Deletion'
+              body='Are you sure you want to delete this player?'
               type='confirm'
               onClose={() => setConfirmationModal(false)}
               onConfirm={handleDelete}
@@ -141,10 +143,10 @@ const TeamScreen = ({ history }) => {
           ) : null}
           {deleted ? (
             <Popup
-              title='Team Deletion'
-              body='Team deleted successfully'
+              title='Player Deletion'
+              body='Player deleted successfully'
               type='success'
-              onClose={() => dispatch(resetTeamDeletion())}
+              onClose={() => dispatch({ type: DELETE_PLAYER_RESET })}
             />
           ) : null}
         </Row>
@@ -153,12 +155,15 @@ const TeamScreen = ({ history }) => {
             {loading ? (
               <Loader />
             ) : name !== '' || region !== 'All' || sort !== 'Default' ? (
-              <TeamList
-                teams={filteredTeams}
+              <PlayerList
+                players={filteredPlayers}
                 deleteModal={(id) => handleDeleteTeamModal(id)}
               />
             ) : (
-              <TeamList teams={teams} deleteModal={handleDeleteTeamModal} />
+              <PlayerList
+                players={players}
+                deleteModal={handleDeleteTeamModal}
+              />
             )}
           </Col>
         </Row>
@@ -168,4 +173,4 @@ const TeamScreen = ({ history }) => {
   )
 }
 
-export default TeamScreen
+export default PlayerScreen
