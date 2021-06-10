@@ -11,6 +11,8 @@ import { resetTeamUpdate, updateTeam } from '../../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
 import Footer from '../../../components/Layout/Footer'
 import useLoginValidation from '../../../hooks/loginValidatorHook'
+import ImagePreview from '../../../components/ImagePreview'
+import { CREATE_PLAYER_RESET } from '../../../constants/player-constants'
 
 const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
@@ -18,7 +20,9 @@ const EditTeamScreen = ({ history, match }) => {
   const [tis_won, setTis] = useState(0)
   const [creationDate, setCreationDate] = useState({})
   const [description, setDescription] = useState('')
+  const [logo, setLogo] = useState('')
 
+  const [previewImage, setImagePreview] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
   //Extracting TeamDetails slice from the store
@@ -44,6 +48,8 @@ const EditTeamScreen = ({ history, match }) => {
         setDescription(team.description)
         setCreationDate(team.creation_date)
         setTis(team.tis_won)
+        setImagePreview(`http://localhost:7000/${team.logo}`)
+        console.log('Logo: ' + team.logo)
       }
     }
 
@@ -60,16 +66,20 @@ const EditTeamScreen = ({ history, match }) => {
     } else if (tis_won < 0) {
       setErrorMessage('Number of TIs won should be 0 or more')
     } else {
-      await dispatch(
-        updateTeam(
-          match.params.id,
-          name,
-          region,
-          description,
-          tis_won,
-          creationDate
-        )
-      )
+      let formData = new FormData()
+      formData.append('name', name)
+      formData.append('region', region)
+      formData.append('description', description)
+
+      //Only if new logo is updated
+      if (logo !== '') {
+        formData.append('logo', logo)
+      }
+
+      formData.append('tis_won', tis_won)
+      formData.append('creation_date', creationDate)
+
+      dispatch(updateTeam(match.params.id, formData))
     }
   }
 
@@ -83,8 +93,21 @@ const EditTeamScreen = ({ history, match }) => {
 
   const handleModalClose = () => {
     resetForm()
-    dispatch(resetTeamUpdate())
+    dispatch({ type: CREATE_PLAYER_RESET })
     history.push('/admin/')
+  }
+
+  const imageHandler = (e) => {
+    setLogo(e.target.files[0])
+    const reader = new FileReader()
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImagePreview(reader.result)
+      }
+    }
+
+    reader.readAsDataURL(e.target.files[0])
   }
 
   return (
@@ -155,6 +178,18 @@ const EditTeamScreen = ({ history, match }) => {
               </Form>
             </Col>
             <Col md='6'>
+              <Form.Group>
+                <ImagePreview
+                  path={previewImage}
+                  alternate='logo-image'
+                  title='Team Logo'
+                />
+                <Form.File
+                  id='logoUpload'
+                  onChange={imageHandler}
+                  accept='.jpg, .jpeg, .png'
+                />
+              </Form.Group>
               <Form className='mt-3'>
                 <Form.Group controlId='updateTeam.description' className='my-3'>
                   <Form.Label>Team Description / Bio</Form.Label>

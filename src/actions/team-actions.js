@@ -114,39 +114,33 @@ export const resetTeamDeletion = () => async (dispatch) => {
   }
 }
 
-export const updateTeam =
-  (id, name, region, description, tis_won, creation_date) =>
-  async (dispatch) => {
-    try {
-      dispatch({
-        type: UPDATE_TEAM_REQUEST,
-      })
+export const updateTeam = (id, formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_TEAM_REQUEST,
+    })
 
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-      const { data } = await axios.patch(
-        `/teams/${id}`,
-        { name, region, description, tis_won, creation_date },
-        config
-      )
-
-      dispatch({
-        type: UPDATE_TEAM_SUCCESS,
-        payload: data,
-      })
-    } catch (error) {
-      dispatch({
-        type: UPDATE_TEAM_FAILURE,
-        payload:
-          error.message && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      })
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }
+    const { data } = await axios.patch(`/teams/${id}`, formData, config)
+
+    dispatch({
+      type: UPDATE_TEAM_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: UPDATE_TEAM_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
   }
+}
 
 export const resetTeamUpdate = () => async (dispatch) => {
   try {
@@ -159,7 +153,6 @@ export const resetTeamUpdate = () => async (dispatch) => {
 }
 
 export const filterTeams = (region, name) => async (dispatch) => {
-  console.log('Region in action: ' + region)
   try {
     dispatch({
       type: FILTER_TEAMS,

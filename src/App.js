@@ -8,6 +8,7 @@ import PlayerScreen from './screens/admin/Player/PlayerScreen'
 
 import dotenv from 'dotenv'
 import CreatePlayerScreen from './screens/admin/Player/CreatePlayerScreen'
+import EditPlayerScreen from './screens/admin/Player/EditPlayerScreen'
 
 const App = () => {
   dotenv.config()
@@ -21,6 +22,11 @@ const App = () => {
         <Route path='/admin/teams/create' exact component={CreateTeamScreen} />
         <Route path='/admin/teams/edit/:id' exact component={EditTeamScreen} />
         <Route path='/admin/players/' exact component={PlayerScreen} />
+        <Route
+          path='/admin/players/edit/:id'
+          exact
+          component={EditPlayerScreen}
+        />
         <Route
           path='/admin/players/create'
           exact

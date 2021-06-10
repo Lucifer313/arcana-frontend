@@ -11,11 +11,14 @@ import Message from '../../../components/Message'
 import Popup from '../../../components/Popup'
 
 import useLoginValidation from '../../../hooks/loginValidatorHook'
-import { CREATE_PLAYER_RESET } from '../../../constants/player-constants'
-import { createPlayer } from '../../../actions/player-action'
+import {
+  CREATE_PLAYER_RESET,
+  UPDATE_PLAYER_RESET,
+} from '../../../constants/player-constants'
+import { createPlayer, updatePlayer } from '../../../actions/player-action'
 import ImagePreview from '../../../components/ImagePreview'
 
-const CreatePlayerScreen = ({ history }) => {
+const EditPlayerScreen = ({ history, match }) => {
   const [name, setName] = useState('')
   const [birthDate, setBirthDate] = useState('')
   const [alias, setAlias] = useState('')
@@ -38,14 +41,14 @@ const CreatePlayerScreen = ({ history }) => {
   const { teams } = teamDetails
 
   const playerDetails = useSelector((state) => state.playerDetails)
-  const { creating, error, created } = playerDetails
+  const { updating, error, updated, players } = playerDetails
 
   const dispatch = useDispatch()
 
   //Custom hook to redirect to login page if the user is not logged in
   useLoginValidation(history)
 
-  const handleSubmit = (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault()
     if (
       name === '' ||
@@ -55,7 +58,6 @@ const CreatePlayerScreen = ({ history }) => {
       region === 'Select Region' ||
       team === '' ||
       tis_won === '' ||
-      playerProfile === '' ||
       country === '' ||
       team === 'Select Team' ||
       role === 'Select Role'
@@ -69,7 +71,12 @@ const CreatePlayerScreen = ({ history }) => {
       formData.append('alias', alias)
       formData.append('role', role)
       formData.append('steam_id', steamId)
-      formData.append('profile_image', playerProfile)
+
+      //Only if new image is added pass it as Form Data
+      if (playerProfile !== '') {
+        formData.append('profile_image', playerProfile)
+      }
+
       formData.append('date_of_birth', birthDate)
       formData.append('region', region)
       formData.append('country', country)
@@ -77,13 +84,13 @@ const CreatePlayerScreen = ({ history }) => {
       formData.append('tis_won', tis_won)
       formData.append('prize_money', prizeMoney)
       //Dispatching the Create Team Action
-      dispatch(createPlayer(formData))
+      dispatch(updatePlayer(match.params.id, formData))
     }
   }
 
   const handleModalClose = (e) => {
-    resetForm()
-    dispatch({ type: CREATE_PLAYER_RESET })
+    dispatch({ type: UPDATE_PLAYER_RESET })
+    window.location.href = '/admin/players'
   }
 
   const resetForm = () => {
@@ -114,15 +121,43 @@ const CreatePlayerScreen = ({ history }) => {
   }
 
   useEffect(() => {
+    dispatch({ type: UPDATE_PLAYER_RESET })
     setErrorMessage('')
     resetForm()
+  }, [])
+
+  useEffect(() => {
+    const getPlayerById = async () => {
+      let player
+
+      if (players.length > 0) {
+        //Since filter returns an array we only need first indexed object hence 0
+        player = await players.filter(
+          (player) => player._id === match.params.id
+        )[0]
+        //Setting the state
+        setName(player.name)
+        setAlias(player.alias)
+        setBirthDate(player.date_of_birth)
+        setTeam(player.team._id)
+        setRegion(player.region)
+        setCountry(player.country)
+        setPrizeMoney(player.prize_money)
+        setTis(player.tis_won)
+        setRole(player.role)
+        setSteamId(player.steam_id)
+        setImagePreview(`http://localhost:7000/${player.profile_image}`)
+      }
+    }
+
+    getPlayerById()
   }, [])
 
   return (
     <>
       <Header />
       <Container style={{ minHeight: '82vh' }}>
-        <h3 className='mt-5'>Create New Player</h3>
+        <h3 className='mt-5'>Edit Player</h3>
         <Row>
           <Col md={6}>
             <Form className='mb-5'>
@@ -131,10 +166,10 @@ const CreatePlayerScreen = ({ history }) => {
               ) : error ? (
                 <Message variant='danger'>{error}</Message>
               ) : null}
-              {created ? (
+              {updated ? (
                 <Popup
-                  title='Player Creation'
-                  body='Player created successfully'
+                  title='Player Update'
+                  body='Player updated successfully'
                   type='success'
                   onClose={handleModalClose}
                 />
@@ -260,10 +295,10 @@ const CreatePlayerScreen = ({ history }) => {
                   accept='.jpg, .jpeg, .png'
                 />
               </Form.Group>
-              {creating ? <Loader /> : null}
+              {updating ? <Loader /> : null}
               <Form.Group className='mt-5'>
-                <Button variant='primary' onClick={handleSubmit}>
-                  Create
+                <Button variant='primary' onClick={handleUpdate}>
+                  Update
                 </Button>
                 &nbsp; &nbsp; &nbsp;
                 <LinkContainer to='/admin/players'>
@@ -279,4 +314,4 @@ const CreatePlayerScreen = ({ history }) => {
   )
 }
 
-export default CreatePlayerScreen
+export default EditPlayerScreen

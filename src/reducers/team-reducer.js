@@ -102,6 +102,7 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
         ...state,
         updating: false,
         updated: true,
+        error: false,
         teams: [...updatedTeams, action.payload],
       }
     }

@@ -12,6 +12,9 @@ import {
   GET_PLAYERS_REQUEST,
   GET_PLAYERS_SUCCESS,
   SORT_PLAYERS,
+  UPDATE_PLAYER_FAILURE,
+  UPDATE_PLAYER_REQUEST,
+  UPDATE_PLAYER_SUCCESS,
 } from '../constants/player-constants'
 
 export const getPlayers = () => async (dispatch) => {
@@ -62,6 +65,35 @@ export const createPlayer = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_PLAYER_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const updatePlayer = (id, formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_PLAYER_REQUEST,
+    })
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+
+    const { data } = await axios.patch(`/players/${id}`, formData, config)
+
+    dispatch({
+      type: UPDATE_PLAYER_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PLAYER_FAILURE,
       payload:
         error.message && error.response.data.message
           ? error.response.data.message

@@ -12,6 +12,10 @@ import {
   GET_PLAYERS_REQUEST,
   GET_PLAYERS_SUCCESS,
   SORT_PLAYERS,
+  UPDATE_PLAYER_FAILURE,
+  UPDATE_PLAYER_REQUEST,
+  UPDATE_PLAYER_RESET,
+  UPDATE_PLAYER_SUCCESS,
 } from '../constants/player-constants'
 
 const playerDetailsReducer = (state = { players: [] }, action) => {
@@ -81,6 +85,46 @@ const playerDetailsReducer = (state = { players: [] }, action) => {
       }
     }
 
+    case UPDATE_PLAYER_REQUEST: {
+      return {
+        ...state,
+        updating: true,
+        updated: false,
+        error: false,
+      }
+    }
+
+    case UPDATE_PLAYER_SUCCESS: {
+      const updatedPlayers = state.players.filter(
+        (player) => player._id !== action.payload._id
+      )
+
+      return {
+        ...state,
+        updating: false,
+        updated: true,
+        error: false,
+        teams: [...updatedPlayers, action.payload],
+      }
+    }
+
+    case UPDATE_PLAYER_FAILURE: {
+      return {
+        ...state,
+        updating: false,
+        updated: false,
+        error: action.payload,
+      }
+    }
+
+    case UPDATE_PLAYER_RESET: {
+      return {
+        ...state,
+        updating: false,
+        updated: false,
+        error: false,
+      }
+    }
     case DELETE_PLAYER_REQUEST: {
       return {
         ...state,
