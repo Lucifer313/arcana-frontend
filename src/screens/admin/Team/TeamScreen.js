@@ -81,7 +81,6 @@ const TeamScreen = ({ history }) => {
   }
 
   const handleClearFilter = (e) => {
-    //e.preventDefault()
     setSort('Default')
     setRegion('All')
     setName('')

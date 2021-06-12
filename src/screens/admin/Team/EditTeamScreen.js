@@ -7,12 +7,12 @@ import Message from '../../../components/Message'
 import Loader from '../../../components/Loader'
 import Popup from '../../../components/Popup'
 
-import { resetTeamUpdate, updateTeam } from '../../../actions/team-actions'
+import { updateTeam } from '../../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
 import Footer from '../../../components/Layout/Footer'
 import useLoginValidation from '../../../hooks/loginValidatorHook'
 import ImagePreview from '../../../components/ImagePreview'
-import { CREATE_PLAYER_RESET } from '../../../constants/player-constants'
+import { UPDATE_TEAM_RESET } from '../../../constants/team-constants'
 
 const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
@@ -36,6 +36,10 @@ const EditTeamScreen = ({ history, match }) => {
 
   /*-----------------------------------CAN BE OPTIMIZED-----------------------------------*/
   useEffect(() => {
+    dispatch({
+      type: UPDATE_TEAM_RESET,
+    })
+
     const getTeamById = async () => {
       let team
 
@@ -93,7 +97,7 @@ const EditTeamScreen = ({ history, match }) => {
 
   const handleModalClose = () => {
     resetForm()
-    dispatch({ type: CREATE_PLAYER_RESET })
+    dispatch({ type: UPDATE_TEAM_RESET })
     history.push('/admin/')
   }
 

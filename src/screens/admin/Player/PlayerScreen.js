@@ -2,18 +2,11 @@ import { useEffect, useState } from 'react'
 
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import axios from '../../../axios-config'
+
 import { useDispatch, useSelector } from 'react-redux'
 
 import Header from '../../../components/Layout/Header'
 import Popup from '../../../components/Popup'
-
-import {
-  deleteTeam,
-  filterTeams,
-  resetTeamDeletion,
-  sortTeams,
-} from '../../../actions/team-actions'
 
 import Loader from '../../../components/Loader'
 import Footer from '../../../components/Layout/Footer'
@@ -29,13 +22,9 @@ import {
   sortPlayers,
 } from '../../../actions/player-action'
 import PlayerList from '../../../components/PlayerList'
-import { DELETE_TEAM_RESET } from '../../../constants/team-constants'
 import { DELETE_PLAYER_RESET } from '../../../constants/player-constants'
 
 const PlayerScreen = ({ history }) => {
-  const teamDetails = useSelector((state) => state.teamDetails)
-  const { teams, filteredTeams } = teamDetails
-
   const playerDetails = useSelector((state) => state.playerDetails)
   const { loading, players, deleted, filteredPlayers } = playerDetails
 

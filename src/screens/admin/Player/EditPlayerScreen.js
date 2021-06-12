@@ -11,11 +11,8 @@ import Message from '../../../components/Message'
 import Popup from '../../../components/Popup'
 
 import useLoginValidation from '../../../hooks/loginValidatorHook'
-import {
-  CREATE_PLAYER_RESET,
-  UPDATE_PLAYER_RESET,
-} from '../../../constants/player-constants'
-import { createPlayer, updatePlayer } from '../../../actions/player-action'
+import { UPDATE_PLAYER_RESET } from '../../../constants/player-constants'
+import { updatePlayer } from '../../../actions/player-action'
 import ImagePreview from '../../../components/ImagePreview'
 
 const EditPlayerScreen = ({ history, match }) => {
@@ -88,9 +85,9 @@ const EditPlayerScreen = ({ history, match }) => {
     }
   }
 
-  const handleModalClose = (e) => {
+  const handleModalClose = () => {
     dispatch({ type: UPDATE_PLAYER_RESET })
-    window.location.href = '/admin/players'
+    history.push('/admin/players')
   }
 
   const resetForm = () => {
