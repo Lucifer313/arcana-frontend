@@ -2,3 +2,68 @@
   min-height: 80vh;
   background-color: black;
 }
+
+.team-logo-container {
+  background: rgb(238, 237, 237);
+  background: linear-gradient(
+    142deg,
+    rgba(238, 237, 237, 1) 0%,
+    rgba(196, 192, 190, 1) 100%
+  );
+  border: 4px solid #ac8644;
+  border-radius: 10px;
+}
+
+.team-detail-logo {
+  width: 100%;
+  height: 250px;
+  padding: 15%;
+}
+
+.team-detail-container {
+  background-color: black;
+}
+
+.achievements-team-title {
+  color: white;
+  font-family: AftaSerif, serif;
+  margin: 20px 0px 20px 0px;
+}
+
+.achievements-title,
+.details-achievements-desc-title {
+  margin-top: 15px;
+  padding: 10px;
+  color: white;
+  background-color: #ac8644;
+  border-radius: 2px;
+}
+
+.achievements-desc,
+.details-description,
+.details-side-sect {
+  color: white;
+}
+
+.detail-label {
+  width: 100px;
+}
+
+.team-details-back-arrow {
+  color: 'red';
+  margin-right: '10px';
+  color: #ac8644;
+  cursor: pointer;
+}
+
+.team-details-back-arrow:hover {
+  color: #dcb570;
+}
+
+.player-team-logo {
+  width: 60px;
+  height: 50px;
+  position: absolute;
+  right: 0px;
+  margin: 3%;
+}

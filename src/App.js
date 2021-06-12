@@ -12,6 +12,8 @@ import EditPlayerScreen from './screens/admin/Player/EditPlayerScreen'
 import HomeScreen from './screens/user/HomeScreen'
 import TeamListScreen from './screens/user/TeamListScreen'
 import PlayerListScreen from './screens/user/PlayerListScreen'
+import TeamDetailScreen from './screens/user/TeamDetailScreen'
+import PlayerDetailScreen from './screens/user/PlayerDetailScreen'
 
 const App = () => {
   dotenv.config()
@@ -21,7 +23,11 @@ const App = () => {
       <Switch>
         <Route path='/' exact component={HomeScreen} />
         <Route path='/teams' exact component={TeamListScreen} />
+        <Route path='/teams/:id' exacth component={TeamDetailScreen} />
+
         <Route path='/players' exact component={PlayerListScreen} />
+        <Route path='/players/:id' exact component={PlayerDetailScreen} />
+
         <Route path='/admin/login' exact component={AdminLoginScreen} />
         <Route path='/admin/' exact component={TeamScreen} />
         <Route path='/admin/teams' exact component={TeamScreen} />
