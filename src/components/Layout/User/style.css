@@ -1,0 +1,55 @@
+/*Header Styling-----------------------------------------------------------------------------------*/
+.arcana-logo {
+  width: 200px;
+  height: 50px;
+}
+
+.navbar {
+  border-bottom: 2px solid #dcb570;
+}
+
+.navbar-container {
+  background-size: 100% 100% !important;
+  background-repeat: 'no-repeat';
+  background-color: black;
+}
+
+.navbar-collapse {
+  margin-left: 5%;
+}
+
+.nav-link {
+  font-family: AftaSerif, serif;
+  font-size: 1.1em;
+  margin-left: 5%;
+  color: #ac8644 !important;
+}
+
+.nav-link.active {
+  color: #dcb570 !important;
+  text-decoration: dotted !important;
+}
+
+.nav-link:hover {
+  color: #dcb570 !important;
+  text-decoration: underline;
+  text-decoration: wavy;
+}
+
+/*---------------------------------------MEDIA QUERIES FOR NAVBAR HEADER-------------------------------------------------------------*/
+
+@media screen and (max-width: 992px) {
+  .nav-separator {
+    display: none;
+  }
+}
+
+/*-------------------------------------FOOTER STYLES------------------------------------------------*/
+
+footer {
+  font-family: AftaSerif, serif;
+  font-size: 1em;
+  background-color: black !important;
+  border-top: 1px solid #dcb570;
+  color: #dcb570;
+}

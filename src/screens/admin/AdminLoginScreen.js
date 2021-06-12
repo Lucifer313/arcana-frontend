@@ -10,7 +10,7 @@ import { login } from '../../actions/user-action'
 
 import './cyborg.css'
 
-const LoginScreen = ({ history }) => {
+const AdminLoginScreen = ({ history }) => {
   //Defining element states
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -90,4 +90,4 @@ const LoginScreen = ({ history }) => {
   )
 }
 
-export default LoginScreen
+export default AdminLoginScreen

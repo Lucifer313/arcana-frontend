@@ -4,8 +4,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 import { useSelector, useDispatch } from 'react-redux'
 
-import Footer from '../../../components/Layout/Footer'
-import Header from '../../../components/Layout/Header'
+import Footer from '../../../components/Layout/Admin/Footer'
+import Header from '../../../components/Layout/Admin/Header'
 import Loader from '../../../components/Loader'
 import Message from '../../../components/Message'
 import Popup from '../../../components/Popup'
@@ -29,7 +29,7 @@ const CreatePlayerScreen = ({ history }) => {
   const [country, setCountry] = useState('')
 
   const [previewImage, setImagePreview] = useState(
-    '/assets/images/preview_placeholder.png'
+    '/assets/images/admin/preview_placeholder.png'
   )
 
   const [errorMessage, setErrorMessage] = useState('')
@@ -98,7 +98,7 @@ const CreatePlayerScreen = ({ history }) => {
     setRole('Select Role')
     setSteamId('')
     setPlayerProfile('')
-    setImagePreview('/assets/images/preview_placeholder.png')
+    setImagePreview('/assets/images/admin/preview_placeholder.png')
   }
 
   const imageHandler = (e) => {

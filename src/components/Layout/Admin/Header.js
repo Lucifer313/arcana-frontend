@@ -2,7 +2,7 @@ import { Container, Navbar, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { useDispatch } from 'react-redux'
-import { logout } from '../../actions/user-action'
+import { logout } from '../../../actions/user-action'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const Header = () => {
         <LinkContainer to='/admin/'>
           <Navbar.Brand>
             <img
-              src='/assets/images/arcana_a_logo_white.png'
+              src='/assets/images/admin/arcana_a_logo_white.png'
               width='50px'
               alt='arcana-logo'
             />

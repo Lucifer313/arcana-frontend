@@ -5,7 +5,9 @@ import { LinkContainer } from 'react-router-bootstrap'
 import axios from '../../../axios-config'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Header from '../../../components/Layout/Header'
+import Header from '../../../components/Layout/Admin/Header'
+import Footer from '../../../components/Layout/Admin/Footer'
+
 import Popup from '../../../components/Popup'
 
 import {
@@ -17,7 +19,7 @@ import {
 } from '../../../actions/team-actions'
 
 import Loader from '../../../components/Loader'
-import Footer from '../../../components/Layout/Footer'
+
 import FilterRegion from '../../../components/Filters/FilterRegion'
 import TeamList from '../../../components/TeamList'
 import FilterName from '../../../components/Filters/FilterName'

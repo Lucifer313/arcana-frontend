@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
-import Header from '../../../components/Layout/Header'
+import Header from '../../../components/Layout/Admin/Header'
 import Message from '../../../components/Message'
 import Loader from '../../../components/Loader'
 import Popup from '../../../components/Popup'
 
 import { createTeam, resetTeamCreation } from '../../../actions/team-actions'
-import Footer from '../../../components/Layout/Footer'
+import Footer from '../../../components/Layout/Admin/Footer'
 import useLoginValidation from '../../../hooks/loginValidatorHook'
 import { CREATE_TEAM_RESET } from '../../../constants/team-constants'
 import ImagePreview from '../../../components/ImagePreview'
@@ -26,7 +26,7 @@ const CreateTeamScreen = ({ history }) => {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [previewImage, setImagePreview] = useState(
-    '/assets/images/preview_placeholder.png'
+    '/assets/images/admin/preview_placeholder.png'
   )
 
   //Extracting TeamDetails slice from the store
@@ -81,7 +81,7 @@ const CreateTeamScreen = ({ history }) => {
     setLogo('')
     setCreationDate('')
     setErrorMessage('')
-    setImagePreview('/assets/images/preview_placeholder.png')
+    setImagePreview('/assets/images/admin/preview_placeholder.png')
   }
 
   //Image preview Handler

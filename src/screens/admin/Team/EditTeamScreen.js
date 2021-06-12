@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import Header from '../../../components/Layout/Header'
+
+import Header from '../../../components/Layout/Admin/Header'
+import Footer from '../../../components/Layout/Admin/Footer'
 
 import Message from '../../../components/Message'
 import Loader from '../../../components/Loader'
@@ -9,7 +11,6 @@ import Popup from '../../../components/Popup'
 
 import { updateTeam } from '../../../actions/team-actions'
 import { LinkContainer } from 'react-router-bootstrap'
-import Footer from '../../../components/Layout/Footer'
 import useLoginValidation from '../../../hooks/loginValidatorHook'
 import ImagePreview from '../../../components/ImagePreview'
 import { UPDATE_TEAM_RESET } from '../../../constants/team-constants'
