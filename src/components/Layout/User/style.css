@@ -4,21 +4,18 @@
   height: 50px;
 }
 
-.navbar {
-  border-bottom: 2px solid #dcb570;
-}
-
 .navbar-container {
   background-size: 100% 100% !important;
   background-repeat: 'no-repeat';
   background-color: black;
+  border-bottom: 2px solid #dcb570;
 }
 
 .navbar-collapse {
   margin-left: 5%;
 }
 
-.nav-link {
+.user-header-link {
   font-family: AftaSerif, serif;
   font-size: 1.1em;
   margin-left: 5%;
@@ -30,7 +27,7 @@
   text-decoration: dotted !important;
 }
 
-.nav-link:hover {
+.user-header-link:hover {
   color: #dcb570 !important;
   text-decoration: underline;
   text-decoration: wavy;
