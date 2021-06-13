@@ -33,7 +33,7 @@ const PlayerDetailScreen = ({ match }) => {
         setName(player.name)
         setAlias(player.alias)
         setRole(player.role)
-        setBirthDate(player.birth_date)
+        setBirthDate(player.date_of_birth)
         setPrizeMoney(player.prize_money)
         setCountry(player.country)
         setProfileImage(player.profile_image)

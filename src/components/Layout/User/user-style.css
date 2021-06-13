@@ -23,7 +23,7 @@
 }
 
 .nav-link.active {
-  color: #dcb570 !important;
+  color: #dcb570;
   text-decoration: dotted !important;
 }
 

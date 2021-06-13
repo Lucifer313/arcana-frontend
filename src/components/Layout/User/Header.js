@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Navbar, Nav } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import './style.css'
+import './user-style.css'
 
 const Header = () => {
   return (

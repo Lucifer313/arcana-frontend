@@ -11,6 +11,8 @@ import {
   GET_PLAYERS_FAILURE,
   GET_PLAYERS_REQUEST,
   GET_PLAYERS_SUCCESS,
+  RESET_PLAYER_FILTERS,
+  RESET_PLAYER_SORT,
   SORT_PLAYERS,
   UPDATE_PLAYER_FAILURE,
   UPDATE_PLAYER_REQUEST,
@@ -169,7 +171,7 @@ const playerDetailsReducer = (state = { players: [] }, action) => {
       let name = action.payload.name
 
       let filteredPlayers =
-        region !== 'All'
+        region !== 'Filter by Region'
           ? state.players.filter((player) => player.region === region)
           : state.players
 
@@ -186,6 +188,12 @@ const playerDetailsReducer = (state = { players: [] }, action) => {
       }
     }
 
+    case RESET_PLAYER_FILTERS: {
+      return {
+        ...state,
+        filteredPlayers: [],
+      }
+    }
     case SORT_PLAYERS: {
       let sortBy = action.payload
 
@@ -213,7 +221,7 @@ const playerDetailsReducer = (state = { players: [] }, action) => {
           break
         }
 
-        case 'Default': {
+        case 'Sort By': {
           break
         }
 

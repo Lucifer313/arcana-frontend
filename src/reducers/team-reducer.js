@@ -16,6 +16,7 @@ import {
   UPDATE_TEAM_RESET,
   FILTER_TEAMS,
   SORT_TEAMS,
+  RESET_TEAM_FILTERS,
 } from '../constants/team-constants'
 
 const teamDetailsReducer = (state = { teams: [] }, action) => {
@@ -162,7 +163,7 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       let name = action.payload.name
 
       let filteredTeams =
-        region !== 'All'
+        region !== 'Filter by Region'
           ? state.teams.filter((team) => team.region === region)
           : state.teams
 
@@ -179,6 +180,12 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
       }
     }
 
+    case RESET_TEAM_FILTERS: {
+      return {
+        ...state,
+        filteredTeams: [],
+      }
+    }
     case SORT_TEAMS: {
       let sortBy = action.payload
 

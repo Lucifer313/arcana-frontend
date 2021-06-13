@@ -105,7 +105,7 @@ const TeamScreen = ({ history }) => {
             <br />
             <p>Result: </p>
             <p>
-              {name !== '' || region !== 'All'
+              {name !== '' || region !== 'Filter by Region'
                 ? filteredTeams.length
                 : teams.length}{' '}
               Records

@@ -32,7 +32,7 @@ const PlayerScreen = ({ history }) => {
   const [confirmationModal, setConfirmationModal] = useState(false)
   const [deletionId, setDeletionId] = useState('')
 
-  const [region, setRegion] = useState('All')
+  const [region, setRegion] = useState('Filter by Region')
   const [name, setName] = useState('')
   const [sort, setSort] = useState('Default')
 
@@ -78,7 +78,7 @@ const PlayerScreen = ({ history }) => {
   const handleClearFilter = (e) => {
     //e.preventDefault()
     setSort('Default')
-    setRegion('All')
+    setRegion('Filter by Region')
     setName('')
     console.log(sort)
   }
@@ -99,7 +99,7 @@ const PlayerScreen = ({ history }) => {
             <br />
             <p>Result: </p>
             <p>
-              {name !== '' || region !== 'All'
+              {name !== '' || region !== 'Filter by Region'
                 ? filteredPlayers.length
                 : players.length}{' '}
               Records
@@ -144,7 +144,9 @@ const PlayerScreen = ({ history }) => {
           <Col>
             {loading ? (
               <Loader />
-            ) : name !== '' || region !== 'All' || sort !== 'Default' ? (
+            ) : name !== '' ||
+              region !== 'Filter by Region' ||
+              sort !== 'Default' ? (
               <PlayerList
                 players={filteredPlayers}
                 deleteModal={(id) => handleDeleteTeamModal(id)}
