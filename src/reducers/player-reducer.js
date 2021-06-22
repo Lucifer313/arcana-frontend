@@ -20,7 +20,10 @@ import {
   UPDATE_PLAYER_SUCCESS,
 } from '../constants/player-constants'
 
-const playerDetailsReducer = (state = { players: [] }, action) => {
+const playerDetailsReducer = (
+  state = { players: [], filteredPlayers: [] },
+  action
+) => {
   switch (action.type) {
     case CREATE_PLAYER_REQUEST: {
       return {

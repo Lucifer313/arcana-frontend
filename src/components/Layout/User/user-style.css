@@ -44,9 +44,8 @@
 /*-------------------------------------FOOTER STYLES------------------------------------------------*/
 
 footer {
-  font-family: AftaSerif, serif;
+  text-transform: uppercase;
   font-size: 1em;
   background-color: black !important;
-  border-top: 1px solid #dcb570;
   color: #dcb570;
 }

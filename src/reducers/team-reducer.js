@@ -19,7 +19,10 @@ import {
   RESET_TEAM_FILTERS,
 } from '../constants/team-constants'
 
-const teamDetailsReducer = (state = { teams: [] }, action) => {
+const teamDetailsReducer = (
+  state = { teams: [], filteredTeams: [] },
+  action
+) => {
   switch (action.type) {
     case CREATE_TEAM_REQUEST: {
       return {
@@ -135,6 +138,7 @@ const teamDetailsReducer = (state = { teams: [] }, action) => {
 
     case DELETE_TEAM_SUCCESS: {
       return {
+        ...state,
         teams: state.teams.filter((team) => team._id !== action.payload._id),
         deleting: false,
         deleted: true,

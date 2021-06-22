@@ -9,7 +9,6 @@ import Sorter from '../../components/Filters/Sorter'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import './style.css'
 import PlayerCard from '../../components/Cards/Player/PlayerCard'
 import {
   filterPlayers,

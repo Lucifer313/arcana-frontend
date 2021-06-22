@@ -5,7 +5,7 @@ const Sorter = ({ sort, sortBy, classes }) => {
   return (
     <Col md={2}>
       <Form.Group controlId='regionFilter' className='mt-3'>
-        <Form.Label>Sort by</Form.Label>
+        <Form.Label className='filter-labels'>Sort by</Form.Label>
         <Form.Control
           as='select'
           value={sort}

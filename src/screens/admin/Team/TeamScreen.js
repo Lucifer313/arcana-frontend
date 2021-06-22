@@ -34,7 +34,7 @@ const TeamScreen = ({ history }) => {
   const [confirmationModal, setConfirmationModal] = useState(false)
   const [deletionId, setDeletionId] = useState('')
 
-  const [region, setRegion] = useState('All')
+  const [region, setRegion] = useState('Filter by Region')
   const [name, setName] = useState('')
   const [sort, setSort] = useState('Default')
 
@@ -150,7 +150,9 @@ const TeamScreen = ({ history }) => {
           <Col>
             {loading ? (
               <Loader />
-            ) : name !== '' || region !== 'All' || sort !== 'Default' ? (
+            ) : name !== '' ||
+              region !== 'Filter by Region' ||
+              sort !== 'Default' ? (
               <TeamList
                 teams={filteredTeams}
                 deleteModal={(id) => handleDeleteTeamModal(id)}

@@ -2,14 +2,16 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import userDetailsReducer from './reducers/admin-reducer'
+import userDetailsReducer from './reducers/user-reducer'
 import teamDetailsReducer from './reducers/team-reducer'
 import playerDetailsReducer from './reducers/player-reducer'
+import tournamentDetailsReducer from './reducers/tournament-reducer'
 
 const reducers = combineReducers({
   userDetails: userDetailsReducer,
   teamDetails: teamDetailsReducer,
   playerDetails: playerDetailsReducer,
+  tournamentDetails: tournamentDetailsReducer,
 })
 
 const userInfoFromLocalStorage = localStorage.getItem('userInfo')
@@ -28,6 +30,10 @@ const initialState = {
   playerDetails: {
     players: [],
     filteredPlayers: [],
+  },
+
+  tournamentDetails: {
+    tournaments: [],
   },
 }
 

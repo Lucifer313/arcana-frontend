@@ -1,8 +1,14 @@
 import React from 'react'
-import './user-style.css'
 
 const Footer = () => {
-  return <footer className='text-center p-3'>ARCANA LEAGUE &copy;2021</footer>
+  return (
+    <footer
+      className='text-center bg-primary p-3'
+      style={{ color: 'white', fontSize: '1em' }}
+    >
+      Arcana League &copy;2021
+    </footer>
+  )
 }
 
 export default Footer

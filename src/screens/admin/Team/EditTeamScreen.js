@@ -19,9 +19,10 @@ const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
   const [region, setRegion] = useState('EU')
   const [tis_won, setTis] = useState(0)
-  const [creationDate, setCreationDate] = useState({})
   const [description, setDescription] = useState('')
   const [logo, setLogo] = useState('')
+  const [achievements, setAchievements] = useState('')
+  const [best_performance, setBestPerformance] = useState('')
 
   const [previewImage, setImagePreview] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -51,8 +52,9 @@ const EditTeamScreen = ({ history, match }) => {
         setName(team.name)
         setRegion(team.region)
         setDescription(team.description)
-        setCreationDate(team.creation_date)
         setTis(team.tis_won)
+        setAchievements(team.achievements)
+        setBestPerformance(team.best_performance)
         setImagePreview(`http://localhost:7000/${team.logo}`)
         console.log('Logo: ' + team.logo)
       }
@@ -64,7 +66,7 @@ const EditTeamScreen = ({ history, match }) => {
   /*-------------------------------------------------------------------------------------------------------*/
   //Creating Team function
   const handleUpdate = async () => {
-    if (name === '' || description === '' || creationDate === '') {
+    if (name === '' || description === '') {
       setErrorMessage('Plese enter all the details properly')
     } else if (name.length < 2) {
       setErrorMessage('Name of the team should be more than 2 characters')
@@ -82,7 +84,8 @@ const EditTeamScreen = ({ history, match }) => {
       }
 
       formData.append('tis_won', tis_won)
-      formData.append('creation_date', creationDate)
+      formData.append('best_performance', best_performance)
+      formData.append('achievements', achievements)
 
       dispatch(updateTeam(match.params.id, formData))
     }
@@ -93,7 +96,6 @@ const EditTeamScreen = ({ history, match }) => {
     setRegion('EU')
     setDescription('')
     setTis(0)
-    setCreationDate({})
   }
 
   const handleModalClose = () => {
@@ -170,14 +172,25 @@ const EditTeamScreen = ({ history, match }) => {
                   />
                 </Form.Group>
                 <Form.Group
-                  controlId='updateTeam.creation_date'
+                  controlId='createTeam.bestPerformance'
                   className='my-3'
                 >
-                  <Form.Label>Team's foundation date</Form.Label>
+                  <Form.Label>Best Performance in TI</Form.Label>
                   <Form.Control
-                    type='date'
-                    value={creationDate}
-                    onChange={(e) => setCreationDate(e.target.value)}
+                    type='text'
+                    value={best_performance}
+                    onChange={(e) => setBestPerformance(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group
+                  controlId='createTeam.achievements'
+                  className='my-3'
+                >
+                  <Form.Label>Latest Achievements</Form.Label>
+                  <Form.Control
+                    type='text'
+                    value={achievements}
+                    onChange={(e) => setAchievements(e.target.value)}
                   />
                 </Form.Group>
               </Form>

@@ -16,16 +16,13 @@ import { updatePlayer } from '../../../actions/player-action'
 import ImagePreview from '../../../components/ImagePreview'
 
 const EditPlayerScreen = ({ history, match }) => {
-  const [name, setName] = useState('')
   const [birthDate, setBirthDate] = useState('')
   const [alias, setAlias] = useState('')
   const [role, setRole] = useState('Carry')
-  const [steamId, setSteamId] = useState('')
   const [region, setRegion] = useState('Select Region')
   const [team, setTeam] = useState('Select Team')
   const [tis_won, setTis] = useState('0')
   const [playerProfile, setPlayerProfile] = useState('')
-  const [prizeMoney, setPrizeMoney] = useState('0')
   const [country, setCountry] = useState('')
 
   const [previewImage, setImagePreview] = useState(
@@ -48,10 +45,8 @@ const EditPlayerScreen = ({ history, match }) => {
   const handleUpdate = (e) => {
     e.preventDefault()
     if (
-      name === '' ||
       birthDate === '' ||
       alias === '' ||
-      steamId === '' ||
       region === 'Select Region' ||
       team === '' ||
       tis_won === '' ||
@@ -64,10 +59,8 @@ const EditPlayerScreen = ({ history, match }) => {
       setErrorMessage('')
       const formData = new FormData()
       //Creating Form Data to be sent
-      formData.append('name', name)
       formData.append('alias', alias)
       formData.append('role', role)
-      formData.append('steam_id', steamId)
 
       //Only if new image is added pass it as Form Data
       if (playerProfile !== '') {
@@ -79,7 +72,6 @@ const EditPlayerScreen = ({ history, match }) => {
       formData.append('country', country)
       formData.append('team', team)
       formData.append('tis_won', tis_won)
-      formData.append('prize_money', prizeMoney)
       //Dispatching the Create Team Action
       dispatch(updatePlayer(match.params.id, formData))
     }
@@ -91,16 +83,13 @@ const EditPlayerScreen = ({ history, match }) => {
   }
 
   const resetForm = () => {
-    setName('')
     setAlias('')
     setBirthDate('')
     setTeam('')
     setRegion('')
     setCountry('')
-    setPrizeMoney('0')
     setTis('0')
     setRole('Select Role')
-    setSteamId('')
     setPlayerProfile('')
     setImagePreview('/assets/images/admin/preview_placeholder.png')
   }
@@ -133,16 +122,13 @@ const EditPlayerScreen = ({ history, match }) => {
           (player) => player._id === match.params.id
         )[0]
         //Setting the state
-        setName(player.name)
         setAlias(player.alias)
         setBirthDate(player.date_of_birth)
         setTeam(player.team._id)
         setRegion(player.region)
         setCountry(player.country)
-        setPrizeMoney(player.prize_money)
         setTis(player.tis_won)
         setRole(player.role)
-        setSteamId(player.steam_id)
         setImagePreview(`http://localhost:7000/${player.profile_image}`)
       }
     }
@@ -171,32 +157,6 @@ const EditPlayerScreen = ({ history, match }) => {
                   onClose={handleModalClose}
                 />
               ) : null}
-              <Form.Group controlId='playerName' className='my-3'>
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter the name of the player'
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId='playerBirthDate' className='my-3'>
-                <Form.Label>Birth Date</Form.Label>
-                <Form.Control
-                  type='date'
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId='playerCountry' className='my-3'>
-                <Form.Label>Country</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter the country of the player'
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                />
-              </Form.Group>
               <Form.Group controlId='playerAlias' className='my-3'>
                 <Form.Label>Alias</Form.Label>
                 <Form.Control
@@ -221,15 +181,6 @@ const EditPlayerScreen = ({ history, match }) => {
                   <option>Hard Support</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group controlId='playerSteamId' className='my-3'>
-                <Form.Label>Steam / Account Id</Form.Label>
-                <Form.Control
-                  type='number'
-                  placeholder='Enter the account id of the player'
-                  value={steamId}
-                  onChange={(e) => setSteamId(e.target.value)}
-                />
-              </Form.Group>
               <Form.Group controlId='playerRegion' className='my-3'>
                 <Form.Label>Playing Region</Form.Label>
                 <Form.Control
@@ -245,10 +196,6 @@ const EditPlayerScreen = ({ history, match }) => {
                   <option>SA</option>
                 </Form.Control>
               </Form.Group>
-            </Form>
-          </Col>
-          <Col md={6}>
-            <Form>
               <Form.Group controlId='playerTeam' className='my-3'>
                 <Form.Label>Team</Form.Label>
                 <Form.Control
@@ -272,12 +219,25 @@ const EditPlayerScreen = ({ history, match }) => {
                   onChange={(e) => setTis(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group controlId='playerPrizeMoney' className='my-3'>
-                <Form.Label>Player Prize Money</Form.Label>
+            </Form>
+          </Col>
+          <Col md={6}>
+            <Form>
+              <Form.Group controlId='playerBirthDate' className='my-3'>
+                <Form.Label>Birth Date</Form.Label>
                 <Form.Control
-                  type='number'
-                  value={prizeMoney}
-                  onChange={(e) => setPrizeMoney(e.target.value)}
+                  type='date'
+                  value={birthDate}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId='playerCountry' className='my-3'>
+                <Form.Label>Country</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Enter the country of the player'
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
                 />
               </Form.Group>
               <Form.Group>

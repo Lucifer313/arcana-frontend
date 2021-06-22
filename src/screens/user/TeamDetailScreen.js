@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux'
 import Header from '../../components/Layout/User/Header'
 import Footer from '../../components/Layout/User/Footer'
 
-import './style.css'
-
 const TeamDetailScreen = ({ match }) => {
   const teamDetails = useSelector((state) => state.teamDetails)
   const { teams } = teamDetails
@@ -19,6 +17,7 @@ const TeamDetailScreen = ({ match }) => {
   const [tis, setTis] = useState('')
   const [description, setDescription] = useState('')
   const [achievements, setAchievements] = useState('')
+  const [best_performance, setBestPerformance] = useState('')
 
   useEffect(() => {
     const getTeamById = async () => {
@@ -32,7 +31,8 @@ const TeamDetailScreen = ({ match }) => {
         setLogo(team.logo)
         setDescription(team.description)
         setTis(team.tis_won)
-        setAchievements(team.description)
+        setBestPerformance(team.best_performance)
+        setAchievements(team.achievements)
       }
     }
 
@@ -76,6 +76,9 @@ const TeamDetailScreen = ({ match }) => {
             </Col>
             <Col lg={5} md={6} sm={12}>
               <div className='details-side-sect'>
+                <h5 className='details-achievements-desc-title'>
+                  Team Information:
+                </h5>
                 <table>
                   <tr>
                     <td className='detail-label'>Region:</td>
@@ -88,6 +91,10 @@ const TeamDetailScreen = ({ match }) => {
                   <tr>
                     <td className='detail-label'>TIs won:</td>
                     <td>{tis}</td>
+                  </tr>
+                  <tr>
+                    <td className='detail-label'>Best Performance:</td>
+                    <td>{best_performance}</td>
                   </tr>
                 </table>
                 <hr />

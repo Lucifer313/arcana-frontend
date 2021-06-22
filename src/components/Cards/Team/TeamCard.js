@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 import './style.css'
 
-const TeamCard = ({ logo, name, region, id }) => {
+const TeamCard = ({ logo, name, region, id, bestPerformance }) => {
   return (
     <Card className='my-4 team-card-container'>
       <Card.Img
@@ -19,7 +19,7 @@ const TeamCard = ({ logo, name, region, id }) => {
         <div class='team-details-container'>
           <Card.Text className='team-card-info'>{region} Region</Card.Text>
           <Card.Text className='team-card-info'>
-            TI Best Performance: 3rd
+            TI Best Performance: {bestPerformance}
           </Card.Text>
           <LinkContainer to={`/teams/${id}`}>
             <Card.Text className='team-card-info team-more-info'>

@@ -12,7 +12,7 @@ const FilterRegion = ({ region, filterRegion, classes }) => {
   return (
     <Col md={2}>
       <Form.Group controlId='regionFilter' className='mt-3'>
-        <Form.Label>Filter by Region</Form.Label>
+        <Form.Label className='filter-labels'>Filter by Region</Form.Label>
         <Form.Control
           as='select'
           value={regionFilter}

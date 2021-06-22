@@ -14,6 +14,11 @@ import TeamListScreen from './screens/user/TeamListScreen'
 import PlayerListScreen from './screens/user/PlayerListScreen'
 import TeamDetailScreen from './screens/user/TeamDetailScreen'
 import PlayerDetailScreen from './screens/user/PlayerDetailScreen'
+import LoginScreen from './screens/user/LoginScreen'
+import RegisterScreen from './screens/user/RegisterScreen'
+import CreateTournamentScreen from './screens/admin/Tournament/CreateTournamentScreen'
+import TournamentScreen from './screens/admin/Tournament/TournamentScreen'
+import SideNav from './components/SideNav'
 
 const App = () => {
   dotenv.config()
@@ -22,9 +27,10 @@ const App = () => {
     <Router>
       <Switch>
         <Route path='/' exact component={HomeScreen} />
+        <Route path='/login' exact component={LoginScreen} />
+        <Route path='/register' exact component={RegisterScreen} />
         <Route path='/teams' exact component={TeamListScreen} />
         <Route path='/teams/:id' exacth component={TeamDetailScreen} />
-
         <Route path='/players' exact component={PlayerListScreen} />
         <Route path='/players/:id' exact component={PlayerDetailScreen} />
 
@@ -33,6 +39,7 @@ const App = () => {
         <Route path='/admin/teams' exact component={TeamScreen} />
         <Route path='/admin/teams/create' exact component={CreateTeamScreen} />
         <Route path='/admin/teams/edit/:id' exact component={EditTeamScreen} />
+
         <Route path='/admin/players/' exact component={PlayerScreen} />
         <Route
           path='/admin/players/edit/:id'
@@ -44,6 +51,13 @@ const App = () => {
           exact
           component={CreatePlayerScreen}
         />
+
+        <Route
+          path='/admin/tournaments/create'
+          exact
+          component={CreateTournamentScreen}
+        />
+        <Route path='/admin/tournaments' exact component={TournamentScreen} />
       </Switch>
     </Router>
   )

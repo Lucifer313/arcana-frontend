@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import Footer from '../../components/Layout/User/Footer'
 import Header from '../../components/Layout/User/Header'
+import useLoginValidation from '../../hooks/userLoginValidatorHook'
 
-import './style.css'
+const HomeScreen = ({ history }) => {
+  useLoginValidation(history)
 
-const HomeScreen = () => {
   return (
     <>
       <Header />

@@ -5,7 +5,6 @@ import Header from '../../components/Layout/User/Header'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import './style.css'
 import TeamCard from '../../components/Cards/Team/TeamCard'
 
 import { filterTeams, getTeams, sortTeams } from '../../actions/team-actions'
@@ -100,6 +99,7 @@ const TeamListScreen = () => {
                       id={team._id}
                       name={team.name}
                       region={team.region}
+                      bestPerformance={team.best_performance}
                     />
                   </Col>
                 ))
@@ -111,6 +111,7 @@ const TeamListScreen = () => {
                       id={team._id}
                       name={team.name}
                       region={team.region}
+                      bestPerformance={team.best_performance}
                     />
                   </Col>
                 ))}

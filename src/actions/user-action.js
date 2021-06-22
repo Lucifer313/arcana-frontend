@@ -1,16 +1,19 @@
 import axios from '../axios-config'
 
 import {
-  ADMIN_LOGIN_FAILURE,
-  ADMIN_LOGIN_REQUEST,
-  ADMIN_LOGIN_SUCCESS,
+  USER_LOGIN_FAILURE,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
   USER_LOGOUT,
-} from '../constants/admin-constants'
+  USER_REGISTER_FAILURE,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+} from '../constants/user-constants'
 
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
-      type: ADMIN_LOGIN_REQUEST,
+      type: USER_LOGIN_REQUEST,
     })
 
     const config = {
@@ -26,7 +29,7 @@ export const login = (email, password) => async (dispatch) => {
     )
 
     dispatch({
-      type: ADMIN_LOGIN_SUCCESS,
+      type: USER_LOGIN_SUCCESS,
       payload: data,
     })
 
@@ -34,12 +37,44 @@ export const login = (email, password) => async (dispatch) => {
   } catch (error) {
     console.log(error)
     dispatch({
-      type: ADMIN_LOGIN_FAILURE,
+      type: USER_LOGIN_FAILURE,
       payload:
         error.message && error.response.data.message
           ? error.response.data.message
           : error.message,
     })
+  }
+}
+
+export const register = (formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_REGISTER_REQUEST,
+    })
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+
+    const { data } = await axios.post('/users/register', formData, config)
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+
+    dispatch({
+      type: USER_REGISTER_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+    console.log(error)
   }
 }
 

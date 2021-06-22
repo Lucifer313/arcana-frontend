@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux'
 import Header from '../../components/Layout/User/Header'
 import Footer from '../../components/Layout/User/Footer'
 
-import './style.css'
-
 const PlayerDetailScreen = ({ match }) => {
   const playerDetails = useSelector((state) => state.playerDetails)
   const { players } = playerDetails

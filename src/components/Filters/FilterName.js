@@ -12,7 +12,7 @@ const FilterName = ({ name, change, label, placeholder, classes }) => {
   return (
     <Col md={2}>
       <Form.Group controlId='nameFilter' className='mt-3 '>
-        <Form.Label>{label}</Form.Label>
+        <Form.Label className='filter-labels'>{label}</Form.Label>
         <Form.Control
           type='text'
           className={classes}
