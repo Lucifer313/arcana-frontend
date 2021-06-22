@@ -3,6 +3,13 @@ import {
   CREATE_TOURNAMENT_REQUEST,
   CREATE_TOURNAMENT_RESET,
   CREATE_TOURNAMENT_SUCCESS,
+  DELETE_TOURNAMENT_FAILURE,
+  DELETE_TOURNAMENT_REQUEST,
+  DELETE_TOURNAMENT_RESET,
+  DELETE_TOURNAMENT_SUCCESS,
+  GET_QUALIFIED_PLAYERS_FAILURE,
+  GET_QUALIFIED_PLAYERS_REQUEST,
+  GET_QUALIFIED_PLAYERS_SUCCESS,
   GET_TOURNAMENTS_FAILURE,
   GET_TOURNAMENTS_REQUEST,
   GET_TOURNAMENTS_SUCCESS,
@@ -75,6 +82,73 @@ const tournamentDetailsReducer = (state = {}, action) => {
       }
     }
 
+    case DELETE_TOURNAMENT_REQUEST: {
+      return {
+        ...state,
+        deleting: true,
+        deleted: false,
+        error: false,
+      }
+    }
+
+    case DELETE_TOURNAMENT_SUCCESS: {
+      return {
+        ...state,
+        deleting: false,
+        deleted: true,
+        tournaments: state.tournaments.filter(
+          (tournament) => tournament._id !== action.payload._id
+        ),
+        error: false,
+      }
+    }
+
+    case DELETE_TOURNAMENT_FAILURE: {
+      return {
+        ...state,
+        deleting: false,
+        deleted: false,
+        error: action.payload,
+      }
+    }
+
+    case DELETE_TOURNAMENT_RESET: {
+      return {
+        ...state,
+        deleting: false,
+        deleted: false,
+        error: false,
+      }
+    }
+
+    case GET_QUALIFIED_PLAYERS_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+        qualifiedPlayers: [],
+        error: false,
+      }
+    }
+
+    case GET_QUALIFIED_PLAYERS_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        qualifiedPlayers: action.payload,
+        error: false,
+      }
+    }
+
+    case GET_QUALIFIED_PLAYERS_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.payload,
+      }
+    }
     default: {
       return state
     }

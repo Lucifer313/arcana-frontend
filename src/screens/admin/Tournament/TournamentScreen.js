@@ -5,19 +5,39 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 import Header from '../../../components/Layout/Admin/Header'
 import Footer from '../../../components/Layout/Admin/Footer'
-import { getTournaments } from '../../../actions/tournament-action'
+import Popup from '../../../components/Popup'
+
+import {
+  deleteTournament,
+  getTournaments,
+} from '../../../actions/tournament-action'
+import { DELETE_TOURNAMENT_RESET } from '../../../constants/tournament-constants'
 
 const TournamentScreen = () => {
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
-  const { tournaments } = tournamentDetails
+  const { tournaments, deleted } = tournamentDetails
 
   const dispatch = useDispatch()
+
+  const [confirmationModal, setConfirmationModal] = useState(false)
+  const [deletionId, setDeletionId] = useState('')
 
   useEffect(() => {
     if (tournaments.length === 0) {
       dispatch(getTournaments())
     }
   }, [tournaments, dispatch])
+
+  const deleteTournamentHandler = (id) => {
+    setDeletionId(id)
+    setConfirmationModal(true)
+  }
+
+  const handleDelete = () => {
+    dispatch(deleteTournament(deletionId))
+    setDeletionId('')
+    setConfirmationModal(false)
+  }
 
   return (
     <>
@@ -32,6 +52,23 @@ const TournamentScreen = () => {
             </LinkContainer>
           </Col>
         </Row>
+        {confirmationModal ? (
+          <Popup
+            title='Tournament Deletion'
+            body='Are you sure you want to delete this tournament?'
+            type='confirm'
+            onClose={() => setConfirmationModal(false)}
+            onConfirm={handleDelete}
+          />
+        ) : null}
+        {deleted ? (
+          <Popup
+            title='Tournament Deletion'
+            body='Tournament deleted successfully'
+            type='success'
+            onClose={() => dispatch({ type: DELETE_TOURNAMENT_RESET })}
+          />
+        ) : null}
         <Row>
           <Table striped hover>
             <thead>
@@ -59,7 +96,10 @@ const TournamentScreen = () => {
                     </LinkContainer>
                   </td>
                   <td>
-                    <Button variant='danger'>
+                    <Button
+                      variant='danger'
+                      onClick={() => deleteTournamentHandler(tournament._id)}
+                    >
                       <i class='fas fa-trash-alt'></i>
                     </Button>
                   </td>
