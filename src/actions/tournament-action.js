@@ -9,6 +9,9 @@ import {
   GET_QUALIFIED_PLAYERS_FAILURE,
   GET_QUALIFIED_PLAYERS_REQUEST,
   GET_QUALIFIED_PLAYERS_SUCCESS,
+  GET_QUALIFIED_TEAMS_FAILURE,
+  GET_QUALIFIED_TEAMS_REQUEST,
+  GET_QUALIFIED_TEAMS_SUCCESS,
   GET_TOURNAMENTS_FAILURE,
   GET_TOURNAMENTS_REQUEST,
   GET_TOURNAMENTS_SUCCESS,
@@ -111,22 +114,14 @@ export const deleteTournament = (id) => async (dispatch) => {
   }
 }
 
-export const getQualifiedPlayers = (tournamentId, role) => async (dispatch) => {
+export const getQualifiedPlayers = (tournamentId) => async (dispatch) => {
   try {
     dispatch({
       type: GET_QUALIFIED_PLAYERS_REQUEST,
     })
 
-    const config = {
-      headers: {
-        'Content-type': 'application/json',
-      },
-    }
-
-    const { data } = await axios.post(
-      `/tournaments/${tournamentId}/qualified-players`,
-      { role },
-      config
+    const { data } = await axios.get(
+      `/tournaments/${tournamentId}/qualified-players`
     )
 
     dispatch({
@@ -136,6 +131,31 @@ export const getQualifiedPlayers = (tournamentId, role) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_QUALIFIED_PLAYERS_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const getQualifiedTeams = (tournamentId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_QUALIFIED_TEAMS_REQUEST,
+    })
+
+    const { data } = await axios.get(
+      `/tournaments/${tournamentId}/qualified-teams/`
+    )
+
+    dispatch({
+      type: GET_QUALIFIED_TEAMS_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: GET_QUALIFIED_TEAMS_FAILURE,
       payload:
         error.message && error.response.data.message
           ? error.response.data.message

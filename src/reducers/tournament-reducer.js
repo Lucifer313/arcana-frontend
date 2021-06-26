@@ -10,6 +10,10 @@ import {
   GET_QUALIFIED_PLAYERS_FAILURE,
   GET_QUALIFIED_PLAYERS_REQUEST,
   GET_QUALIFIED_PLAYERS_SUCCESS,
+  GET_QUALIFIED_TEAMS_FAILURE,
+  GET_QUALIFIED_TEAMS_REQUEST,
+  GET_QUALIFIED_TEAMS_RESET,
+  GET_QUALIFIED_TEAMS_SUCCESS,
   GET_TOURNAMENTS_FAILURE,
   GET_TOURNAMENTS_REQUEST,
   GET_TOURNAMENTS_SUCCESS,
@@ -149,6 +153,44 @@ const tournamentDetailsReducer = (state = {}, action) => {
         error: action.payload,
       }
     }
+
+    case GET_QUALIFIED_TEAMS_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+        error: false,
+      }
+    }
+
+    case GET_QUALIFIED_TEAMS_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        qualifiedTeams: action.payload,
+        error: false,
+      }
+    }
+
+    case GET_QUALIFIED_TEAMS_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.payload,
+      }
+    }
+
+    case GET_QUALIFIED_TEAMS_RESET: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: false,
+      }
+    }
+
     default: {
       return state
     }
