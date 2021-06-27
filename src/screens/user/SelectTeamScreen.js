@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
+import useLoginValidation from '../../hooks/userLoginValidatorHook'
 
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Table, Button } from 'react-bootstrap'
 
 import {
   getQualifiedPlayers,
@@ -13,15 +14,22 @@ import Header from '../../components/Layout/User/Header'
 import Footer from '../../components/Layout/User/Footer'
 import Disclaimer from '../../components/Disclaimer'
 import Popup from '../../components/Popup'
+import Logo from '../../components/Logo'
 
 import SelectTeamList from '../../components/SelectTeamList'
 import TeamPreview from '../../components/TeamPreview'
+import { createArcanaTeam } from '../../actions/user-action'
 
-const CreateTournamentTeamScreen = ({ match }) => {
+const CreateTournamentTeamScreen = ({ match, history }) => {
+  useLoginValidation(history)
+
   const [role, setRole] = useState(['Hard Support', 'Soft Support'])
 
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
   const { qualifiedPlayers, qualifiedTeams } = tournamentDetails
+
+  const userDetails = useSelector((state) => state.userDetails)
+  const { userInfo, created } = userDetails
 
   const dispatch = useDispatch()
   const { tid } = useParams()
@@ -29,12 +37,16 @@ const CreateTournamentTeamScreen = ({ match }) => {
   const [selectedPlayers, setSelectedPlayers] = useState([])
   const [preview, setPreview] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [showFilter, setShowFilter] = useState(false)
+  const [confirmationModal, setConfirmationModal] = useState(false)
 
   const [name, setName] = useState('')
   const [teamFilter, setTeamFilter] = useState('Filter by Team')
   //Section is to track the different sections of creating a team
   const [liveSection, setLiveSection] = useState('disclaimer')
+
+  const [teamPrediction, setTeamPrediction] = useState('')
 
   useEffect(() => {
     dispatch(getQualifiedPlayers(tid))
@@ -42,7 +54,6 @@ const CreateTournamentTeamScreen = ({ match }) => {
   }, [match.params.id])
 
   const handleLiveSection = (nextSection) => {
-    //
     setLiveSection(nextSection)
   }
 
@@ -88,20 +99,81 @@ const CreateTournamentTeamScreen = ({ match }) => {
     console.log(selectedPlayers)
   }
 
+  const submitArcanaTeam = (e) => {
+    e.preventDefault()
+    if (selectedPlayers.length < 12) {
+      setError(
+        'Please select 12 players for your team. You can click on the Preview button to see your selected players'
+      )
+    } else if (teamPrediction === '') {
+      setError('Please select a team for Victory prediction')
+    } else {
+      setConfirmationModal(true)
+    }
+  }
+
   const clearFilter = () => {
     setTeamFilter('Filter by Team')
     setName('')
   }
+
+  const handleArcanaTeamCreation = () => {
+    const userId = userInfo._id
+    //Fetched from above where it was extractred using useParams
+    const tournamentId = tid
+    setConfirmationModal(false)
+    dispatch(
+      createArcanaTeam(tournamentId, userId, teamPrediction, selectedPlayers)
+    ).then(() => {
+      setSuccess('Arcana Team created successfully')
+    })
+  }
+
+  const handleTeamCreationSuccess = () => {
+    setSelectedPlayers([])
+    setTeamPrediction('')
+    setLiveSection('disclaimer')
+    setRole(['Hard Support', 'Soft Support'])
+    setSuccess('')
+    setError('')
+    history.push(`/tournaments/${tid}/`)
+  }
+
   return (
     <div>
       <Header />
       <Container>
+        {success !== '' ? (
+          <Popup
+            title='Team creation'
+            body={success}
+            onClose={handleTeamCreationSuccess}
+            type='success'
+          />
+        ) : null}
+        {error !== '' ? (
+          <Popup
+            title='Team creation'
+            body={error}
+            onClose={() => setError('')}
+            type='success'
+          />
+        ) : null}
+        {confirmationModal ? (
+          <Popup
+            title='Arcana Team Creation'
+            body='Do you want to lock  your Arcana Team for this tournament? You cannot make any changes to your team after making this confirmation'
+            type='confirm'
+            onClose={() => setConfirmationModal(false)}
+            onConfirm={handleArcanaTeamCreation}
+          />
+        ) : null}
         <Row>
           <Col sm={12}>
             {liveSection === 'disclaimer' ? (
               <Disclaimer setSection={handleLiveSection} />
             ) : null}
-            {liveSection === 'Core-Selection' ? (
+            {liveSection === 'Team-selection' ? (
               preview ? (
                 <TeamPreview
                   team={selectedPlayers}
@@ -226,19 +298,84 @@ const CreateTournamentTeamScreen = ({ match }) => {
                         >
                           Preview
                         </Button>
+                        <Button
+                          variant='success'
+                          onClick={() => setLiveSection('Team-prediction')}
+                          style={{ float: 'right' }}
+                        >
+                          Next
+                        </Button>
                       </>
                     ) : null}
                   </div>
-                  {error !== '' ? (
-                    <Popup
-                      title='Team creation'
-                      body={error}
-                      onClose={() => setError('')}
-                      type='success'
-                    />
-                  ) : null}
                 </>
               )
+            ) : null}
+            {liveSection === 'Team-prediction' ? (
+              <>
+                <h6 className='text-center my-3'>
+                  Predict a Team for Tournament Victory
+                </h6>
+                <p>
+                  Note: Remember, correct team prediction gives the maximum
+                  points.
+                </p>
+                <div style={{ maxHeight: '64vh', overflowY: 'auto' }}>
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Region</th>
+                        <th>Logo</th>
+                        <th>Predict</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {qualifiedTeams.map((team) => (
+                        <tr key={team._id}>
+                          <td>{team.name}</td>
+                          <td>{team.region}</td>
+                          <td>
+                            <Logo path={team.logo} />
+                          </td>
+                          <td>
+                            {teamPrediction !== team._id ? (
+                              <Button
+                                variant='primary'
+                                onClick={() => setTeamPrediction(team._id)}
+                              >
+                                <i class='fas fa-plus-circle'></i>
+                              </Button>
+                            ) : (
+                              <Button
+                                variant='danger'
+                                onClick={() => setTeamPrediction('')}
+                              >
+                                <i class='fas fa-times'></i>
+                              </Button>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+                <div className='my-4'>
+                  <Button
+                    variant='danger'
+                    onClick={() => setLiveSection('Team-selection')}
+                  >
+                    Back
+                  </Button>
+                  <Button
+                    variant='success'
+                    style={{ float: 'right' }}
+                    onClick={submitArcanaTeam}
+                  >
+                    Create
+                  </Button>
+                </div>
+              </>
             ) : null}
           </Col>
         </Row>

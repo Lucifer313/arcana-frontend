@@ -1,6 +1,12 @@
 import axios from '../axios-config'
 
 import {
+  CREATE_ARCANA_TEAM_FAILURE,
+  CREATE_ARCANA_TEAM_REQUEST,
+  CREATE_ARCANA_TEAM_SUCCESS,
+  GET_MY_TOURNAMENTS_FAILURE,
+  GET_MY_TOURNAMENTS_REQUEST,
+  GET_MY_TOURNAMENTS_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -75,6 +81,63 @@ export const register = (formData) => async (dispatch) => {
           : error.message,
     })
     console.log(error)
+  }
+}
+
+export const createArcanaTeam =
+  (tournamentId, userId, teamPrediction, arcanaTeam) => async (dispatch) => {
+    try {
+      dispatch({
+        type: CREATE_ARCANA_TEAM_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      }
+
+      const { data } = axios.post(
+        `/users/tournaments/${tournamentId}/createArcanaTeam`,
+        { userId, teamPrediction, arcanaTeam },
+        config
+      )
+
+      dispatch({
+        type: CREATE_ARCANA_TEAM_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: CREATE_ARCANA_TEAM_FAILURE,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getMyTournaments = (userId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_MY_TOURNAMENTS_REQUEST,
+    })
+
+    const { data } = await axios.get(`/users/${userId}/my-tournaments/`)
+
+    dispatch({
+      type: GET_MY_TOURNAMENTS_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: GET_MY_TOURNAMENTS_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
   }
 }
 

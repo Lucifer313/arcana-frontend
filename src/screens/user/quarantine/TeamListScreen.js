@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
-import Footer from '../../components/Layout/User/Footer'
-import Header from '../../components/Layout/User/Header'
+import Footer from '../../../components/Layout/User/Footer'
+import Header from '../../../components/Layout/User/Header'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import TeamCard from '../../components/Cards/Team/TeamCard'
+import TeamCard from '../../../components/Cards/Team/TeamCard'
 
-import { filterTeams, getTeams, sortTeams } from '../../actions/team-actions'
-import FilterName from '../../components/Filters/FilterName'
-import FilterRegion from '../../components/Filters/FilterRegion'
-import Sorter from '../../components/Filters/Sorter'
-import { RESET_TEAM_FILTERS } from '../../constants/team-constants'
+import { filterTeams, getTeams, sortTeams } from '../../../actions/team-actions'
+import FilterName from '../../../../components/Filters/FilterName'
+import FilterRegion from '../../../../components/Filters/FilterRegion'
+import Sorter from '../../../../components/Filters/Sorter'
+import { RESET_TEAM_FILTERS } from '../../../../constants/team-constants'
 
 const TeamListScreen = () => {
   const teamDetails = useSelector((state) => state.teamDetails)

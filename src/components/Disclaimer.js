@@ -52,7 +52,7 @@ const Disclaimer = ({ setSection }) => {
         <Button
           variant='primary'
           className='my-3'
-          onClick={() => setSection('Core-Selection')}
+          onClick={() => setSection('Team-selection')}
         >
           CREATE TEAM
         </Button>

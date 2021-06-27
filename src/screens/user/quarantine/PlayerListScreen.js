@@ -3,19 +3,19 @@ import { Container, Row, Col, Button } from 'react-bootstrap'
 import Footer from '../../components/Layout/User/Footer'
 import Header from '../../components/Layout/User/Header'
 
-import FilterName from '../../components/Filters/FilterName'
-import FilterRegion from '../../components/Filters/FilterRegion'
-import Sorter from '../../components/Filters/Sorter'
+import FilterName from '../../../components/Filters/FilterName'
+import FilterRegion from '../../../components/Filters/FilterRegion'
+import Sorter from '../../../components/Filters/Sorter'
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import PlayerCard from '../../components/Cards/Player/PlayerCard'
+import PlayerCard from '../../../components/Cards/Player/PlayerCard'
 import {
   filterPlayers,
   getPlayers,
   sortPlayers,
 } from '../../actions/player-action'
-import { RESET_PLAYER_FILTERS } from '../../constants/player-constants'
+import { RESET_PLAYER_FILTERS } from '../../../constants/player-constants'
 
 const PlayerListScreen = () => {
   const playerDetails = useSelector((state) => state.playerDetails)

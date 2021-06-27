@@ -26,7 +26,7 @@ const SelectTeamList = ({
 
   return (
     <>
-      <div style={{ height: '74vh', overflowY: 'auto' }}>
+      <div style={{ height: '64vh', overflowY: 'auto' }}>
         <Table striped hover style={{ maxHeight: '80vh', overflowY: 'auto' }}>
           <thead>
             <tr>

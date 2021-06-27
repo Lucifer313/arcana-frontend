@@ -37,9 +37,9 @@ const Header = () => {
                 <i class='fas fa-home'></i> HOME
               </Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/teams'>
+            <LinkContainer to='/my-tournaments'>
               <Nav.Link>
-                <i class='fas fa-user-friends'></i> TOURNAMENT
+                <i class='fas fa-user-friends'></i> MY TOURNAMENTS
               </Nav.Link>
             </LinkContainer>
             <LinkContainer to='/profile'>

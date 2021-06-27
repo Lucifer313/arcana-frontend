@@ -3,8 +3,8 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { useSelector } from 'react-redux'
-import Header from '../../components/Layout/User/Header'
-import Footer from '../../components/Layout/User/Footer'
+import Header from '../../../components/Layout/User/Header'
+import Footer from '../../../components/Layout/User/Footer'
 
 const PlayerDetailScreen = ({ match }) => {
   const playerDetails = useSelector((state) => state.playerDetails)

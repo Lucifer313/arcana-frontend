@@ -21,6 +21,7 @@ const userInfoFromLocalStorage = localStorage.getItem('userInfo')
 const initialState = {
   userDetails: {
     userInfo: userInfoFromLocalStorage,
+    myTournaments: [],
   },
   teamDetails: {
     teams: [],

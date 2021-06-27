@@ -10,16 +10,13 @@ import dotenv from 'dotenv'
 import CreatePlayerScreen from './screens/admin/Player/CreatePlayerScreen'
 import EditPlayerScreen from './screens/admin/Player/EditPlayerScreen'
 import HomeScreen from './screens/user/HomeScreen'
-import TeamListScreen from './screens/user/TeamListScreen'
-import PlayerListScreen from './screens/user/PlayerListScreen'
-import TeamDetailScreen from './screens/user/TeamDetailScreen'
-import PlayerDetailScreen from './screens/user/PlayerDetailScreen'
 import LoginScreen from './screens/user/LoginScreen'
 import RegisterScreen from './screens/user/RegisterScreen'
 import CreateTournamentScreen from './screens/admin/Tournament/CreateTournamentScreen'
 import TournamentScreen from './screens/admin/Tournament/TournamentScreen'
-import SideNav from './components/SideNav'
 import SelectTeamScreen from './screens/user/SelectTeamScreen'
+import TournamentDetailScreen from './screens/user/TournamentDetailScreen'
+import MyTournamentScreen from './screens/user/MyTournamentScreen'
 
 const App = () => {
   dotenv.config()
@@ -30,10 +27,6 @@ const App = () => {
         <Route path='/' exact component={HomeScreen} />
         <Route path='/login' exact component={LoginScreen} />
         <Route path='/register' exact component={RegisterScreen} />
-        <Route path='/teams' exact component={TeamListScreen} />
-        <Route path='/teams/:id' exacth component={TeamDetailScreen} />
-        <Route path='/players' exact component={PlayerListScreen} />
-        <Route path='/players/:id' exact component={PlayerDetailScreen} />
 
         <Route path='/admin/login' exact component={AdminLoginScreen} />
         <Route path='/admin/' exact component={TeamScreen} />
@@ -64,6 +57,13 @@ const App = () => {
           exact
           component={SelectTeamScreen}
         />
+
+        <Route
+          path='/tournaments/:tid'
+          exact
+          component={TournamentDetailScreen}
+        />
+        <Route path='/my-tournaments/' exact component={MyTournamentScreen} />
       </Switch>
     </Router>
   )

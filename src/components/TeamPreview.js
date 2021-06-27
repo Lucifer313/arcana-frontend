@@ -11,7 +11,7 @@ export default function TeamPreview({ onClose, team, remove }) {
   const previewPlayers = qualifiedPlayers.filter((p) => team.includes(p._id))
 
   return previewPlayers.length === 0 ? (
-    <div style={{ minHeight: '80vh' }}>
+    <div style={{ minHeight: '84vh' }}>
       <h5 className='py-5'>
         No player has been selected yet. Please select your players and then
         preview. them
