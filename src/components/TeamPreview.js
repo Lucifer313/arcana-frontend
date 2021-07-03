@@ -45,7 +45,11 @@ export default function TeamPreview({ onClose, team, remove }) {
                   <Logo path={p.team.logo} />
                 </td>
                 <td>
-                  <Button variant='danger' onClick={() => remove(p._id)}>
+                  <Button
+                    variant='danger'
+                    onClick={() => remove(p._id)}
+                    style={{ width: '40px' }}
+                  >
                     <i class='fas fa-times'></i>
                   </Button>
                 </td>

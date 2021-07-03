@@ -1,4 +1,10 @@
 import {
+  ADD_PLAYING_SQUAD_FAILURE,
+  ADD_PLAYING_SQUAD_REQUEST,
+  ADD_PLAYING_SQUAD_SUCCESS,
+  CHECK_SQUAD_PERMISSION_FAILURE,
+  CHECK_SQUAD_PERMISSION_REQUEST,
+  CHECK_SQUAD_PERMISSION_SUCCESS,
   CREATE_ARCANA_TEAM_FAILURE,
   CREATE_ARCANA_TEAM_REQUEST,
   CREATE_ARCANA_TEAM_RESET,
@@ -16,7 +22,7 @@ import {
 } from '../constants/user-constants'
 
 const userDetailsReducer = (
-  state = { userInfo: {}, myTournaments: [] },
+  state = { userInfo: {}, myTournaments: [], allowed: false },
   action
 ) => {
   switch (action.type) {
@@ -126,6 +132,61 @@ const userDetailsReducer = (
         ...state,
         loading: false,
         loaded: false,
+        error: action.payload,
+      }
+    }
+
+    case ADD_PLAYING_SQUAD_REQUEST: {
+      return {
+        ...state,
+        adding: true,
+        added: false,
+        error: false,
+      }
+    }
+
+    case ADD_PLAYING_SQUAD_SUCCESS: {
+      return {
+        ...state,
+        adding: false,
+        added: true,
+        playingSquad: action.payload,
+        error: false,
+      }
+    }
+
+    case ADD_PLAYING_SQUAD_FAILURE: {
+      return {
+        ...state,
+        adding: false,
+        added: false,
+        error: action.payload,
+      }
+    }
+
+    case CHECK_SQUAD_PERMISSION_REQUEST: {
+      return {
+        ...state,
+        checking: true,
+        checked: false,
+        allowed: false,
+      }
+    }
+
+    case CHECK_SQUAD_PERMISSION_SUCCESS: {
+      return {
+        ...state,
+        checking: false,
+        checked: true,
+        allowed: action.payload,
+      }
+    }
+
+    case CHECK_SQUAD_PERMISSION_FAILURE: {
+      return {
+        ...state,
+        checking: false,
+        checked: false,
         error: action.payload,
       }
     }

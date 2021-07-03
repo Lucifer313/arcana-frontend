@@ -18,9 +18,9 @@ import Logo from '../../components/Logo'
 
 import SelectTeamList from '../../components/SelectTeamList'
 import TeamPreview from '../../components/TeamPreview'
-import { createArcanaTeam } from '../../actions/user-action'
+import { createArcanaTeam, getMyTournaments } from '../../actions/user-action'
 
-const CreateTournamentTeamScreen = ({ match, history }) => {
+const CreateTournamentTeamScreen = ({ history }) => {
   useLoginValidation(history)
 
   const [role, setRole] = useState(['Hard Support', 'Soft Support'])
@@ -29,7 +29,7 @@ const CreateTournamentTeamScreen = ({ match, history }) => {
   const { qualifiedPlayers, qualifiedTeams } = tournamentDetails
 
   const userDetails = useSelector((state) => state.userDetails)
-  const { userInfo, created } = userDetails
+  const { userInfo } = userDetails
 
   const dispatch = useDispatch()
   const { tid } = useParams()
@@ -51,7 +51,7 @@ const CreateTournamentTeamScreen = ({ match, history }) => {
   useEffect(() => {
     dispatch(getQualifiedPlayers(tid))
     dispatch(getQualifiedTeams(tid))
-  }, [match.params.id])
+  }, [tid, dispatch])
 
   const handleLiveSection = (nextSection) => {
     setLiveSection(nextSection)
@@ -131,12 +131,13 @@ const CreateTournamentTeamScreen = ({ match, history }) => {
 
   const handleTeamCreationSuccess = () => {
     setSelectedPlayers([])
+    dispatch(getMyTournaments(userInfo._id))
     setTeamPrediction('')
     setLiveSection('disclaimer')
     setRole(['Hard Support', 'Soft Support'])
     setSuccess('')
     setError('')
-    history.push(`/tournaments/${tid}/`)
+    history.push(`/tournaments/${tid}`)
   }
 
   return (
@@ -255,7 +256,7 @@ const CreateTournamentTeamScreen = ({ match, history }) => {
                           Preview
                         </Button>
                         <Button
-                          variant='primary'
+                          variant='success'
                           onClick={() => setRole(['Offlane'])}
                           style={{ float: 'right' }}
                         >
@@ -277,7 +278,7 @@ const CreateTournamentTeamScreen = ({ match, history }) => {
                           Preview
                         </Button>
                         <Button
-                          variant='primary'
+                          variant='success'
                           onClick={() => setRole(['Mid', 'Carry'])}
                           style={{ float: 'right' }}
                         >

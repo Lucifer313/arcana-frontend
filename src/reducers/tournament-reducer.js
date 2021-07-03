@@ -19,7 +19,7 @@ import {
   GET_TOURNAMENTS_SUCCESS,
 } from '../constants/tournament-constants'
 
-const tournamentDetailsReducer = (state = {}, action) => {
+const tournamentDetailsReducer = (state = { qualifiedPlayers: [] }, action) => {
   switch (action.type) {
     case CREATE_TOURNAMENT_REQUEST: {
       return {

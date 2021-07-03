@@ -29,7 +29,7 @@ const MyTournamentScreen = ({ history }) => {
       dispatch(getTournaments())
       dispatch(getMyTournaments(userInfo._id))
     }
-  }, [userInfo])
+  }, [userInfo, dispatch, history])
 
   return (
     <>
@@ -57,7 +57,7 @@ const MyTournamentScreen = ({ history }) => {
                       <td>{tournament.tier}</td>
                       <td>{tournament.number_of_teams}</td>
                       <td>
-                        <LinkContainer to={`/tournaments/${tournament._id}`}>
+                        <LinkContainer to={`/tournaments/${tournament._id}/`}>
                           <Button variant='success'>Visit</Button>
                         </LinkContainer>
                       </td>

@@ -1,6 +1,12 @@
 import axios from '../axios-config'
 
 import {
+  ADD_PLAYING_SQUAD_FAILURE,
+  ADD_PLAYING_SQUAD_REQUEST,
+  ADD_PLAYING_SQUAD_SUCCESS,
+  CHECK_SQUAD_PERMISSION_FAILURE,
+  CHECK_SQUAD_PERMISSION_REQUEST,
+  CHECK_SQUAD_PERMISSION_SUCCESS,
   CREATE_ARCANA_TEAM_FAILURE,
   CREATE_ARCANA_TEAM_REQUEST,
   CREATE_ARCANA_TEAM_SUCCESS,
@@ -140,6 +146,75 @@ export const getMyTournaments = (userId) => async (dispatch) => {
     })
   }
 }
+
+export const submitPlayingSquad =
+  (userId, tournamentId, playingSquad, reserveSquad, addedAt) =>
+  async (dispatch) => {
+    try {
+      dispatch({
+        type: ADD_PLAYING_SQUAD_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      }
+
+      const { data } = await axios.post(
+        `/users/${userId}/add-playing-squad/`,
+        { tournamentId, playingSquad, reserveSquad, addedAt },
+        config
+      )
+
+      dispatch({
+        type: ADD_PLAYING_SQUAD_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: ADD_PLAYING_SQUAD_FAILURE,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getSquadAddingPermission =
+  (userId, tournamentId) => async (dispatch) => {
+    try {
+      dispatch({
+        type: CHECK_SQUAD_PERMISSION_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      }
+
+      const { data } = await axios.post(
+        `/users/${userId}/allow-adding-squad`,
+        { tournamentId },
+        config
+      )
+
+      dispatch({
+        type: CHECK_SQUAD_PERMISSION_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: CHECK_SQUAD_PERMISSION_FAILURE,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
 
 export const logout = () => (dispatch) => {
   //Clearing localstorage first

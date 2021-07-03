@@ -22,6 +22,7 @@ const initialState = {
   userDetails: {
     userInfo: userInfoFromLocalStorage,
     myTournaments: [],
+    allowed: false,
   },
   teamDetails: {
     teams: [],
@@ -35,6 +36,8 @@ const initialState = {
 
   tournamentDetails: {
     tournaments: [],
+    qualifiedPlayers: [],
+    qualifiedTeams: [],
   },
 }
 

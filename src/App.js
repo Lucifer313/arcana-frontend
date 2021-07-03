@@ -15,8 +15,9 @@ import RegisterScreen from './screens/user/RegisterScreen'
 import CreateTournamentScreen from './screens/admin/Tournament/CreateTournamentScreen'
 import TournamentScreen from './screens/admin/Tournament/TournamentScreen'
 import SelectTeamScreen from './screens/user/SelectTeamScreen'
-import TournamentDetailScreen from './screens/user/TournamentDetailScreen'
+import SquadSelectionScreen from './screens/user/SquadSelectionScreen'
 import MyTournamentScreen from './screens/user/MyTournamentScreen'
+import TournamentDetailScreen from './screens/user/TournamentDetailScreen'
 
 const App = () => {
   dotenv.config()
@@ -57,12 +58,17 @@ const App = () => {
           exact
           component={SelectTeamScreen}
         />
-
         <Route
-          path='/tournaments/:tid'
+          path='/tournaments/:tid/'
           exact
           component={TournamentDetailScreen}
         />
+        <Route
+          path='/tournaments/:tid/squad-selection/'
+          exact
+          component={SquadSelectionScreen}
+        />
+
         <Route path='/my-tournaments/' exact component={MyTournamentScreen} />
       </Switch>
     </Router>

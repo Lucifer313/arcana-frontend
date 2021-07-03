@@ -12,6 +12,10 @@ const SelectTeamList = ({
   nameFilter,
   teamFilter,
 }) => {
+  role = !role
+    ? ['Hard Support', 'Soft Support', 'Offlane', 'Mid', 'Carry']
+    : role
+
   players =
     nameFilter !== ''
       ? players.filter((p) =>
@@ -53,6 +57,7 @@ const SelectTeamList = ({
                       <Button
                         variant='primary'
                         onClick={() => addPlayers(p._id)}
+                        style={{ width: '40px' }}
                       >
                         <i class='fas fa-plus-circle'></i>
                       </Button>
@@ -60,6 +65,7 @@ const SelectTeamList = ({
                       <Button
                         variant='danger'
                         onClick={() => removePlayers(p._id)}
+                        style={{ width: '40px' }}
                       >
                         <i class='fas fa-times'></i>
                       </Button>

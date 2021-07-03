@@ -7,6 +7,7 @@ import useLoginValidation from '../../hooks/userLoginValidatorHook'
 import { getTournaments } from '../../actions/tournament-action'
 import { LinkContainer } from 'react-router-bootstrap'
 import { getMyTournaments } from '../../actions/user-action'
+import Moment from 'moment'
 
 const HomeScreen = ({ history }) => {
   useLoginValidation(history)
@@ -24,14 +25,14 @@ const HomeScreen = ({ history }) => {
     if (!userInfo) {
       history.push('/login')
     }
-  }, [])
+  }, [history, userInfo])
 
   useEffect(() => {
     if (userInfo) {
       dispatch(getTournaments())
       dispatch(getMyTournaments(userInfo._id))
     }
-  }, [])
+  }, [dispatch, userInfo])
 
   let myEnrolledTournaments = myTournaments.map((tournament) => tournament._id)
 
@@ -52,7 +53,7 @@ const HomeScreen = ({ history }) => {
               </thead>
               <tbody>
                 {tournaments.map((tournament) => (
-                  <tr>
+                  <tr key={tournament._id}>
                     <td>{tournament.name}</td>
                     <td>{tournament.tier}</td>
                     <td>{tournament.number_of_teams}</td>
