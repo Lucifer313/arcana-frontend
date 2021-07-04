@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+
 import { useSelector, useDispatch } from 'react-redux'
 import { Col, Button } from 'react-bootstrap'
 import { useParams } from 'react-router'
@@ -7,11 +8,11 @@ import Moment from 'moment'
 import { LinkContainer } from 'react-router-bootstrap'
 import SelectTeamList from './SelectTeamList'
 import Popup from './Popup'
+import Loader from './Loader'
 
 import {
   getMyTournaments,
   getSquadAddingPermission,
-  getSquadByDay,
   submitPlayingSquad,
 } from '../actions/user-action'
 
@@ -24,7 +25,7 @@ const SquadSelector = () => {
   const { tid } = useParams()
 
   const userDetails = useSelector((state) => state.userDetails)
-  const { myTournaments, userInfo, allowed, previousSquad } = userDetails
+  const { myTournaments, userInfo, adding } = userDetails
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
   const { qualifiedPlayers } = tournamentDetails
 
@@ -142,6 +143,11 @@ const SquadSelector = () => {
         removePlayers={removePlayingSquad}
         previewStatus={false}
       />
+      {adding ? (
+        <div style={{ width: '10%', margin: 'auto' }}>
+          <Loader />
+        </div>
+      ) : null}
       <div className='my-3'>
         <LinkContainer
           to={`/tournaments/${tid}`}

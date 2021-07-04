@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 
 import { getMyTournaments, getSquadByDay } from '../actions/user-action'
-
+import Loader from './Loader'
 import SelectedSquad from './SelectedSquad'
 
 const PreviousSquadViewer = ({ navigation }) => {
@@ -16,7 +16,7 @@ const PreviousSquadViewer = ({ navigation }) => {
   const { tid } = useParams()
 
   const userDetails = useSelector((state) => state.userDetails)
-  const { myTournaments, userInfo, previousSquad } = userDetails
+  const { myTournaments, userInfo, previousSquad, loading } = userDetails
 
   let tournament = myTournaments.filter((t) => t._id === tid)[0]
 
@@ -68,18 +68,25 @@ const PreviousSquadViewer = ({ navigation }) => {
             </>
           )}
           {previousSquadFilter ? (
-            <Form.Group controlId='squadDay' className='my-3'>
-              <Form.Label>View Squads of Previous Days</Form.Label>
-              <Form.Control
-                as='select'
-                value={day}
-                onChange={(e) => getPreviousSquadHandler(e.target.value)}
-              >
-                {tournament.days.map((t) => {
-                  return <option value={t.day}>{t.day}</option>
-                })}
-              </Form.Control>
-            </Form.Group>
+            <>
+              <Form.Group controlId='squadDay' className='my-3'>
+                <Form.Label>View Squads of Previous Days</Form.Label>
+                <Form.Control
+                  as='select'
+                  value={day}
+                  onChange={(e) => getPreviousSquadHandler(e.target.value)}
+                >
+                  {tournament.days.map((t) => {
+                    return <option value={t.day}>{t.day}</option>
+                  })}
+                </Form.Control>
+              </Form.Group>
+              {loading ? (
+                <div style={{ width: '10%', margin: 'auto' }}>
+                  <Loader />
+                </div>
+              ) : null}
+            </>
           ) : null}
           {playingSquad.length > 0 ? (
             <SelectedSquad
