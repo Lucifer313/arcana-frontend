@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import Footer from '../../components/Layout/User/Footer'
 import Header from '../../components/Layout/User/Header'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { useParams } from 'react-router'
-import { getMyTournaments } from '../../actions/user-action'
-import { getQualifiedPlayers } from '../../actions/tournament-action'
 
 const TournamentDetailScreen = () => {
-  const userDetails = useSelector((state) => state.userDetails)
-  const { userInfo } = userDetails
-
   const { tid } = useParams()
-
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getMyTournaments(userInfo._id))
-    dispatch(getQualifiedPlayers(tid))
-  }, [])
 
   return (
     <div>

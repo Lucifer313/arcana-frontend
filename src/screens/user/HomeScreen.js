@@ -7,7 +7,6 @@ import useLoginValidation from '../../hooks/userLoginValidatorHook'
 import { getTournaments } from '../../actions/tournament-action'
 import { LinkContainer } from 'react-router-bootstrap'
 import { getMyTournaments } from '../../actions/user-action'
-import Moment from 'moment'
 
 const HomeScreen = ({ history }) => {
   useLoginValidation(history)

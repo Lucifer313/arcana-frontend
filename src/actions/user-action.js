@@ -1,4 +1,5 @@
 import axios from '../axios-config'
+import { GET_QUALIFIED_PLAYERS_REQUEST } from '../constants/tournament-constants'
 
 import {
   ADD_PLAYING_SQUAD_FAILURE,
@@ -13,6 +14,9 @@ import {
   GET_MY_TOURNAMENTS_FAILURE,
   GET_MY_TOURNAMENTS_REQUEST,
   GET_MY_TOURNAMENTS_SUCCESS,
+  GET_SQUAD_BY_DAY_FAILURE,
+  GET_SQUAD_BY_DAY_REQUEST,
+  GET_SQUAD_BY_DAY_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -208,6 +212,31 @@ export const getSquadAddingPermission =
     } catch (error) {
       dispatch({
         type: CHECK_SQUAD_PERMISSION_FAILURE,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getSquadByDay =
+  (userId, tournamentId, day) => async (dispatch) => {
+    try {
+      dispatch({ type: GET_SQUAD_BY_DAY_REQUEST })
+
+      const { data } = await axios.post(`/users/${userId}/get-squad-by-day`, {
+        tournamentId,
+        day,
+      })
+
+      dispatch({
+        type: GET_SQUAD_BY_DAY_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: GET_SQUAD_BY_DAY_FAILURE,
         payload:
           error.message && error.response.data.message
             ? error.response.data.message

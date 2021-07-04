@@ -12,6 +12,9 @@ import {
   GET_MY_TOURNAMENTS_FAILURE,
   GET_MY_TOURNAMENTS_REQUEST,
   GET_MY_TOURNAMENTS_SUCCESS,
+  GET_SQUAD_BY_DAY_FAILURE,
+  GET_SQUAD_BY_DAY_REQUEST,
+  GET_SQUAD_BY_DAY_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -22,7 +25,15 @@ import {
 } from '../constants/user-constants'
 
 const userDetailsReducer = (
-  state = { userInfo: {}, myTournaments: [], allowed: false },
+  state = {
+    userInfo: {},
+    myTournaments: [],
+    allowed: false,
+    previousSquad: {
+      playingSquad: [],
+      reserveSquad: [],
+    },
+  },
   action
 ) => {
   switch (action.type) {
@@ -191,6 +202,31 @@ const userDetailsReducer = (
       }
     }
 
+    case GET_SQUAD_BY_DAY_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+      }
+    }
+
+    case GET_SQUAD_BY_DAY_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        previousSquad: action.payload,
+      }
+    }
+
+    case GET_SQUAD_BY_DAY_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.payload,
+      }
+    }
     case USER_LOGOUT: {
       return {
         userInfo: null,

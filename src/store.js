@@ -23,6 +23,10 @@ const initialState = {
     userInfo: userInfoFromLocalStorage,
     myTournaments: [],
     allowed: false,
+    previousSquad: {
+      playingSquad: [],
+      reserveSquad: [],
+    },
   },
   teamDetails: {
     teams: [],
