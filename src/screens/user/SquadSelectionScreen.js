@@ -10,11 +10,7 @@ import Header from '../../components/Layout/User/Header'
 import SquadSelector from '../../components/SquadSelector'
 import PreviousSquadViewer from '../../components/PreviousSquadViewer'
 
-import { getQualifiedPlayers } from '../../actions/tournament-action'
-import {
-  getMyTournaments,
-  getSquadAddingPermission,
-} from '../../actions/user-action'
+import { getSquadAddingPermission } from '../../actions/user-action'
 
 const SquadSelectionScreen = ({ history }) => {
   //const [reserveSquad, setReserveSquad] = useState([])
@@ -36,17 +32,9 @@ const SquadSelectionScreen = ({ history }) => {
     if (hour >= 0) {
       dispatch(getSquadAddingPermission(userInfo._id, tid))
     }
-  }, [])
+  }, [allowed, dispatch, tid, userInfo._id])
 
   //To get tournaments of the current user
-  useEffect(() => {
-    dispatch(getMyTournaments(userInfo._id))
-  }, [userInfo, dispatch])
-
-  // To get the qualified players list for the selected tournament
-  useEffect(() => {
-    dispatch(getQualifiedPlayers(tid))
-  }, [history, dispatch, tid])
 
   return (
     <div>
@@ -59,7 +47,14 @@ const SquadSelectionScreen = ({ history }) => {
           >
             Squads can only be submitted between 9:00 PM and 9:00 AM
           </p>
-        ) : null}
+        ) : (
+          <p
+            className='text-center p-1'
+            style={{ background: 'red', color: 'white', fontWeight: '400' }}
+          >
+            Select 2 Cores, 1 Offlaner and 2 Support Players
+          </p>
+        )}
         <Container style={{ minHeight: '82vh' }}>
           <Row>
             {allowed ? (

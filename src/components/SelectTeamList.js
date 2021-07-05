@@ -4,6 +4,7 @@ import Logo from '../components/Logo'
 
 const SelectTeamList = ({
   players,
+  previousSelectedSquad,
   selectedPlayers,
   addPlayers,
   removePlayers,
@@ -30,7 +31,7 @@ const SelectTeamList = ({
 
   return (
     <>
-      <div style={{ height: '64vh', overflowY: 'auto' }}>
+      <div style={{ height: '70vh', overflowY: 'auto' }}>
         <Table striped hover style={{ maxHeight: '80vh', overflowY: 'auto' }}>
           <thead>
             <tr>

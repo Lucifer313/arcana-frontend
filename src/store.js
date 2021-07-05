@@ -25,8 +25,12 @@ const initialState = {
     allowed: false,
     previousSquad: {
       playingSquad: [],
+      playingSquadIds: [],
       reserveSquad: [],
+      reserveSquadIds: [],
     },
+
+    newPlayingSquad: [],
   },
   teamDetails: {
     teams: [],

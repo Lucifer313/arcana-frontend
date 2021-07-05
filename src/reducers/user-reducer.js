@@ -1,4 +1,5 @@
 import {
+  ADD_PLAYER_TO_SQUAD,
   ADD_PLAYING_SQUAD_FAILURE,
   ADD_PLAYING_SQUAD_REQUEST,
   ADD_PLAYING_SQUAD_SUCCESS,
@@ -14,7 +15,10 @@ import {
   GET_MY_TOURNAMENTS_SUCCESS,
   GET_SQUAD_BY_DAY_FAILURE,
   GET_SQUAD_BY_DAY_REQUEST,
+  GET_SQUAD_BY_DAY_RESET,
   GET_SQUAD_BY_DAY_SUCCESS,
+  REMOVE_PLAYER_FROM_SQUAD,
+  RESET_PLAYER_SQUAD,
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -31,8 +35,11 @@ const userDetailsReducer = (
     allowed: false,
     previousSquad: {
       playingSquad: [],
+      playingSquadIds: [],
       reserveSquad: [],
+      reserveSquadIds: [],
     },
+    newPlayingSquad: [],
   },
   action
 ) => {
@@ -180,7 +187,6 @@ const userDetailsReducer = (
         ...state,
         checking: true,
         checked: false,
-        allowed: false,
       }
     }
 
@@ -216,6 +222,7 @@ const userDetailsReducer = (
         loading: false,
         loaded: true,
         previousSquad: action.payload,
+        newPlayingSquad: action.payload.playingSquadIds,
       }
     }
 
@@ -227,6 +234,45 @@ const userDetailsReducer = (
         error: action.payload,
       }
     }
+
+    case GET_SQUAD_BY_DAY_RESET: {
+      return {
+        ...state,
+        previousSquad: {
+          playingSquad: [],
+          playingSquadIds: [],
+          reserveSquad: [],
+          reserveSquadIds: [],
+        },
+        newPlayingSquad: [],
+      }
+    }
+
+    case ADD_PLAYER_TO_SQUAD: {
+      return {
+        ...state,
+        newPlayingSquad: [...state.newPlayingSquad, action.payload],
+      }
+    }
+
+    case REMOVE_PLAYER_FROM_SQUAD: {
+      let updatedPlayingSquad = state.newPlayingSquad.filter(
+        (p) => p !== action.payload
+      )
+
+      return {
+        ...state,
+        newPlayingSquad: updatedPlayingSquad,
+      }
+    }
+
+    case RESET_PLAYER_SQUAD: {
+      return {
+        ...state,
+        newPlayingSquad: state.previousSquad.playingSquadIds,
+      }
+    }
+
     case USER_LOGOUT: {
       return {
         userInfo: null,

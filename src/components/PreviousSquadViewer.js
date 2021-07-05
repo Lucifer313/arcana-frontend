@@ -22,14 +22,16 @@ const PreviousSquadViewer = ({ navigation }) => {
 
   const { playingSquad, reserveSquad } = previousSquad
 
-  let tournamentDays = tournament.days.length === 0 ? 1 : tournament.days.length
+  let tournamentDays = tournament.days.length
 
-  const [day, setDay] = useState(tournamentDays)
-
+  const [day, setDay] = useState(tournament.days.length)
+  console.log('DayTe: ' + day)
   useEffect(() => {
-    dispatch(getMyTournaments(userInfo._id, tid))
-    dispatch(getSquadByDay(userInfo._id, tid, tournamentDays))
-  }, [])
+    //dispatch(getMyTournaments(userInfo._id, tid))
+    if (tournamentDays > 0) {
+      dispatch(getSquadByDay(userInfo._id, tid, tournamentDays))
+    }
+  }, [tournament, tid, userInfo._id, dispatch])
 
   const getPreviousSquadHandler = (selectedDay) => {
     setDay(selectedDay)
@@ -81,43 +83,47 @@ const PreviousSquadViewer = ({ navigation }) => {
                   })}
                 </Form.Control>
               </Form.Group>
-              {loading ? (
-                <div style={{ width: '10%', margin: 'auto' }}>
-                  <Loader />
-                </div>
-              ) : null}
             </>
           ) : null}
-          {playingSquad.length > 0 ? (
-            <SelectedSquad
-              squad={playingSquad}
-              title={`Squad selected for Day ${day}`}
-            />
+          {loading ? (
+            <div style={{ width: '10%', margin: 'auto' }}>
+              <Loader />
+            </div>
           ) : null}
-          <Button
-            variant='primary'
-            className='my-2'
-            onClick={() => navigation.goBack()}
-          >
-            Back
-          </Button>{' '}
-          {!showSubstitueSquad ? (
+          <div style={{ minHeight: '74vh' }}>
+            {playingSquad.length > 0 ? (
+              <SelectedSquad
+                squad={playingSquad}
+                title={`Squad selected for Day ${day}`}
+              />
+            ) : null}
+          </div>
+          <div>
             <Button
-              className='my-2'
-              variant='success'
-              onClick={() => setShowSubstitueSquad(true)}
-            >
-              Show Subs
-            </Button>
-          ) : (
-            <Button
-              className='my-2'
               variant='danger'
-              onClick={() => setShowSubstitueSquad(false)}
+              className='my-2'
+              onClick={() => navigation.goBack()}
             >
-              Hide Subs
-            </Button>
-          )}
+              Back
+            </Button>{' '}
+            {!showSubstitueSquad ? (
+              <Button
+                className='my-2'
+                variant='success'
+                onClick={() => setShowSubstitueSquad(true)}
+              >
+                Show Subs
+              </Button>
+            ) : (
+              <Button
+                className='my-2'
+                variant='danger'
+                onClick={() => setShowSubstitueSquad(false)}
+              >
+                Hide Subs
+              </Button>
+            )}
+          </div>
         </>
       </Col>
 
