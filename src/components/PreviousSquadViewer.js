@@ -91,7 +91,7 @@ const PreviousSquadViewer = ({ navigation }) => {
             </div>
           ) : null}
           <div style={{ minHeight: '74vh' }}>
-            {playingSquad.length > 0 ? (
+            {playingSquad && playingSquad.length > 0 ? (
               <SelectedSquad
                 squad={playingSquad}
                 title={`Squad selected for Day ${day}`}
@@ -128,7 +128,7 @@ const PreviousSquadViewer = ({ navigation }) => {
       </Col>
 
       {showSubstitueSquad ? (
-        reserveSquad.length > 0 ? (
+        reserveSquad && reserveSquad.length > 0 ? (
           <SelectedSquad
             squad={reserveSquad}
             title={`Substitutes for Day ${day}`}
