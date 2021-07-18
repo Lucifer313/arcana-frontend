@@ -22,20 +22,23 @@ const PreviousSquadViewer = ({ navigation }) => {
 
   const { playingSquad, reserveSquad } = previousSquad
 
-  let tournamentDays = tournament.days.length
+  let tournamentDays = tournament.days.length - 1
+  console.log(typeof tournamentDays)
 
-  const [day, setDay] = useState(tournament.days.length)
-  console.log('DayTe: ' + day)
+  const [day, setDay] = useState(tournament.days.length - 1)
+
   useEffect(() => {
     //dispatch(getMyTournaments(userInfo._id, tid))
     if (tournamentDays > 0) {
-      dispatch(getSquadByDay(userInfo._id, tid, tournamentDays))
+      dispatch(
+        getSquadByDay(userInfo._id, tid, tournamentDays.toString(), 'previous')
+      )
     }
   }, [tournament, tid, userInfo._id, dispatch])
 
-  const getPreviousSquadHandler = (selectedDay) => {
+  const getPreviousSquadHandler = (selectedDay, mode) => {
     setDay(selectedDay)
-    dispatch(getSquadByDay(userInfo._id, tid, selectedDay))
+    dispatch(getSquadByDay(userInfo._id, tid, selectedDay, mode))
   }
 
   return (
@@ -63,7 +66,12 @@ const PreviousSquadViewer = ({ navigation }) => {
                 style={{ float: 'right' }}
                 variant='warning'
                 className='my-2'
-                onClick={() => getPreviousSquadHandler(tournament.days.length)}
+                onClick={() =>
+                  getPreviousSquadHandler(
+                    (tournament.days.length - 1).toString(),
+                    'previous'
+                  )
+                }
               >
                 Clear Filter
               </Button>
@@ -76,10 +84,15 @@ const PreviousSquadViewer = ({ navigation }) => {
                 <Form.Control
                   as='select'
                   value={day}
-                  onChange={(e) => getPreviousSquadHandler(e.target.value)}
+                  onChange={(e) =>
+                    getPreviousSquadHandler(e.target.value, 'previous')
+                  }
                 >
+                  <option selected>Select previous day</option>
                   {tournament.days.map((t) => {
-                    return <option value={t.day}>{t.day}</option>
+                    if (t.day < tournament.days.length) {
+                      return <option value={t.day}>{t.day}</option>
+                    }
                   })}
                 </Form.Control>
               </Form.Group>

@@ -1,5 +1,8 @@
 import axios from '../axios-config'
 import {
+  ADD_MATCH_POINTS_FAILURE,
+  ADD_MATCH_POINTS_REQUEST,
+  ADD_MATCH_POINTS_SUCCESS,
   CREATE_TOURNAMENT_FAILURE,
   CREATE_TOURNAMENT_REQUEST,
   CREATE_TOURNAMENT_SUCCESS,
@@ -163,3 +166,35 @@ export const getQualifiedTeams = (tournamentId) => async (dispatch) => {
     })
   }
 }
+
+export const addMatchPoints =
+  (tournamentId, matchId, dayNum, matchNum, team1, team2) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ADD_MATCH_POINTS_REQUEST })
+
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      }
+
+      const data = await axios.post(
+        '/tournaments/add-points',
+        { tournamentId, matchId, dayNum, matchNum, team1, team2 },
+        config
+      )
+
+      dispatch({
+        type: ADD_MATCH_POINTS_SUCCESS,
+      })
+    } catch (error) {
+      dispatch({
+        type: ADD_MATCH_POINTS_FAILURE,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }

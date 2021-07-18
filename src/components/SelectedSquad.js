@@ -26,7 +26,7 @@ const SelectedSquad = ({ squad, title }) => {
             <th>Avatar</th>
             <th>Alias</th>
             <th>Role</th>
-            <th>Team</th>
+            <th>Points</th>
           </tr>
         </thead>
         <tbody>
@@ -38,9 +38,15 @@ const SelectedSquad = ({ squad, title }) => {
                   </td>
                   <td>{player.alias}</td>
                   <td>{player.role}</td>
-                  <td>
-                    <Logo path={player.team.logo} />
-                  </td>
+
+                  {player.dayPoints === undefined ||
+                  player.dayPoints === null ? (
+                    <td style={{ color: 'red' }}>TBD</td>
+                  ) : (
+                    <td style={{ color: 'blue' }}>
+                      {Math.round(player.dayPoints * 100) / 100}
+                    </td>
+                  )}
                 </tr>
               ))
             : null}

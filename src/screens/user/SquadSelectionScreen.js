@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container, Row } from 'react-bootstrap'
+import { Container, Row, Tabs, Tab } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import Moment from 'moment'
 
@@ -14,6 +14,8 @@ import { getSquadAddingPermission } from '../../actions/user-action'
 
 const SquadSelectionScreen = ({ history }) => {
   //const [reserveSquad, setReserveSquad] = useState([])
+
+  const TABSTYLES = { width: '50%' }
 
   const dispatch = useDispatch()
 
@@ -40,30 +42,34 @@ const SquadSelectionScreen = ({ history }) => {
     <div>
       <>
         <Header />
-        {!allowed ? (
-          <p
-            className='text-center p-1'
-            style={{ background: 'red', color: 'white', fontWeight: '400' }}
+        <div>
+          <Tabs
+            defaultActiveKey='selectSquad'
+            transition={false}
+            id='noanim-tab-example'
+            className='mb-3'
           >
-            Squads can only be submitted between 9:00 PM and 9:00 AM
-          </p>
-        ) : (
-          <p
-            className='text-center p-1'
-            style={{ background: 'red', color: 'white', fontWeight: '400' }}
-          >
-            Select 2 Cores, 1 Offlaner and 2 Support Players
-          </p>
-        )}
-        <Container style={{ minHeight: '82vh' }}>
-          <Row>
-            {allowed ? (
-              <SquadSelector navigation={history} />
-            ) : (
-              <PreviousSquadViewer navigation={history} />
-            )}
-          </Row>
-        </Container>
+            <Tab
+              eventKey='selectSquad'
+              title='Select New Squad'
+              className={TABSTYLES}
+            >
+              <Container style={{ minHeight: '82vh' }}>
+                <Row>
+                  <SquadSelector navigation={history} allowed={allowed} />
+                </Row>
+              </Container>
+            </Tab>
+            <Tab eventKey='previousSquad' title='View Previous Squad'>
+              <Container style={{ minHeight: '82vh' }}>
+                <Row>
+                  <PreviousSquadViewer navigation={history} />
+                </Row>
+              </Container>
+            </Tab>
+          </Tabs>
+        </div>
+
         <Footer />
       </>
     </div>

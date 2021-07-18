@@ -1,4 +1,8 @@
 import {
+  ADD_MATCH_POINTS_FAILURE,
+  ADD_MATCH_POINTS_REQUEST,
+  ADD_MATCH_POINTS_RESET,
+  ADD_MATCH_POINTS_SUCCESS,
   CREATE_TOURNAMENT_FAILURE,
   CREATE_TOURNAMENT_REQUEST,
   CREATE_TOURNAMENT_RESET,
@@ -191,6 +195,41 @@ const tournamentDetailsReducer = (state = { qualifiedPlayers: [] }, action) => {
       }
     }
 
+    case ADD_MATCH_POINTS_REQUEST: {
+      return {
+        ...state,
+        inserting: true,
+        inserted: false,
+        error: false,
+      }
+    }
+
+    case ADD_MATCH_POINTS_SUCCESS: {
+      return {
+        ...state,
+        inserting: false,
+        inserted: true,
+        error: false,
+      }
+    }
+
+    case ADD_MATCH_POINTS_FAILURE: {
+      return {
+        ...state,
+        inserting: false,
+        inserted: false,
+        error: action.payload,
+      }
+    }
+
+    case ADD_MATCH_POINTS_RESET: {
+      return {
+        ...state,
+        inserting: false,
+        inserted: false,
+        error: false,
+      }
+    }
     default: {
       return state
     }

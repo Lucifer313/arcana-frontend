@@ -21,8 +21,9 @@ import {
   REMOVE_PLAYER_FROM_SQUAD,
   RESET_PLAYER_SQUAD,
 } from '../constants/user-constants'
+import SelectedSquad from './SelectedSquad'
 
-const SquadSelector = ({ navigation }) => {
+const SquadSelector = ({ navigation, allowed }) => {
   //const [reserveSquad, setReserveSquad] = useState([])
 
   const dispatch = useDispatch()
@@ -35,7 +36,7 @@ const SquadSelector = ({ navigation }) => {
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
   const { qualifiedPlayers } = tournamentDetails
 
-  const { playingSquadIds } = previousSquad
+  const { playingSquadIds, playingSquad } = previousSquad
 
   //const [playingSquad, setPlayingSquad] = useState([])
 
@@ -168,10 +169,12 @@ const SquadSelector = ({ navigation }) => {
 
   useEffect(() => {
     dispatch({ type: GET_SQUAD_BY_DAY_RESET })
-    dispatch(getSquadByDay(userInfo._id, tid, tournament.days.length))
+    dispatch(
+      getSquadByDay(userInfo._id, tid, tournament.days.length, 'current')
+    )
   }, [])
 
-  return (
+  return allowed ? (
     <Col>
       {errorMessage !== '' ? (
         <Popup
@@ -231,6 +234,11 @@ const SquadSelector = ({ navigation }) => {
         </Button>
       </div>
     </Col>
+  ) : (
+    <SelectedSquad
+      squad={playingSquad}
+      title={`Squad selected for Day ${tournament.days.length}`}
+    />
   )
 }
 

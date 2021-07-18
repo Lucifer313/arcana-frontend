@@ -18,6 +18,7 @@ import SelectTeamScreen from './screens/user/SelectTeamScreen'
 import SquadSelectionScreen from './screens/user/SquadSelectionScreen'
 import MyTournamentScreen from './screens/user/MyTournamentScreen'
 import TournamentDetailScreen from './screens/user/TournamentDetailScreen'
+import AdminTournamentDetailsScreen from './screens/admin/Tournament/AdminTournamentDetailsScreen'
 
 const App = () => {
   dotenv.config()
@@ -53,6 +54,12 @@ const App = () => {
           component={CreateTournamentScreen}
         />
         <Route path='/admin/tournaments' exact component={TournamentScreen} />
+        <Route
+          path='/admin/tournaments/:tid'
+          exact
+          component={AdminTournamentDetailsScreen}
+        />
+
         <Route
           path='/tournaments/:tid/create-team'
           exact
