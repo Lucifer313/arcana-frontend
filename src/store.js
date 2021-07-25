@@ -46,7 +46,6 @@ const initialState = {
       reserveSquad: [],
       reserveSquadIds: [],
     },
-
     newPlayingSquad: [],
   },
   teamDetails: {

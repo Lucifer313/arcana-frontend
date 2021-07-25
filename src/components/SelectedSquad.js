@@ -2,7 +2,23 @@ import React from 'react'
 import { Col, Table } from 'react-bootstrap'
 import Logo from './Logo'
 
+import { useSelector } from 'react-redux'
+
+//This component is used for displaying the squad that has already been selected//
+//It is a user component//
 const SelectedSquad = ({ squad, title }) => {
+  const tournamentDetails = useSelector((state) => state.tournamentDetails)
+  const { qualifiedPlayers } = tournamentDetails
+
+  const userDetails = useSelector((state) => state.userDetails)
+  const { previousSquad } = userDetails
+
+  let squadWithoutPoints = qualifiedPlayers.filter((player) =>
+    previousSquad.playingSquadIds.includes(player._id)
+  )
+
+  squad = squad.length > 0 ? squad : squadWithoutPoints
+  console.log(squad.length)
   return (
     <Col>
       <Table>
@@ -30,26 +46,23 @@ const SelectedSquad = ({ squad, title }) => {
           </tr>
         </thead>
         <tbody>
-          {squad.length > 0
-            ? squad.map((player) => (
-                <tr>
-                  <td>
-                    <Logo path={player.profile_image} />
-                  </td>
-                  <td>{player.alias}</td>
-                  <td>{player.role}</td>
+          {squad.map((player) => (
+            <tr>
+              <td>
+                <Logo path={player.profile_image} />
+              </td>
+              <td>{player.alias}</td>
+              <td>{player.role}</td>
 
-                  {player.dayPoints === undefined ||
-                  player.dayPoints === null ? (
-                    <td style={{ color: 'red' }}>TBD</td>
-                  ) : (
-                    <td style={{ color: 'blue' }}>
-                      {Math.round(player.dayPoints * 100) / 100}
-                    </td>
-                  )}
-                </tr>
-              ))
-            : null}
+              {player.dayPoints === undefined || player.dayPoints === null ? (
+                <td style={{ color: 'red' }}>TBD</td>
+              ) : (
+                <td style={{ color: 'blue' }}>
+                  {Math.round(player.dayPoints * 100) / 100}
+                </td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </Table>
     </Col>

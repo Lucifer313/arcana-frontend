@@ -33,10 +33,7 @@ const userDetailsReducer = (
     userInfo: {},
     myTournaments: [],
     allowed: false,
-    currentSquad: {
-      playingSquad: [],
-      reserveSquad: [],
-    },
+
     previousSquad: {
       playingSquad: [],
       playingSquadIds: [],
@@ -171,7 +168,6 @@ const userDetailsReducer = (
         ...state,
         adding: false,
         added: true,
-        playingSquad: action.payload,
         error: false,
       }
     }

@@ -19,6 +19,7 @@ import SquadSelectionScreen from './screens/user/SquadSelectionScreen'
 import MyTournamentScreen from './screens/user/MyTournamentScreen'
 import TournamentDetailScreen from './screens/user/TournamentDetailScreen'
 import AdminTournamentDetailsScreen from './screens/admin/Tournament/AdminTournamentDetailsScreen'
+import PreviousSquadViewer from './components/PreviousSquadViewer'
 
 const App = () => {
   dotenv.config()
@@ -75,8 +76,12 @@ const App = () => {
           exact
           component={SquadSelectionScreen}
         />
-
         <Route path='/my-tournaments/' exact component={MyTournamentScreen} />
+        <Route
+          path='/my-tournaments/:tid/view-previous-squads/'
+          exact
+          component={PreviousSquadViewer}
+        />
       </Switch>
     </Router>
   )

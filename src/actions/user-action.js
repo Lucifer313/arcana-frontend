@@ -221,14 +221,13 @@ export const getSquadAddingPermission =
   }
 
 export const getSquadByDay =
-  (userId, tournamentId, day, mode) => async (dispatch) => {
+  (userId, tournamentId, day) => async (dispatch) => {
     try {
       dispatch({ type: GET_SQUAD_BY_DAY_REQUEST })
 
       const { data } = await axios.post(`/users/${userId}/get-squad-by-day`, {
         tournamentId,
         day,
-        mode,
       })
 
       dispatch({

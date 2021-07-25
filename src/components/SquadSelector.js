@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { batch } from 'react-redux'
 import { useSelector, useDispatch } from 'react-redux'
-import { Col, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import { useParams } from 'react-router'
 import Moment from 'moment'
 
@@ -21,11 +20,11 @@ import {
   REMOVE_PLAYER_FROM_SQUAD,
   RESET_PLAYER_SQUAD,
 } from '../constants/user-constants'
-import SelectedSquad from './SelectedSquad'
+import { LinkContainer } from 'react-router-bootstrap'
+import Header from './Layout/User/Header'
+import Footer from './Layout/User/Footer'
 
-const SquadSelector = ({ navigation, allowed }) => {
-  //const [reserveSquad, setReserveSquad] = useState([])
-
+const SquadSelector = ({ navigation }) => {
   const dispatch = useDispatch()
 
   const { tid } = useParams()
@@ -36,9 +35,7 @@ const SquadSelector = ({ navigation, allowed }) => {
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
   const { qualifiedPlayers } = tournamentDetails
 
-  const { playingSquadIds, playingSquad } = previousSquad
-
-  //const [playingSquad, setPlayingSquad] = useState([])
+  const { playingSquadIds } = previousSquad
 
   let tournament = myTournaments.filter((t) => t._id === tid)[0]
 
@@ -53,12 +50,13 @@ const SquadSelector = ({ navigation, allowed }) => {
   const [confirmBody, setConfirmBody] = useState('')
   //Adding a player to the squad selection
   const addPlayingSquad = (playerId) => {
+    //Intializing the acceptable value for the new player to be added to true
     let acceptable = true
-
+    //If squad length is already 5 and new player is selected
     if (newPlayingSquad.length === 5) {
       setErrorMessage('You can only select 5 players for the Playing Squad')
     } else {
-      //Getting the New Player Role
+      //Getting the New Selected Player Role
       let newPlayerRole = qualifiedPlayers.filter(
         (player) => player._id === playerId
       )[0].role
@@ -117,6 +115,7 @@ const SquadSelector = ({ navigation, allowed }) => {
     }
   }
 
+  //This function is executed to validate the squad selected and check if max 3 subs are made to previous squad
   const squadVerification = () => {
     if (newPlayingSquad.length < 5) {
       setErrorMessage('Please select 5 players for your Squad')
@@ -124,7 +123,6 @@ const SquadSelector = ({ navigation, allowed }) => {
       let squadVariation = playingSquadIds.filter(
         (p) => !newPlayingSquad.includes(p)
       )
-      console.log(squadVariation)
       if (squadVariation.length > 3) {
         setErrorMessage('You can make a maximum of 3 substitutions')
       } else {
@@ -174,71 +172,99 @@ const SquadSelector = ({ navigation, allowed }) => {
     )
   }, [])
 
-  return allowed ? (
-    <Col>
-      {errorMessage !== '' ? (
-        <Popup
-          title='Team Selection'
-          body={errorMessage}
-          onClose={() => setErrorMessage('')}
-          type='success'
-        />
-      ) : null}
-      {confirmationModal ? (
-        <Popup
-          title='Squad Submission'
-          body={confirmBody}
-          type='confirm'
-          onClose={() => setConfirmationModal(false)}
-          onConfirm={submitSquad}
-        />
-      ) : null}
-      <div style={{ minHeight: '70vh' }}>
-        {playingSquadIds.length > 0 || tournament.days.length === 0 ? (
-          <SelectTeamList
-            players={myArcanaTeam}
-            previousSelectedSquad={previousSquad.playingSquadIds}
-            selectedPlayers={newPlayingSquad}
-            nameFilter=''
-            teamFilter='Filter by Team'
-            addPlayers={addPlayingSquad}
-            removePlayers={removePlayingSquad}
-            previewStatus={false}
+  return (
+    <>
+      <Header />
+      <Row className='my-2'>
+        <Col>
+          <LinkContainer to={`/my-tournaments/${tid}/view-previous-squads/`}>
+            <Button variant='success'>View Previous Squads</Button>
+          </LinkContainer>
+        </Col>
+      </Row>
+      <Container>
+        <Row>
+          <Col>
+            <p
+              style={{
+                padding: '8px',
+                borderTopLeftRadius: '4px',
+                borderTopRightRadius: '4px',
+                backgroundColor: '#2196F3',
+                textAlign: 'center',
+                fontWeight: 500,
+                fontSize: '16px',
+                color: 'white',
+                width: '100%',
+                marginBottom: '0px',
+              }}
+            >
+              Select your squad for Day: {tournament.days.length + 1}
+            </p>
+          </Col>
+        </Row>
+      </Container>
+      <Col>
+        {errorMessage !== '' ? (
+          <Popup
+            title='Team Selection'
+            body={errorMessage}
+            onClose={() => setErrorMessage('')}
+            type='success'
           />
-        ) : (
+        ) : null}
+        {confirmationModal ? (
+          <Popup
+            title='Squad Submission'
+            body={confirmBody}
+            type='confirm'
+            onClose={() => setConfirmationModal(false)}
+            onConfirm={submitSquad}
+          />
+        ) : null}
+        <div style={{ minHeight: '70vh' }}>
+          {playingSquadIds.length > 0 || tournament.days.length === 0 ? (
+            <SelectTeamList
+              players={myArcanaTeam}
+              previousSelectedSquad={previousSquad.playingSquadIds}
+              selectedPlayers={newPlayingSquad}
+              nameFilter=''
+              teamFilter='Filter by Team'
+              addPlayers={addPlayingSquad}
+              removePlayers={removePlayingSquad}
+              previewStatus={false}
+            />
+          ) : (
+            <div style={{ width: '10%', margin: 'auto' }}>
+              <Loader />
+            </div>
+          )}
+        </div>
+        {adding ? (
           <div style={{ width: '10%', margin: 'auto' }}>
             <Loader />
           </div>
-        )}
-      </div>
-      {adding ? (
-        <div style={{ width: '10%', margin: 'auto' }}>
-          <Loader />
-        </div>
-      ) : null}
+        ) : null}
 
-      <div className='my-3'>
-        <Button variant='danger' onClick={() => navigation.goBack()}>
-          Back
-        </Button>{' '}
-        <Button
-          variant='warning'
-          onClick={() => {
-            dispatch({ type: RESET_PLAYER_SQUAD })
-          }}
-        >
-          Reset
-        </Button>{' '}
-        <Button variant='success' onClick={squadVerification}>
-          Submit
-        </Button>
-      </div>
-    </Col>
-  ) : (
-    <SelectedSquad
-      squad={playingSquad}
-      title={`Squad selected for Day ${tournament.days.length}`}
-    />
+        <div className='my-3'>
+          <Button variant='danger' onClick={() => navigation.goBack()}>
+            Back
+          </Button>{' '}
+          <Button
+            variant='warning'
+            onClick={() => {
+              dispatch({ type: RESET_PLAYER_SQUAD })
+            }}
+          >
+            Reset
+          </Button>{' '}
+          <Button variant='success' onClick={squadVerification}>
+            Submit
+          </Button>
+        </div>
+      </Col>
+      <Footer />
+    </>
   )
 }
 

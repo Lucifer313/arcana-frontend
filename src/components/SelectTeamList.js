@@ -33,7 +33,14 @@ const SelectTeamList = ({
     <>
       <div style={{ height: '70vh', overflowY: 'auto' }}>
         <Table striped hover style={{ maxHeight: '80vh', overflowY: 'auto' }}>
-          <thead>
+          <thead
+            style={{
+              position: 'sticky',
+              top: '0',
+              backgroundColor: 'white',
+              zIndex: 1000,
+            }}
+          >
             <tr>
               <th>Avatar</th>
               <th>Name</th>
