@@ -76,7 +76,6 @@ const TournamentScreen = () => {
                 <th>Name</th>
                 <th>Tier</th>
                 <th>Total Teams</th>
-                <th>Days</th>
                 <th>View</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -90,7 +89,7 @@ const TournamentScreen = () => {
                   <td>{tournament.number_of_teams}</td>
                   <td>
                     <LinkContainer to={'/admin/tournaments/' + tournament._id}>
-                      <Button variant='warning'>
+                      <Button variant='primary'>
                         <i class='fas fa-eye'></i>
                       </Button>
                     </LinkContainer>

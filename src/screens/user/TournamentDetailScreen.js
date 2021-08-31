@@ -90,7 +90,7 @@ const TournamentDetailScreen = () => {
           </Col>
           <Col lg={12} style={{ padding: '0' }}>
             <LinkContainer
-              to='/'
+              to={`/tournaments/${tid}/player-leaderboard`}
               style={{
                 width: '100%',
                 minHeight: '27vh',

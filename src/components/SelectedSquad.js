@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 //This component is used for displaying the squad that has already been selected//
 //It is a user component//
-const SelectedSquad = ({ squad, title }) => {
+const SelectedSquad = ({ squad, squadType, title }) => {
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
   const { qualifiedPlayers } = tournamentDetails
 
@@ -18,7 +18,7 @@ const SelectedSquad = ({ squad, title }) => {
   )
 
   squad = squad.length > 0 ? squad : squadWithoutPoints
-  console.log(squad.length)
+
   return (
     <Col>
       <Table>

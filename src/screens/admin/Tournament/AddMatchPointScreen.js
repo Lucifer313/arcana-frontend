@@ -82,7 +82,7 @@ const AddMatchPointScreen = () => {
                   value={team1}
                   onChange={(e) => setTeam1(e.target.value)}
                 >
-                  {qualifiedTeams.map((team) => {
+                  {qualifiedTeams.teams.map((team) => {
                     return <option value={team._id}>{team.name}</option>
                   })}
                 </Form.Control>
@@ -94,7 +94,7 @@ const AddMatchPointScreen = () => {
                   value={team2}
                   onChange={(e) => setTeam2(e.target.value)}
                 >
-                  {qualifiedTeams.map((team) => {
+                  {qualifiedTeams.teams.map((team) => {
                     return <option value={team._id}>{team.name}</option>
                   })}
                 </Form.Control>

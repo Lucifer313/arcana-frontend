@@ -9,6 +9,9 @@ import {
   DELETE_TOURNAMENT_FAILURE,
   DELETE_TOURNAMENT_REQUEST,
   DELETE_TOURNAMENT_SUCCESS,
+  ELIMINATE_TEAM_FAILURE,
+  ELIMINATE_TEAM_REQUEST,
+  ELIMINATE_TEAM_SUCCESS,
   GET_QUALIFIED_PLAYERS_FAILURE,
   GET_QUALIFIED_PLAYERS_REQUEST,
   GET_QUALIFIED_PLAYERS_SUCCESS,
@@ -18,6 +21,12 @@ import {
   GET_TOURNAMENTS_FAILURE,
   GET_TOURNAMENTS_REQUEST,
   GET_TOURNAMENTS_SUCCESS,
+  PLAYER_LEADERBOARD_FAILURE,
+  PLAYER_LEADERBOARD_REQUEST,
+  PLAYER_LEADERBOARD_SUCCESS,
+  UNDO_ELIMINATE_TEAM_FAILURE,
+  UNDO_ELIMINATE_TEAM_REQUEST,
+  UNDO_ELIMINATE_TEAM_SUCCESS,
 } from '../constants/tournament-constants'
 
 export const createTournament =
@@ -191,6 +200,98 @@ export const addMatchPoints =
     } catch (error) {
       dispatch({
         type: ADD_MATCH_POINTS_FAILURE,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getPlayerLeaderboard = (tournamentId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: PLAYER_LEADERBOARD_REQUEST,
+    })
+
+    const { data } = await axios.get(
+      `/tournaments/${tournamentId}/player-leaderboard/`
+    )
+
+    dispatch({
+      type: PLAYER_LEADERBOARD_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PLAYER_LEADERBOARD_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const eliminateTeam = (tournamentId, teamId) => async (dispatch) => {
+  try {
+    console.log('TournamentID: ' + tournamentId)
+    console.log('TeamID: ' + teamId)
+
+    dispatch({
+      type: ELIMINATE_TEAM_REQUEST,
+    })
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+    }
+    const { data } = await axios.patch(
+      `/tournaments/${tournamentId}/eliminate-team`,
+      { teamId },
+      config
+    )
+
+    dispatch({
+      type: ELIMINATE_TEAM_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ELIMINATE_TEAM_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const undoTeamElimination =
+  (tournamentId, teamId) => async (dispatch) => {
+    try {
+      dispatch({
+        type: UNDO_ELIMINATE_TEAM_REQUEST,
+      })
+      const config = {
+        headers: {
+          'Content-type': 'application/json',
+        },
+      }
+
+      const { data } = await axios.patch(
+        `/tournaments/${tournamentId}/undo-eliminate-team`,
+        { teamId },
+        config
+      )
+
+      dispatch({
+        type: UNDO_ELIMINATE_TEAM_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: UNDO_ELIMINATE_TEAM_FAILURE,
         payload:
           error.message && error.response.data.message
             ? error.response.data.message

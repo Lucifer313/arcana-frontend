@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import Footer from '../../../components/Layout/Admin/Footer'
 import Header from '../../../components/Layout/Admin/Header'
-import { Container, Row, Col, Nav, Tabs, Tab } from 'react-bootstrap'
+import { Container, Row, Col, Nav, Tabs, Tab, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { getQualifiedTeams } from '../../../actions/tournament-action'
 import { useParams } from 'react-router'
 import AddMatchPointScreen from './AddMatchPointScreen'
+import { LinkContainer } from 'react-router-bootstrap'
+
+import './tournament.css'
+import EliminateTeamScreen from './EliminateTeamScreen'
+import DeclareWinnerScreen from './DeclareWinnerScreen'
 
 const AdminTournamentDetailsScreen = () => {
   const { tid } = useParams()
@@ -29,13 +34,15 @@ const AdminTournamentDetailsScreen = () => {
                   <Nav.Link eventKey='second'>Eliminate Teams</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey='second'>Declare Winner</Nav.Link>
+                  <Nav.Link eventKey='third'>Declare Winner</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey='second'>Edit Tourament</Nav.Link>
+                  <Nav.Link eventKey='fourth'>Edit Tourament</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey='second'>Back</Nav.Link>
+                  <LinkContainer to='/admin/tournaments'>
+                    <Nav.Link>Back</Nav.Link>
+                  </LinkContainer>
                 </Nav.Item>
               </Nav>
             </Col>
@@ -45,7 +52,10 @@ const AdminTournamentDetailsScreen = () => {
                   <AddMatchPointScreen />
                 </Tab.Pane>
                 <Tab.Pane eventKey='second'>
-                  <p>WP</p>
+                  <EliminateTeamScreen />
+                </Tab.Pane>
+                <Tab.Pane eventKey='third'>
+                  <DeclareWinnerScreen />
                 </Tab.Pane>
               </Tab.Content>
             </Col>

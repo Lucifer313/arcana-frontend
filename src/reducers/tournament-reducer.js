@@ -11,6 +11,9 @@ import {
   DELETE_TOURNAMENT_REQUEST,
   DELETE_TOURNAMENT_RESET,
   DELETE_TOURNAMENT_SUCCESS,
+  ELIMINATE_TEAM_FAILURE,
+  ELIMINATE_TEAM_REQUEST,
+  ELIMINATE_TEAM_SUCCESS,
   GET_QUALIFIED_PLAYERS_FAILURE,
   GET_QUALIFIED_PLAYERS_REQUEST,
   GET_QUALIFIED_PLAYERS_SUCCESS,
@@ -21,9 +24,18 @@ import {
   GET_TOURNAMENTS_FAILURE,
   GET_TOURNAMENTS_REQUEST,
   GET_TOURNAMENTS_SUCCESS,
+  PLAYER_LEADERBOARD_FAILURE,
+  PLAYER_LEADERBOARD_REQUEST,
+  PLAYER_LEADERBOARD_SUCCESS,
+  UNDO_ELIMINATE_TEAM_FAILURE,
+  UNDO_ELIMINATE_TEAM_REQUEST,
+  UNDO_ELIMINATE_TEAM_SUCCESS,
 } from '../constants/tournament-constants'
 
-const tournamentDetailsReducer = (state = { qualifiedPlayers: [] }, action) => {
+const tournamentDetailsReducer = (
+  state = { qualifiedPlayers: [], playerLeaderboard: [] },
+  action
+) => {
   switch (action.type) {
     case CREATE_TOURNAMENT_REQUEST: {
       return {
@@ -230,6 +242,91 @@ const tournamentDetailsReducer = (state = { qualifiedPlayers: [] }, action) => {
         error: false,
       }
     }
+
+    case PLAYER_LEADERBOARD_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        playerLeaderboard: [],
+        error: false,
+      }
+    }
+
+    case PLAYER_LEADERBOARD_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        playerLeaderboard: action.payload,
+        error: false,
+      }
+    }
+
+    case PLAYER_LEADERBOARD_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    }
+
+    case ELIMINATE_TEAM_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      }
+    }
+
+    case ELIMINATE_TEAM_SUCCESS: {
+      //Only updating the eliminatedTeams sub object of the qualifiedTeams object
+      let updatedQualifiedTeams = state.qualifiedTeams
+      updatedQualifiedTeams.eliminatedTeams = action.payload
+
+      return {
+        ...state,
+        loading: false,
+        qualifiedTeams: updatedQualifiedTeams,
+        error: false,
+      }
+    }
+
+    case ELIMINATE_TEAM_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    }
+
+    case UNDO_ELIMINATE_TEAM_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      }
+    }
+
+    case UNDO_ELIMINATE_TEAM_SUCCESS: {
+      //Only updating the eliminatedTeams sub object of the qualifiedTeams object
+      let updatedQualifiedTeams = state.qualifiedTeams
+      updatedQualifiedTeams.eliminatedTeams = action.payload
+
+      return {
+        ...state,
+        loading: false,
+        qualifiedTeams: updatedQualifiedTeams,
+        error: false,
+      }
+    }
+
+    case UNDO_ELIMINATE_TEAM_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    }
+
     default: {
       return state
     }

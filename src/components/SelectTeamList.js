@@ -1,10 +1,10 @@
 import React from 'react'
 import { Table, Button } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 import Logo from '../components/Logo'
 
 const SelectTeamList = ({
   players,
-  previousSelectedSquad,
   selectedPlayers,
   addPlayers,
   removePlayers,
@@ -29,6 +29,11 @@ const SelectTeamList = ({
       ? players.filter((p) => p.team._id === teamFilter)
       : players
 
+  const tournamentDetails = useSelector((state) => state.tournamentDetails)
+  const {
+    qualifiedTeams: { eliminatedTeams },
+  } = tournamentDetails
+
   return (
     <>
       <div style={{ height: '70vh', overflowY: 'auto' }}>
@@ -52,13 +57,20 @@ const SelectTeamList = ({
             {players
               .filter((p) => role.includes(p.role))
               .map((p) => (
-                <tr key={p._id}>
+                <tr
+                  key={p._id}
+                  style={{
+                    backgroundColor: eliminatedTeams.includes(p.team)
+                      ? 'red'
+                      : '',
+                  }}
+                >
                   <td>
                     <Logo path={p.profile_image} />
                   </td>
                   <td>{p.alias}</td>
                   <td>
-                    <Logo path={p.team.logo} />
+                    <Logo path={p.team_info[0].logo} />
                   </td>
                   <td>
                     {!selectedPlayers.includes(p._id) && !previewStatus ? (

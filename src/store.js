@@ -61,7 +61,11 @@ const initialState = {
   tournamentDetails: {
     tournaments: [],
     qualifiedPlayers: [],
-    qualifiedTeams: [],
+    qualifiedTeams: {
+      teams: [],
+      eliminatedTeams: [],
+    },
+    playerLeaderboard: [],
   },
 }
 

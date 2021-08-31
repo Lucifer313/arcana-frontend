@@ -45,6 +45,7 @@ const SquadSelector = ({ navigation }) => {
   let myArcanaTeam = qualifiedPlayers.filter((player) =>
     arcanaTeamIds.includes(player._id)
   )
+
   const [errorMessage, setErrorMessage] = useState('')
   const [confirmationModal, setConfirmationModal] = useState(false)
   const [confirmBody, setConfirmBody] = useState('')
@@ -166,10 +167,10 @@ const SquadSelector = ({ navigation }) => {
   }
 
   useEffect(() => {
-    dispatch({ type: GET_SQUAD_BY_DAY_RESET })
-    dispatch(
-      getSquadByDay(userInfo._id, tid, tournament.days.length, 'current')
-    )
+    //    dispatch({ type: GET_SQUAD_BY_DAY_RESET })
+    dispatch({ type: RESET_PLAYER_SQUAD })
+    //  dispatch()
+    dispatch(getSquadByDay(userInfo._id, tid, tournament.days.length))
   }, [])
 
   return (

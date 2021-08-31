@@ -102,6 +102,7 @@ const PreviousSquadViewer = ({ navigation, history }) => {
             <div style={{ minHeight: '74vh' }}>
               <SelectedSquad
                 squad={playingSquad}
+                squadType='playing'
                 title={`Squad selected for Day ${day}`}
               />
             </div>
@@ -140,6 +141,7 @@ const PreviousSquadViewer = ({ navigation, history }) => {
           reserveSquad && reserveSquad.length > 0 ? (
             <SelectedSquad
               squad={reserveSquad}
+              squadType='reserve'
               title={`Substitutes for Day ${day}`}
             />
           ) : null
