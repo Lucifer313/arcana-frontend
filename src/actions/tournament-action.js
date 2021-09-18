@@ -3,6 +3,9 @@ import {
   ADD_MATCH_POINTS_FAILURE,
   ADD_MATCH_POINTS_REQUEST,
   ADD_MATCH_POINTS_SUCCESS,
+  ARCANA_LEADERBOARD_FAILURE,
+  ARCANA_LEADERBOARD_REQUEST,
+  ARCANA_LEADERBOARD_SUCCESS,
   CREATE_TOURNAMENT_FAILURE,
   CREATE_TOURNAMENT_REQUEST,
   CREATE_TOURNAMENT_SUCCESS,
@@ -299,3 +302,26 @@ export const undoTeamElimination =
       })
     }
   }
+
+export const getArcanaLeaderboard = (tournamentId) => async (dispatch) => {
+  try {
+    dispatch({ type: ARCANA_LEADERBOARD_REQUEST })
+
+    const { data } = await axios.get(
+      `/tournaments/${tournamentId}/arcana-leaderboard`
+    )
+
+    dispatch({
+      type: ARCANA_LEADERBOARD_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: ARCANA_LEADERBOARD_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}

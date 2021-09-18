@@ -21,6 +21,7 @@ import TournamentDetailScreen from './screens/user/TournamentDetailScreen'
 import AdminTournamentDetailsScreen from './screens/admin/Tournament/AdminTournamentDetailsScreen'
 import PreviousSquadViewer from './components/PreviousSquadViewer'
 import PlayerLeaderboardScreen from './screens/user/PlayerLeaderboardScreen'
+import ArcanaLeaderboardScreen from './screens/user/ArcanaLeaderboardScreen'
 
 const App = () => {
   dotenv.config()
@@ -88,6 +89,11 @@ const App = () => {
           path='/tournaments/:tid/player-leaderboard/'
           exact
           component={PlayerLeaderboardScreen}
+        />
+        <Route
+          path='/tournaments/:tid/arcana-leaderboard/'
+          exact
+          component={ArcanaLeaderboardScreen}
         />
       </Switch>
     </Router>

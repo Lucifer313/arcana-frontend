@@ -3,6 +3,9 @@ import {
   ADD_MATCH_POINTS_REQUEST,
   ADD_MATCH_POINTS_RESET,
   ADD_MATCH_POINTS_SUCCESS,
+  ARCANA_LEADERBOARD_FAILURE,
+  ARCANA_LEADERBOARD_REQUEST,
+  ARCANA_LEADERBOARD_SUCCESS,
   CREATE_TOURNAMENT_FAILURE,
   CREATE_TOURNAMENT_REQUEST,
   CREATE_TOURNAMENT_RESET,
@@ -33,7 +36,11 @@ import {
 } from '../constants/tournament-constants'
 
 const tournamentDetailsReducer = (
-  state = { qualifiedPlayers: [], playerLeaderboard: [] },
+  state = {
+    qualifiedPlayers: [],
+    playerLeaderboard: [],
+    arcanaLeaderboard: [],
+  },
   action
 ) => {
   switch (action.type) {
@@ -320,6 +327,31 @@ const tournamentDetailsReducer = (
     }
 
     case UNDO_ELIMINATE_TEAM_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      }
+    }
+
+    case ARCANA_LEADERBOARD_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        error: false,
+      }
+    }
+
+    case ARCANA_LEADERBOARD_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        arcanaLeaderboard: action.payload,
+      }
+    }
+
+    case ARCANA_LEADERBOARD_FAILURE: {
       return {
         ...state,
         loading: false,

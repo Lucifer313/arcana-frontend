@@ -90,11 +90,11 @@ const TournamentDetailScreen = () => {
           </Col>
           <Col lg={12} style={{ padding: '0' }}>
             <LinkContainer
-              to={`/tournaments/${tid}/player-leaderboard`}
+              to={`/tournaments/${tid}/arcana-leaderboard`}
               style={{
                 width: '100%',
                 minHeight: '27vh',
-                backgroundColor: '#e51c23',
+                backgroundColor: '#2196F3',
               }}
             >
               <Button variant='warning' style={{}}>
@@ -113,7 +113,37 @@ const TournamentDetailScreen = () => {
                     margin: '20px',
                   }}
                 >
-                  LEADERBOARD
+                  ARCANA LEADERBOARD
+                </p>
+              </Button>
+            </LinkContainer>
+          </Col>
+          <Col lg={12} style={{ padding: '0' }}>
+            <LinkContainer
+              to={`/tournaments/${tid}/player-leaderboard`}
+              style={{
+                width: '100%',
+                minHeight: '27vh',
+                backgroundColor: '#e51c23',
+              }}
+            >
+              <Button variant='success' style={{}}>
+                <i
+                  class='fas fa-chart-line'
+                  style={{
+                    fontSize: '3.5em',
+                    width: '100%',
+                    marginTop: '15px',
+                  }}
+                ></i>{' '}
+                <p
+                  style={{
+                    fontSize: '1.5em',
+                    fontWeight: '600',
+                    margin: '20px',
+                  }}
+                >
+                  PLAYER LEADERBOARD
                 </p>
               </Button>
             </LinkContainer>

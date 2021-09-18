@@ -66,6 +66,7 @@ const initialState = {
       eliminatedTeams: [],
     },
     playerLeaderboard: [],
+    arcanaLeaderboard: [],
   },
 }
 
