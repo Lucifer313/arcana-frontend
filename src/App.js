@@ -24,6 +24,9 @@ import PlayerLeaderboardScreen from './screens/user/PlayerLeaderboardScreen'
 import ArcanaLeaderboardScreen from './screens/user/ArcanaLeaderboardScreen'
 import ProfileScreen from './screens/user/ProfileScreen'
 import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen'
+import ResetPasswordScreen from './screens/user/ResetPasswordScreen'
+import PlayerListScreen from './screens/user/PlayerListScreen'
+import PlayerDetailScreen from './screens/user/PlayerDetailScreen'
 
 const App = () => {
   dotenv.config()
@@ -100,6 +103,13 @@ const App = () => {
 
         <Route path='/profile' exact component={ProfileScreen} />
         <Route path='/forgot-password' exact component={ForgotPasswordScreen} />
+        <Route
+          path='/reset-password/:tid'
+          exact
+          component={ResetPasswordScreen}
+        />
+        <Route path='/players' exact component={PlayerListScreen} />
+        <Route path='/players/:pid' exact component={PlayerDetailScreen} />
       </Switch>
     </Router>
   )

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+
 import Header from '../../components/Layout/User/Header'
 import Footer from '../../components/Layout/User/Footer'
 import Message from '../../components/Message'
 import Loader from '../../components/Loader'
+import { forgotPassword } from '../../actions/user-action'
+import { FORGOT_PASSWORD_RESET } from '../../constants/user-constants'
 
 const ForgotPasswordScreen = () => {
   const [email, setEmail] = useState('')
@@ -15,8 +19,18 @@ const ForgotPasswordScreen = () => {
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch({
+      type: FORGOT_PASSWORD_RESET,
+    })
+    setEmail('')
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    dispatch({
+      type: FORGOT_PASSWORD_RESET,
+    })
 
     let re =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -29,7 +43,8 @@ const ForgotPasswordScreen = () => {
       )
     } else {
       setErrorMessage('')
-      alert('Valid email address')
+      setEmail('')
+      dispatch(forgotPassword(email))
     }
   }
 
@@ -39,12 +54,19 @@ const ForgotPasswordScreen = () => {
       <Container style={{ minHeight: '82vh' }}>
         <Row>
           <Col lg={6} md={12} className='d-block mx-auto'>
-            <Form className='mt-5'>
-              <h3>Forgot Password</h3>
+            <Form>
+              <h3 className='my-4'>Forgot Password</h3>
               <p>
                 Enter your email address. We will send a link to reset your
                 password
               </p>
+              {loaded ? (
+                <Message variant='success'>
+                  Reset Password link sent successfully. Please check your
+                  mailbox for the email and follow the steps to reset your
+                  password
+                </Message>
+              ) : null}
               {errorMessage ? (
                 <Message variant='danger'>{errorMessage}</Message>
               ) : error ? (
@@ -62,6 +84,9 @@ const ForgotPasswordScreen = () => {
               </Form.Group>
               <Form.Group>{loading ? <Loader /> : null}</Form.Group>
               <Form.Group className='mt-3'>
+                <LinkContainer to='/login'>
+                  <Button variant='danger'>Back</Button>
+                </LinkContainer>{' '}
                 <Button onClick={handleSubmit}>Submit</Button>
               </Form.Group>
             </Form>

@@ -20,6 +20,9 @@ import {
   GET_SQUAD_BY_DAY_FAILURE,
   GET_SQUAD_BY_DAY_REQUEST,
   GET_SQUAD_BY_DAY_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -123,6 +126,41 @@ export const forgotPassword = (email) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const resetPassword = (password, token) => async (dispatch) => {
+  try {
+    console.log(password)
+    dispatch({
+      type: RESET_PASSWORD_REQUEST,
+    })
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }
+
+    const { data } = await axios.post(
+      '/users/reset-password',
+      { password },
+      config
+    )
+
+    dispatch({
+      type: RESET_PASSWORD_SUCCESS,
+    })
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: RESET_PASSWORD_FAILURE,
       payload:
         error.message && error.response.data.message
           ? error.response.data.message
