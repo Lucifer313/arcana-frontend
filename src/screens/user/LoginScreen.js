@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../actions/user-action'
 
 import './cyborg.css'
+import { USER_LOGIN_RESET } from '../../constants/user-constants'
 
 const AdminLoginScreen = ({ history }) => {
   //Defining element states
@@ -30,6 +31,10 @@ const AdminLoginScreen = ({ history }) => {
   useEffect(() => {
     if (userInfo !== null) {
       history.push('/')
+    } else {
+      dispatch({
+        type: USER_LOGIN_RESET,
+      })
     }
   }, [userInfo, history])
 
@@ -105,9 +110,11 @@ const AdminLoginScreen = ({ history }) => {
                     Don't have an account? Register here
                   </p>
                 </LinkContainer>
-                <p style={{ color: '#2196f3' }} className='mt-3'>
-                  Forgot password? Click here
-                </p>
+                <LinkContainer to='/forgot-password' className='mt-3'>
+                  <p style={{ color: '#2196f3 !important' }}>
+                    Forgot password? Click here
+                  </p>
+                </LinkContainer>
               </Form.Group>
             </Form>
           </Col>

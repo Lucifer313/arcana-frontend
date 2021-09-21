@@ -25,7 +25,16 @@ import {
   USER_LOGOUT,
   USER_REGISTER_FAILURE,
   USER_REGISTER_REQUEST,
+  USER_REGISTER_RESET,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_FAILURE,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_RESET,
+  USER_LOGIN_RESET,
+  FORGOT_PASSWORD_FAILURE,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_REQUEST,
 } from '../constants/user-constants'
 
 const userDetailsReducer = (
@@ -40,6 +49,8 @@ const userDetailsReducer = (
       reserveSquad: [],
       reserveSquadIds: [],
     },
+
+    newPlayingSquad: [],
   },
   action
 ) => {
@@ -67,6 +78,14 @@ const userDetailsReducer = (
       }
     }
 
+    case USER_LOGIN_RESET: {
+      return {
+        ...state,
+        loading: false,
+        error: false,
+      }
+    }
+
     case USER_REGISTER_REQUEST: {
       return { ...state, registering: true, registered: false }
     }
@@ -76,7 +95,7 @@ const userDetailsReducer = (
         ...state,
         registering: false,
         registered: true,
-        userInfo: action.payload,
+        //userInfo: action.payload,
         error: false,
       }
     }
@@ -87,6 +106,79 @@ const userDetailsReducer = (
         registering: false,
         registered: false,
         error: action.payload,
+      }
+    }
+
+    case USER_REGISTER_RESET: {
+      return {
+        ...state,
+        registering: false,
+        registered: false,
+        error: false,
+      }
+    }
+
+    case FORGOT_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false,
+        error: false,
+      }
+    }
+
+    case FORGOT_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        error: false,
+      }
+    }
+
+    case FORGOT_PASSWORD_FAILURE: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.payload,
+      }
+    }
+
+    case USER_UPDATE_REQUEST: {
+      return {
+        ...state,
+        updating: true,
+        updated: false,
+        error: false,
+      }
+    }
+
+    case USER_UPDATE_SUCCESS: {
+      return {
+        ...state,
+        updating: false,
+        updated: true,
+        userInfo: action.payload,
+        error: false,
+      }
+    }
+
+    case USER_UPDATE_FAILURE: {
+      return {
+        ...state,
+        updating: false,
+        updated: false,
+        error: action.payload,
+      }
+    }
+
+    case USER_UPDATE_RESET: {
+      return {
+        ...state,
+        updating: false,
+        updated: false,
+        error: false,
       }
     }
 
@@ -273,8 +365,21 @@ const userDetailsReducer = (
 
     case USER_LOGOUT: {
       return {
+        ...state,
+        loading: false,
+        loaded: false,
         userInfo: null,
-        myTournaments: [],
+        allowed: false,
+        error: false,
+
+        previousSquad: {
+          playingSquad: [],
+          playingSquadIds: [],
+          reserveSquad: [],
+          reserveSquadIds: [],
+        },
+
+        newPlayingSquad: [],
       }
     }
     default: {

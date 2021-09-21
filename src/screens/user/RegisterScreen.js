@@ -11,6 +11,7 @@ import Message from '../../components/Message'
 import ImagePreview from '../../components/ImagePreview'
 
 import { register } from '../../actions/user-action'
+import { USER_REGISTER_RESET } from '../../constants/user-constants'
 
 const RegisterScreen = ({ history }) => {
   const [firstName, setFirstName] = useState('')
@@ -43,12 +44,19 @@ const RegisterScreen = ({ history }) => {
       lastName === '' ||
       password === '' ||
       confirmPassword === '' ||
-      userProfile === '' ||
       country === ''
     ) {
       setErrorMessage('Please enter all the fields')
+      window.scrollTo(0, 0)
+    } else if (userProfile === '') {
+      setErrorMessage('Please select a profile image')
+      window.scrollTo(0, 0)
     } else if (password !== confirmPassword) {
       setErrorMessage('Password and Confirm Password do not match')
+      window.scrollTo(0, 0)
+    } else if (password.length < 6) {
+      setErrorMessage('Password should not be less than 6 characters')
+      window.scrollTo(0, 0)
     } else {
       setErrorMessage('')
       const formData = new FormData()
@@ -63,10 +71,12 @@ const RegisterScreen = ({ history }) => {
       formData.append('country', country)
       //Dispatching the Create Team Action
       dispatch(register(formData))
+      window.scrollTo(0, 0)
+      resetForm()
     }
   }
 
-  /* const resetForm = () => {
+  const resetForm = () => {
     setFirstName('')
     setLastName('')
     setAlias('')
@@ -76,7 +86,7 @@ const RegisterScreen = ({ history }) => {
     setCountry('')
     setUserProfile('')
     setImagePreview('/assets/images/admin/preview_placeholder.png')
-  }*/
+  }
 
   const imageHandler = (e) => {
     setUserProfile(e.target.files[0])
@@ -91,11 +101,10 @@ const RegisterScreen = ({ history }) => {
   }
 
   useEffect(() => {
-    setErrorMessage('')
-    if (registered) {
-      history.push('/')
-    }
-  }, [registered])
+    dispatch({
+      type: USER_REGISTER_RESET,
+    })
+  }, [])
 
   return (
     <>
@@ -120,6 +129,14 @@ const RegisterScreen = ({ history }) => {
                 <Message variant='danger'>{errorMessage}</Message>
               ) : error ? (
                 <Message variant='danger'>{error}</Message>
+              ) : null}
+              {registered ? (
+                <Message variant='success'>
+                  You are registered successfully. A verification link has been
+                  sent to your registered email address.{' '}
+                  <a href='/login'>Log in</a> to the website after clicking on
+                  the link in the email address{' '}
+                </Message>
               ) : null}
               <Form.Group controlId='playerFirstName' className='my-3'>
                 <Form.Label>First Name</Form.Label>
@@ -193,6 +210,7 @@ const RegisterScreen = ({ history }) => {
                 />
               </Form.Group>
               <Form.Group>
+                <Form.Label>Profile Image</Form.Label>
                 <ImagePreview
                   path={previewImage}
                   alternate='logo-image'
@@ -204,7 +222,7 @@ const RegisterScreen = ({ history }) => {
                   accept='.jpg, .jpeg, .png'
                 />
               </Form.Group>
-              {registering ? <Loader /> : null}
+              <Form.Group>{registering ? <Loader /> : null}</Form.Group>
               <Form.Group className='mt-5'>
                 <Button variant='primary' onClick={handleSubmit}>
                   Register

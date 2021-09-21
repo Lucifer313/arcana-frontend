@@ -10,11 +10,14 @@ import { getArcanaLeaderboard } from '../../actions/tournament-action'
 import Loader from '../../components/Loader'
 import Logo from '../../components/Logo'
 
-const ArcanaLeaderboardScreen = () => {
+const ArcanaLeaderboardScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
   const { loading, error, arcanaLeaderboard } = tournamentDetails
+
+  const userDetails = useSelector((state) => state.userDetails)
+  const { userInfo } = userDetails
 
   //Getting the tournamentId
   const { tid } = useParams()
@@ -24,6 +27,12 @@ const ArcanaLeaderboardScreen = () => {
   useEffect(() => {
     dispatch(getArcanaLeaderboard(tid))
   }, [])
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [history, userInfo])
 
   return (
     <>
@@ -40,7 +49,13 @@ const ArcanaLeaderboardScreen = () => {
             {loading ? (
               <Loader />
             ) : (
-              <div style={{ maxHeight: '80vh', overflowY: 'auto' }}>
+              <div
+                style={{
+                  maxHeight: '80vh',
+                  minHeight: '80vh',
+                  overflowY: 'auto',
+                }}
+              >
                 <Table striped>
                   <thead
                     style={{

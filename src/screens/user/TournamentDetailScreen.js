@@ -10,7 +10,7 @@ import { useParams } from 'react-router'
 import { getMyTournaments } from '../../actions/user-action'
 import { getQualifiedPlayers } from '../../actions/tournament-action'
 
-const TournamentDetailScreen = () => {
+const TournamentDetailScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
@@ -22,6 +22,12 @@ const TournamentDetailScreen = () => {
     dispatch(getMyTournaments(userInfo._id))
     dispatch(getQualifiedPlayers(tid))
   }, [])
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [history, userInfo])
 
   return (
     <div>
@@ -99,7 +105,7 @@ const TournamentDetailScreen = () => {
             >
               <Button variant='warning' style={{}}>
                 <i
-                  class='fas fa-chart-line'
+                  class='fab fa-autoprefixer'
                   style={{
                     fontSize: '3.5em',
                     width: '100%',
@@ -143,7 +149,7 @@ const TournamentDetailScreen = () => {
                     margin: '20px',
                   }}
                 >
-                  PLAYER LEADERBOARD
+                  PRO PLAYER LEADERBOARD
                 </p>
               </Button>
             </LinkContainer>

@@ -30,10 +30,10 @@ const PreviousSquadViewer = ({ navigation, history }) => {
 
   useEffect(() => {
     //dispatch(getMyTournaments(userInfo._id, tid))
-    if (tournamentDays > 0) {
+    if (tournamentDays > 0 && userInfo) {
       dispatch(getSquadByDay(userInfo._id, tid, tournamentDays.toString()))
     }
-  }, [tournament, tid, userInfo._id, dispatch])
+  }, [tournament, tid, userInfo, dispatch])
 
   const getPreviousSquadHandler = (selectedDay) => {
     setDay(selectedDay)

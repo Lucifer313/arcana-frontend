@@ -12,13 +12,23 @@ import './tournament.css'
 import EliminateTeamScreen from './EliminateTeamScreen'
 import DeclareWinnerScreen from './DeclareWinnerScreen'
 
-const AdminTournamentDetailsScreen = () => {
+const AdminTournamentDetailsScreen = ({ history }) => {
   const { tid } = useParams()
   const dispatch = useDispatch()
+
+  const userDetails = useSelector((state) => state.userDetails)
+  const { userInfo } = userDetails
 
   useEffect(() => {
     dispatch(getQualifiedTeams(tid))
   }, [])
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [history, userInfo])
+
   return (
     <div>
       <Header />

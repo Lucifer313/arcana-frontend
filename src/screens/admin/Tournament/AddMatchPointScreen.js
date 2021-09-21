@@ -111,7 +111,7 @@ const AddMatchPointScreen = () => {
               <Form.Group controlId='addMatchPoints.matchNum' className='my-3'>
                 <Form.Label>Match Number</Form.Label>
                 <Form.Control
-                  type='number'
+                  type='text'
                   placeholder='Enter the match-number of the tournament'
                   value={matchNum}
                   onChange={(e) => setMatchNum(e.target.value)}

@@ -22,8 +22,18 @@ export default function TeamPreview({ onClose, team, remove }) {
     </div>
   ) : (
     <>
-      <h5 className='text-center my-2'>My Arcana Team Preview</h5>
-      <p>Players selected: {previewPlayers.length}</p>
+      <h5
+        className='text-center my-2 p-2'
+        style={{ background: '#51B155', color: 'white', borderRadius: '4px' }}
+      >
+        My Arcana Team Preview
+      </h5>
+      <p
+        className='p-2'
+        style={{ background: '#FF9C09', color: 'white', borderRadius: '4px' }}
+      >
+        Players selected: {previewPlayers.length}
+      </p>
       <div style={{ height: '74vh', overflowY: 'auto' }}>
         <Table striped hover>
           <thead>
@@ -42,7 +52,7 @@ export default function TeamPreview({ onClose, team, remove }) {
                 </td>
                 <td>{p.alias}</td>
                 <td>
-                  <Logo path={p.team.logo} />
+                  <Logo path={p.team_info[0].logo} />
                 </td>
                 <td>
                   <Button

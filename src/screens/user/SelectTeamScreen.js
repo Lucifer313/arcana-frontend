@@ -26,7 +26,12 @@ const CreateTournamentTeamScreen = ({ history }) => {
   const [role, setRole] = useState(['Hard Support', 'Soft Support'])
 
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
-  const { qualifiedPlayers, qualifiedTeams } = tournamentDetails
+  const {
+    qualifiedPlayers,
+    qualifiedTeams: { teams },
+  } = tournamentDetails
+
+  //  const teams = { qualifiedTeams }
 
   const userDetails = useSelector((state) => state.userDetails)
   const { userInfo } = userDetails
@@ -66,20 +71,20 @@ const CreateTournamentTeamScreen = ({ history }) => {
       )[0]
 
       //Getting the team ID of the selected new player
-      const newPlayerTeam = newPlayerDetails.team._id
-
+      const newPlayerTeam = newPlayerDetails.team
       //Getting the already selected player details
       let selectedPlayerDetails = qualifiedPlayers.filter((p) =>
         selectedPlayers.includes(p._id)
       )
-
+      console.log(selectedPlayerDetails)
       //Getting the players from the same team
       let sameTeamPlayers = selectedPlayerDetails.filter(
-        (p) => p.team._id === newPlayerTeam
+        (p) => p.team === newPlayerTeam
       )
 
       //if we already have 3 players from the same team which the user is trying to add one more from show eror
       if (sameTeamPlayers.length === 3) {
+        console.log(sameTeamPlayers)
         setError('You can only select maximum 3 players from one team.')
       } else {
         let updatedSelectedPlayers = [...selectedPlayers, newPlayer]
@@ -87,6 +92,8 @@ const CreateTournamentTeamScreen = ({ history }) => {
         setSelectedPlayers(updatedSelectedPlayers)
         //console.log(selectedPlayers)
       }
+
+      //console.log(selectedPlayers)
     } else {
       setError('You are only allowed to select 12 players')
     }
@@ -183,9 +190,21 @@ const CreateTournamentTeamScreen = ({ history }) => {
                 />
               ) : (
                 <>
-                  <h5 className='py-2 text-center'>
-                    Select 4 - 5 players from each role group
-                  </h5>
+                  <p className='pt-2 text-center mb-1'>
+                    Select 3 - 5 players from the following roles:&nbsp;
+                  </p>
+                  <p
+                    className='p-2 text-center'
+                    style={{
+                      background: 'red',
+                      color: 'white',
+                      borderRadius: '4px',
+                    }}
+                  >
+                    {role.map((r) => (
+                      <span>{r}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    ))}
+                  </p>
                   {!showFilter ? (
                     <Button
                       variant='primary'
@@ -229,7 +248,7 @@ const CreateTournamentTeamScreen = ({ history }) => {
                           onChange={(e) => setTeamFilter(e.target.value)}
                         >
                           <option>Filter by Team</option>
-                          {qualifiedTeams.map((team) => {
+                          {teams.map((team) => {
                             return <option value={team._id}>{team.name}</option>
                           })}
                         </Form.Control>
@@ -247,7 +266,7 @@ const CreateTournamentTeamScreen = ({ history }) => {
                     previewStatus={preview}
                   />
                   <div className='my-2'>
-                    {role.includes('Hard Support', 'Support') ? (
+                    {role.includes('Hard Support', 'Soft Support') ? (
                       <>
                         <Button
                           variant='warning'
@@ -267,7 +286,9 @@ const CreateTournamentTeamScreen = ({ history }) => {
                       <>
                         <Button
                           variant='danger'
-                          onClick={() => setRole(['Hard Support', 'Support'])}
+                          onClick={() =>
+                            setRole(['Hard Support', 'Soft Support'])
+                          }
                         >
                           Back
                         </Button>{' '}
@@ -314,10 +335,24 @@ const CreateTournamentTeamScreen = ({ history }) => {
             ) : null}
             {liveSection === 'Team-prediction' ? (
               <>
-                <h6 className='text-center my-3'>
+                <h6
+                  className='text-center p-2'
+                  style={{
+                    background: '#51B155',
+                    color: 'white',
+                    margin: '0',
+                  }}
+                >
                   Predict a Team for Tournament Victory
                 </h6>
-                <p>
+                <p
+                  className='p-2'
+                  style={{
+                    background: '#FF9C09',
+                    color: 'white',
+                    margin: '0',
+                  }}
+                >
                   Note: Remember, correct team prediction gives the maximum
                   points.
                 </p>
@@ -332,7 +367,7 @@ const CreateTournamentTeamScreen = ({ history }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {qualifiedTeams.map((team) => (
+                      {teams.map((team) => (
                         <tr key={team._id}>
                           <td>{team.name}</td>
                           <td>{team.region}</td>
@@ -344,6 +379,7 @@ const CreateTournamentTeamScreen = ({ history }) => {
                               <Button
                                 variant='primary'
                                 onClick={() => setTeamPrediction(team._id)}
+                                style={{ width: '40px' }}
                               >
                                 <i class='fas fa-plus-circle'></i>
                               </Button>
@@ -351,6 +387,7 @@ const CreateTournamentTeamScreen = ({ history }) => {
                               <Button
                                 variant='danger'
                                 onClick={() => setTeamPrediction('')}
+                                style={{ width: '40px' }}
                               >
                                 <i class='fas fa-times'></i>
                               </Button>
