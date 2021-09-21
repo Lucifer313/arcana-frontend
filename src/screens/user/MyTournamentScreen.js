@@ -47,22 +47,32 @@ const MyTournamentScreen = ({ history }) => {
                 </tr>
               </thead>
               <tbody>
-                {tournaments
-                  .filter((tournament) =>
-                    myEnrolledTournaments.includes(tournament._id)
-                  )
-                  .map((tournament) => (
-                    <tr>
-                      <td>{tournament.name}</td>
-                      <td>{tournament.tier}</td>
-                      <td>{tournament.number_of_teams}</td>
-                      <td>
-                        <LinkContainer to={`/tournaments/${tournament._id}/`}>
-                          <Button variant='success'>Visit</Button>
-                        </LinkContainer>
-                      </td>
-                    </tr>
-                  ))}
+                {myTournaments.length > 0 ? (
+                  tournaments
+                    .filter((tournament) =>
+                      myEnrolledTournaments.includes(tournament._id)
+                    )
+                    .map((tournament) => (
+                      <tr>
+                        <td>{tournament.name}</td>
+                        <td>{tournament.tier}</td>
+                        <td>{tournament.number_of_teams}</td>
+                        <td>
+                          <LinkContainer to={`/tournaments/${tournament._id}/`}>
+                            <Button variant='success'>Visit</Button>
+                          </LinkContainer>
+                        </td>
+                      </tr>
+                    ))
+                ) : (
+                  <tr>
+                    <td colSpan={4}>
+                      <h5 className='text-center'>
+                        No tournaments enrolled yet
+                      </h5>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </Table>
           </Row>

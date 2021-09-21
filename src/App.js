@@ -22,6 +22,8 @@ import AdminTournamentDetailsScreen from './screens/admin/Tournament/AdminTourna
 import PreviousSquadViewer from './components/PreviousSquadViewer'
 import PlayerLeaderboardScreen from './screens/user/PlayerLeaderboardScreen'
 import ArcanaLeaderboardScreen from './screens/user/ArcanaLeaderboardScreen'
+import ProfileScreen from './screens/user/ProfileScreen'
+import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen'
 
 const App = () => {
   dotenv.config()
@@ -95,6 +97,9 @@ const App = () => {
           exact
           component={ArcanaLeaderboardScreen}
         />
+
+        <Route path='/profile' exact component={ProfileScreen} />
+        <Route path='/forgot-password' exact component={ForgotPasswordScreen} />
       </Switch>
     </Router>
   )

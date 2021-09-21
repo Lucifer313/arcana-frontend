@@ -28,10 +28,14 @@ const SquadSelectionScreen = ({ history }) => {
     const now = Moment()
     const hour = now.hour()
     //alert(hour)
-    if (hour >= 0) {
-      dispatch(getSquadAddingPermission(userInfo._id, tid))
+    if (userInfo) {
+      if (hour >= 0) {
+        dispatch(getSquadAddingPermission(userInfo._id, tid))
+      }
+    } else {
+      history.push('/login')
     }
-  }, [allowed, dispatch, tid, userInfo._id])
+  }, [allowed, dispatch, tid, userInfo, history])
 
   //To get tournaments of the current user
 

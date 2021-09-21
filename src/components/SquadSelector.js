@@ -178,9 +178,11 @@ const SquadSelector = ({ navigation }) => {
       <Header />
       <Row className='my-2'>
         <Col>
-          <LinkContainer to={`/my-tournaments/${tid}/view-previous-squads/`}>
-            <Button variant='success'>View Previous Squads</Button>
-          </LinkContainer>
+          {tournament.days.length !== 0 ? (
+            <LinkContainer to={`/my-tournaments/${tid}/view-previous-squads/`}>
+              <Button variant='success'>View Previous Squads</Button>
+            </LinkContainer>
+          ) : null}
         </Col>
       </Row>
       <Container>

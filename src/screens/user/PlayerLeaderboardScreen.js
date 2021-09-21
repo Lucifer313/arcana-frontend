@@ -10,11 +10,14 @@ import { getPlayerLeaderboard } from '../../actions/tournament-action'
 import Loader from '../../components/Loader'
 import Logo from '../../components/Logo'
 
-const PlayerLeaderboardScreen = () => {
+const PlayerLeaderboardScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const tournamentDetails = useSelector((state) => state.tournamentDetails)
   const { loading, error, playerLeaderboard } = tournamentDetails
+
+  const userDetails = useSelector((state) => state.userDetails)
+  const { userInfo } = userDetails
 
   //Getting the tournamentId
   const { tid } = useParams()
@@ -24,6 +27,12 @@ const PlayerLeaderboardScreen = () => {
   useEffect(() => {
     dispatch(getPlayerLeaderboard(tid))
   }, [])
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [history, userInfo])
 
   return (
     <>

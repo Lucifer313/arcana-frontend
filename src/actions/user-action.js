@@ -11,6 +11,9 @@ import {
   CREATE_ARCANA_TEAM_FAILURE,
   CREATE_ARCANA_TEAM_REQUEST,
   CREATE_ARCANA_TEAM_SUCCESS,
+  FORGOT_PASSWORD_FAILURE,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
   GET_MY_TOURNAMENTS_FAILURE,
   GET_MY_TOURNAMENTS_REQUEST,
   GET_MY_TOURNAMENTS_SUCCESS,
@@ -24,6 +27,9 @@ import {
   USER_REGISTER_FAILURE,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_UPDATE_FAILURE,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
 } from '../constants/user-constants'
 
 export const login = (email, password) => async (dispatch) => {
@@ -76,7 +82,7 @@ export const register = (formData) => async (dispatch) => {
 
     const { data } = await axios.post('/users/register', formData, config)
 
-    localStorage.setItem('userInfo', JSON.stringify(data))
+    //localStorage.setItem('userInfo', JSON.stringify(data))
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
@@ -85,6 +91,69 @@ export const register = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+    console.log(error)
+  }
+}
+
+export const forgotPassword = (email) => async (dispatch) => {
+  try {
+    dispatch({
+      type: FORGOT_PASSWORD_REQUEST,
+    })
+
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.post(
+      '/users/forgot-password',
+      { email },
+      config
+    )
+    dispatch({
+      type: FORGOT_PASSWORD_SUCCESS,
+    })
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAILURE,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const updateUser = (formData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_UPDATE_REQUEST,
+    })
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${formData.get('token')}`,
+      },
+    }
+
+    const { data } = await axios.patch('/users/profile', formData, config)
+
+    localStorage.setItem('userInfo', JSON.stringify(data))
+
+    dispatch({
+      type: USER_UPDATE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAILURE,
       payload:
         error.message && error.response.data.message
           ? error.response.data.message
