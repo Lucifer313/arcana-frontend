@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { useSelector } from 'react-redux'
-import Header from '../../../components/Layout/User/Header'
-import Footer from '../../../components/Layout/User/Footer'
+import { useHistory } from 'react-router-dom'
+import Header from '../../components/Layout/User/Header'
+import Footer from '../../components/Layout/User/Footer'
+import './black-style.css'
+import Logo from '../../components/Logo'
 
 const PlayerDetailScreen = ({ match }) => {
   const playerDetails = useSelector((state) => state.playerDetails)
   const { players } = playerDetails
+
+  let history = useHistory()
 
   const [name, setName] = useState('')
   const [profileImage, setProfileImage] = useState('')
@@ -26,9 +31,9 @@ const PlayerDetailScreen = ({ match }) => {
       if (players.length > 0) {
         //Since filter returns an array we only need first indexed object hence 0
         player = await players.filter(
-          (player) => player._id === match.params.id
+          (player) => player._id === match.params.pid
         )[0]
-        setName(player.name)
+
         setAlias(player.alias)
         setRole(player.role)
         setBirthDate(player.date_of_birth)
@@ -54,13 +59,13 @@ const PlayerDetailScreen = ({ match }) => {
           <Row>
             <Col className='offset-lg-2' lg={10} sm={12}>
               <h3 className='achievements-team-title'>
-                <LinkContainer to='/players'>
-                  <span className='team-details-back-arrow'>
-                    <i class='fas fa-arrow-circle-left'></i>
-                  </span>
-                </LinkContainer>
-                {'  '}
                 {alias}
+                <Button
+                  className='team-details-back-arrow'
+                  onClick={() => history.goBack()}
+                >
+                  <i class='fas fa-times'></i>
+                </Button>
               </h3>
             </Col>
           </Row>
@@ -73,18 +78,14 @@ const PlayerDetailScreen = ({ match }) => {
                   className='team-detail-logo'
                 />
               </div>
-
-              <div className='details-achievements'>
-                <h5 className='achievements-title'>Achievements</h5>
-                <div className='achievements-desc'>Test data</div>
-              </div>
             </Col>
             <Col lg={5} md={6} sm={12}>
               <div className='details-side-sect'>
+                <h5 className='details-achievements-desc-title'>Bio:</h5>
                 <table>
                   <tr>
-                    <td className='detail-label'>Name:</td>
-                    <td>{name}</td>
+                    <td className='detail-label'>Alias:</td>
+                    <td>{alias}</td>
                   </tr>
                   <tr>
                     <td className='detail-label'>Role:</td>
@@ -92,7 +93,9 @@ const PlayerDetailScreen = ({ match }) => {
                   </tr>
                   <tr>
                     <td className='detail-label'>Team:</td>
-                    <td>{team}</td>
+                    <td>
+                      {team} <Logo path={teamLogo} />
+                    </td>
                   </tr>
                   <tr>
                     <td className='detail-label'>Country:</td>
@@ -102,14 +105,8 @@ const PlayerDetailScreen = ({ match }) => {
                     <td className='detail-label'>Birth Date:</td>
                     <td>{birthDate}</td>
                   </tr>
-                  <tr>
-                    <td className='detail-label'>Prize Money:</td>
-                    <td>${prizeMoney}</td>
-                  </tr>
                 </table>
                 <hr />
-                <h5 className='details-achievements-desc-title'>Bio:</h5>
-                <div className='details-description'>Test Description</div>
               </div>
             </Col>
           </Row>

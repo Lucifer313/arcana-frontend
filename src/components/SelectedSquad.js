@@ -3,6 +3,7 @@ import { Col, Table } from 'react-bootstrap'
 import Logo from './Logo'
 
 import { useSelector } from 'react-redux'
+import { LinkContainer } from 'react-router-bootstrap'
 
 //This component is used for displaying the squad that has already been selected//
 //It is a user component//
@@ -51,7 +52,11 @@ const SelectedSquad = ({ squad, squadType, title }) => {
               <td>
                 <Logo path={player.profile_image} />
               </td>
-              <td>{player.alias}</td>
+
+              <LinkContainer to={`/players/${player._id}`}>
+                <td>{player.alias}</td>
+              </LinkContainer>
+
               <td>{player.role}</td>
 
               {player.dayPoints === undefined || player.dayPoints === null ? (

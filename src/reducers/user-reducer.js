@@ -35,6 +35,11 @@ import {
   FORGOT_PASSWORD_FAILURE,
   FORGOT_PASSWORD_SUCCESS,
   FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_RESET,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+  RESET_PASSWORD_RESET,
 } from '../constants/user-constants'
 
 const userDetailsReducer = (
@@ -127,6 +132,15 @@ const userDetailsReducer = (
       }
     }
 
+    case FORGOT_PASSWORD_RESET: {
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: false,
+      }
+    }
+
     case FORGOT_PASSWORD_SUCCESS: {
       return {
         ...state,
@@ -142,6 +156,42 @@ const userDetailsReducer = (
         loading: false,
         loaded: false,
         error: action.payload,
+      }
+    }
+
+    case RESET_PASSWORD_REQUEST: {
+      return {
+        ...state,
+        resetting: true,
+        reset: false,
+        error: false,
+      }
+    }
+
+    case RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        resetting: false,
+        reset: true,
+        error: false,
+      }
+    }
+
+    case RESET_PASSWORD_FAILURE: {
+      return {
+        ...state,
+        resetting: false,
+        reset: false,
+        error: action.payload,
+      }
+    }
+
+    case RESET_PASSWORD_RESET: {
+      return {
+        ...state,
+        resetting: false,
+        reset: false,
+        error: false,
       }
     }
 

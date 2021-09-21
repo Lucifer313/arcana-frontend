@@ -52,8 +52,12 @@
 .team-details-back-arrow {
   color: 'red';
   margin-right: '10px';
-  color: #ac8644;
+  color: white;
   cursor: pointer;
+  float: right;
+  background: black;
+  font-size: 30px;
+  padding: 0;
 }
 
 .team-details-back-arrow:hover {

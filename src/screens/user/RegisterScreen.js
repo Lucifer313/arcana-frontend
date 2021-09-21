@@ -36,6 +36,9 @@ const RegisterScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
     e.preventDefault()
     if (
       firstName === '' ||
@@ -48,14 +51,17 @@ const RegisterScreen = ({ history }) => {
     ) {
       setErrorMessage('Please enter all the fields')
       window.scrollTo(0, 0)
-    } else if (userProfile === '') {
-      setErrorMessage('Please select a profile image')
+    } else if (!re.test(email)) {
+      setErrorMessage('Please provide a valid email address')
       window.scrollTo(0, 0)
     } else if (password !== confirmPassword) {
       setErrorMessage('Password and Confirm Password do not match')
       window.scrollTo(0, 0)
     } else if (password.length < 6) {
       setErrorMessage('Password should not be less than 6 characters')
+      window.scrollTo(0, 0)
+    } else if (userProfile === '') {
+      setErrorMessage('Please select a profile image')
       window.scrollTo(0, 0)
     } else {
       setErrorMessage('')

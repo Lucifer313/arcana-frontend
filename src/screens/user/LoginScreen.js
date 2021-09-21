@@ -41,9 +41,13 @@ const AdminLoginScreen = ({ history }) => {
   //Login function
   const handleSubmit = (e) => {
     e.preventDefault()
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
     if (email === '' || password === '') {
       setErrorMessage('Please provide the email address and password')
+    } else if (!re.test(email)) {
+      setErrorMessage('Please provide a valid email address')
     } else {
       setErrorMessage('')
       dispatch(login(email, password))
@@ -52,7 +56,7 @@ const AdminLoginScreen = ({ history }) => {
 
   return (
     <>
-      <Container>
+      <Container style={{ minHeight: '93vh' }}>
         <Row>
           <Col>
             <Form className='col-md-6 offset-md-3 mt-5'>
