@@ -170,13 +170,20 @@ const ProfileScreen = ({ history }) => {
               </Form.Group>
               <Form.Group>{updating ? <Loader /> : null}</Form.Group>
               <Form.Group className='mt-5 mb-3'>
-                <Button variant='primary' onClick={handleUpdate}>
+                <Button
+                  className='arcana-btn'
+                  variant='primary'
+                  onClick={handleUpdate}
+                  style={{
+                    backgroundImage: `url(${'/assets/images/user/arcana_cracked_button.jpg'})`,
+                  }}
+                >
                   Update
                 </Button>
                 &nbsp; &nbsp; &nbsp;
-                <LinkContainer to='/'>
+                {/*<LinkContainer to='/'>
                   <Button variant='danger'>Back</Button>
-                </LinkContainer>
+                </LinkContainer>*/}
               </Form.Group>
             </Form>
           </Col>

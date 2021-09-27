@@ -34,123 +34,77 @@ const TournamentDetailScreen = ({ history }) => {
       <Header />
       <Container style={{ minHeight: '81vh' }}>
         <Row>
-          <Col lg={6} sm={12} style={{ padding: '0' }}>
+          <Col
+            lg={6}
+            sm={12}
+            style={{ padding: '0', borderBottom: '2px solid #DCB570' }}
+          >
             <LinkContainer
               to={`/tournaments/${tid}/squad-selection/`}
               style={{
                 width: '100%',
                 minHeight: '27vh',
-                backgroundColor: '#4caf50',
+                backgroundColor: 'black',
               }}
             >
               <Button variant='warning' style={{}}>
-                <i
-                  class='fas fa-users'
-                  style={{
-                    fontSize: '3.5em',
-                    width: '100%',
-                    marginTop: '15px',
-                  }}
-                ></i>{' '}
-                <p
-                  style={{
-                    fontSize: '1.5em',
-                    fontWeight: '600',
-                    margin: '20px',
-                  }}
-                >
-                  Squad Selection
-                </p>
+                <i className='fas fa-users tournament-detail-btn-icon'></i>{' '}
+                <p className='tournament-detail-btn-text'>Squad Selection</p>
               </Button>
             </LinkContainer>
           </Col>
-          <Col lg={6} sm={12} style={{ padding: '0' }}>
-            <LinkContainer
-              to='/'
-              style={{
-                width: '100%',
-                minHeight: '27vh',
-                backgroundColor: '#ff9800',
-              }}
-            >
-              <Button variant='warning' style={{}}>
-                <i
-                  class='fas fa-calendar-alt'
-                  style={{
-                    fontSize: '3.5em',
-                    width: '100%',
-                    marginTop: '15px',
-                  }}
-                ></i>{' '}
-                <p
-                  style={{
-                    fontSize: '1.5em',
-                    fontWeight: '600',
-                    margin: '20px',
-                  }}
-                >
-                  UPCOMING SCHEDULE
-                </p>
-              </Button>
-            </LinkContainer>
-          </Col>
-          <Col lg={12} style={{ padding: '0' }}>
+          <Col
+            lg={6}
+            sm={12}
+            style={{ padding: '0', borderBottom: '2px solid #DCB570' }}
+          >
             <LinkContainer
               to={`/tournaments/${tid}/arcana-leaderboard`}
               style={{
                 width: '100%',
                 minHeight: '27vh',
-                backgroundColor: '#2196F3',
+                backgroundColor: 'black',
               }}
             >
               <Button variant='warning' style={{}}>
-                <i
-                  class='fab fa-autoprefixer'
-                  style={{
-                    fontSize: '3.5em',
-                    width: '100%',
-                    marginTop: '15px',
-                  }}
-                ></i>{' '}
-                <p
-                  style={{
-                    fontSize: '1.5em',
-                    fontWeight: '600',
-                    margin: '20px',
-                  }}
-                >
-                  ARCANA LEADERBOARD
-                </p>
+                <i className='fas fa-calendar-alt tournament-detail-btn-icon'></i>{' '}
+                <p className='tournament-detail-btn-text'>UPCOMING SCHEDULE</p>
               </Button>
             </LinkContainer>
           </Col>
-          <Col lg={12} style={{ padding: '0' }}>
+          <Col
+            lg={12}
+            style={{ padding: '0', borderBottom: '2px solid #DCB570' }}
+          >
+            <LinkContainer
+              to={`/tournaments/${tid}/arcana-leaderboard`}
+              style={{
+                width: '100%',
+                minHeight: '27vh',
+                backgroundColor: 'black',
+              }}
+            >
+              <Button variant='warning' style={{}}>
+                <i className='fab fa-autoprefixer tournament-detail-btn-icon'></i>{' '}
+                <p className='tournament-detail-btn-text'>ARCANA LEADERBOARD</p>
+              </Button>
+            </LinkContainer>
+          </Col>
+          <Col
+            lg={12}
+            style={{ padding: '0', borderBottom: '2px solid #DCB570' }}
+          >
             <LinkContainer
               to={`/tournaments/${tid}/player-leaderboard`}
               style={{
                 width: '100%',
                 minHeight: '27vh',
-                backgroundColor: '#e51c23',
+                backgroundColor: 'black',
               }}
             >
               <Button variant='success' style={{}}>
-                <i
-                  class='fas fa-chart-line'
-                  style={{
-                    fontSize: '3.5em',
-                    width: '100%',
-                    marginTop: '15px',
-                  }}
-                ></i>{' '}
-                <p
-                  style={{
-                    fontSize: '1.5em',
-                    fontWeight: '600',
-                    margin: '20px',
-                  }}
-                >
-                  PRO PLAYER LEADERBOARD
-                </p>
+                <i className='fas fa-chart-line tournament-detail-btn-icon'></i>{' '}
+                <p className='tournament-detail-btn-text'>PLAYER LEADERBOARD</p>
               </Button>
             </LinkContainer>
           </Col>

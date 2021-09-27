@@ -176,32 +176,10 @@ const SquadSelector = ({ navigation }) => {
   return (
     <>
       <Header />
-      <Row className='my-2'>
-        <Col>
-          {tournament.days.length !== 0 ? (
-            <LinkContainer to={`/my-tournaments/${tid}/view-previous-squads/`}>
-              <Button variant='success'>View Previous Squads</Button>
-            </LinkContainer>
-          ) : null}
-        </Col>
-      </Row>
-      <Container>
+      <Container className='my-2'>
         <Row>
           <Col>
-            <p
-              style={{
-                padding: '8px',
-                borderTopLeftRadius: '4px',
-                borderTopRightRadius: '4px',
-                backgroundColor: '#2196F3',
-                textAlign: 'center',
-                fontWeight: 500,
-                fontSize: '16px',
-                color: 'white',
-                width: '100%',
-                marginBottom: '0px',
-              }}
-            >
+            <p className='p-2 mb-0 page-banner'>
               Select your squad for Day: {tournament.days.length + 1}
             </p>
           </Col>
@@ -248,20 +226,35 @@ const SquadSelector = ({ navigation }) => {
             <Loader />
           </div>
         ) : null}
-
-        <div className='my-3'>
-          <Button variant='danger' onClick={() => navigation.goBack()}>
-            Back
-          </Button>{' '}
+        <div className='py-2'>
+          {tournament.days.length !== 0 ? (
+            <LinkContainer
+              to={`/my-tournaments/${tid}/view-previous-squads/`}
+              style={{ width: '100%', borderBottom: '2px solid #dcb570' }}
+            >
+              <Button className='arcana-link-btn'>View Previous Squads</Button>
+            </LinkContainer>
+          ) : null}
+        </div>
+        <div className='py-1 mb-1'>
           <Button
-            variant='warning'
+            className='arcana-btn'
+            style={{
+              backgroundColor: 'black',
+            }}
             onClick={() => {
               dispatch({ type: RESET_PLAYER_SQUAD })
             }}
           >
             Reset
           </Button>{' '}
-          <Button variant='success' onClick={squadVerification}>
+          <Button
+            className='arcana-btn'
+            onClick={squadVerification}
+            style={{
+              backgroundImage: `url(${'/assets/images/user/arcana_cracked_button.jpg'})`,
+            }}
+          >
             Submit
           </Button>
         </div>

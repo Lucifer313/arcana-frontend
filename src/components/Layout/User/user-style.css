@@ -4,11 +4,20 @@
   height: 50px;
 }
 
+.navbar {
+  background-image: none !important;
+}
+
+.navbar-brand img {
+  width: 100% !important;
+  height: 60px !important;
+}
+
 .navbar-container {
   background-size: 100% 100% !important;
-  background-repeat: 'no-repeat';
-  background-color: black;
-  border-bottom: 2px solid #dcb570;
+  background-repeat: 'no-repeat' !important;
+  background-color: black !important;
+  border-bottom: 2px solid #dcb570 !important;
 }
 
 .navbar-collapse {
@@ -16,21 +25,31 @@
 }
 
 .user-header-link {
-  font-family: AftaSerif, serif;
-  font-size: 1.1em;
-  margin-left: 5%;
+  font-family: 'Afta serif', sans-serif;
+  font-size: 1.1em !important;
+  margin-left: 5% !important;
   color: #ac8644 !important;
 }
 
-.nav-link.active {
-  color: #dcb570;
+.active {
+  color: #dcb570 !important;
   text-decoration: dotted !important;
 }
 
 .user-header-link:hover {
   color: #dcb570 !important;
-  text-decoration: underline;
-  text-decoration: wavy;
+  text-decoration: underline !important;
+  text-decoration: wavy !important;
+}
+
+.nav-link,
+footer {
+  font-family: 'Afta serif', sans-serif;
+  text-transform: capitalize;
+}
+
+footer {
+  padding: 20px;
 }
 
 /*---------------------------------------MEDIA QUERIES FOR NAVBAR HEADER-------------------------------------------------------------*/
@@ -46,6 +65,8 @@
 footer {
   text-transform: uppercase;
   font-size: 1em;
+  text-align: center;
+  padding: 2%;
   background-color: black !important;
-  color: #dcb570;
+  color: #dcb570 !important;
 }

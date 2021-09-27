@@ -42,7 +42,6 @@ const SelectTeamList = ({
             style={{
               position: 'sticky',
               top: '0',
-              backgroundColor: 'white',
               zIndex: 1000,
             }}
           >
@@ -50,7 +49,7 @@ const SelectTeamList = ({
               <th>Avatar</th>
               <th>Name</th>
               <th>Team</th>
-              <th>Add</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>
@@ -59,6 +58,11 @@ const SelectTeamList = ({
               .map((p) => (
                 <tr
                   key={p._id}
+                  className={
+                    !selectedPlayers.includes(p._id) && !previewStatus
+                      ? 'player-unselected'
+                      : 'player-selected'
+                  }
                   style={{
                     backgroundColor: eliminatedTeams.includes(p.team)
                       ? 'red'
@@ -75,19 +79,17 @@ const SelectTeamList = ({
                   <td>
                     {!selectedPlayers.includes(p._id) && !previewStatus ? (
                       <Button
-                        variant='primary'
+                        className='add-btn'
                         onClick={() => addPlayers(p._id)}
-                        style={{ width: '40px' }}
                       >
-                        <i class='fas fa-plus-circle'></i>
+                        <i class='fas fa-plus'></i>
                       </Button>
                     ) : (
                       <Button
-                        variant='danger'
+                        className='remove-btn'
                         onClick={() => removePlayers(p._id)}
-                        style={{ width: '40px' }}
                       >
-                        <i class='fas fa-times'></i>
+                        <i class='fas fa-minus'></i>
                       </Button>
                     )}
                   </td>

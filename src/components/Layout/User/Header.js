@@ -22,15 +22,10 @@ const Header = () => {
       expand='lg'
       className='navbar-container'
       variant='dark'
-      bg='primary'
     >
       <Container>
         <Navbar.Brand href='#home'>
-          <img
-            src='/assets/images/admin/arcana_a_logo_white.png'
-            alt='arcana-logo'
-            style={{ width: '80px', height: '50px' }}
-          />
+          <img src='/assets/images/user/arcana_logo.png' alt='arcana-logo' />
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls='responsive-navbar-nav' />
@@ -40,13 +35,14 @@ const Header = () => {
               <>
                 <LinkContainer to='/'>
                   <Nav.Link>
-                    <i class='fas fa-home'></i> HOME
+                    <i class='fas fa-home'></i>
+                    {'  '}HOME
                   </Nav.Link>
                 </LinkContainer>
-
                 <LinkContainer to='/my-tournaments'>
                   <Nav.Link>
-                    <i class='fas fa-user-friends'></i> MY TOURNAMENTS
+                    <i class='fas fa-user-friends'></i>
+                    {'  '}MY TOURNAMENTS
                   </Nav.Link>
                 </LinkContainer>
                 <LinkContainer to='/profile'>

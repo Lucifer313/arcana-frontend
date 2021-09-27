@@ -59,7 +59,9 @@ const MyTournamentScreen = ({ history }) => {
                         <td>{tournament.number_of_teams}</td>
                         <td>
                           <LinkContainer to={`/tournaments/${tournament._id}/`}>
-                            <Button variant='success'>Visit</Button>
+                            <Button className='arcana-link-btn'>
+                              Visit <i class='fas fa-bolt'></i>
+                            </Button>
                           </LinkContainer>
                         </td>
                       </tr>

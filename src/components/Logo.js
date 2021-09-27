@@ -1,6 +1,9 @@
 import React from 'react'
+import dotenv from 'dotenv'
 
 const Logo = ({ path }) => {
+  dotenv.config()
+
   return (
     <img
       src={`http://localhost:7000/${path}`}
