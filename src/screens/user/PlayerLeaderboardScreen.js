@@ -37,12 +37,7 @@ const PlayerLeaderboardScreen = ({ history }) => {
   return (
     <>
       <Header />
-      <h5
-        style={{ textAlign: 'center', color: 'white', backgroundColor: 'red' }}
-        className='p-2'
-      >
-        Player Leaderboard
-      </h5>
+      <h5 className='p-2 m-0 leaderboard-banner'>Leaderboard</h5>
       <Container>
         <Row>
           <Col>
@@ -55,11 +50,11 @@ const PlayerLeaderboardScreen = ({ history }) => {
                     style={{
                       position: 'sticky',
                       top: '0',
-                      backgroundColor: 'white',
                       zIndex: '1000',
+                      background: 'black',
                     }}
                   >
-                    <tr>
+                    <tr className='leaderboard-row'>
                       <th>Rank</th>
                       <th>Avatar</th>
                       <th>Name</th>
@@ -68,7 +63,7 @@ const PlayerLeaderboardScreen = ({ history }) => {
                   </thead>
                   <tbody>
                     {playerLeaderboard.map((player) => (
-                      <tr>
+                      <tr className='leaderboard-row'>
                         <td>{counter++}</td>
                         <td>
                           <Logo path={player.profile_image} />

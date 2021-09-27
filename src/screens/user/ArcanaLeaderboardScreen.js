@@ -37,12 +37,7 @@ const ArcanaLeaderboardScreen = ({ history }) => {
   return (
     <>
       <Header />
-      <h5
-        style={{ textAlign: 'center', color: 'white', backgroundColor: 'red' }}
-        className='p-2'
-      >
-        Arcana Leaderboard
-      </h5>
+      <h5 className='p-2 m-0 leaderboard-banner'>Arcana Leaderboard</h5>
       <Container>
         <Row>
           <Col>
@@ -61,11 +56,11 @@ const ArcanaLeaderboardScreen = ({ history }) => {
                     style={{
                       position: 'sticky',
                       top: '0',
-                      backgroundColor: 'white',
                       zIndex: '1000',
+                      background: 'black',
                     }}
                   >
-                    <tr>
+                    <tr className='leaderboard-row'>
                       <th>Rank</th>
                       <th>Avatar</th>
                       <th>Name</th>
@@ -74,7 +69,7 @@ const ArcanaLeaderboardScreen = ({ history }) => {
                   </thead>
                   <tbody>
                     {arcanaLeaderboard.map((user) => (
-                      <tr>
+                      <tr className='leaderboard-row'>
                         <td>{counter++}</td>
                         <td>
                           <Logo path={user.profile_image} />

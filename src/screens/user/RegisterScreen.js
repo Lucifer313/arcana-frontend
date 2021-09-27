@@ -115,21 +115,9 @@ const RegisterScreen = ({ history }) => {
   return (
     <>
       <Container style={{ minHeight: '82vh' }}>
-        <img
-          src='/assets/images/user/arcana_logo_blue.png'
-          alt='arcana-logo'
-          style={{ width: '70%', marginLeft: '15%' }}
-          className='mt-5'
-        />
-        <img
-          src='/assets/images/user/sword_shield_icon.svg'
-          alt='sword-icon'
-          style={{ width: '20%', marginLeft: '40%' }}
-          className='my-4'
-        />
         <h3>Register</h3>
         <Row>
-          <Col md={6} sm={12} xs={12}>
+          <Col md={6} sm={12} xs={12} className='offset-md-3'>
             <Form className='mb-5'>
               {errorMessage ? (
                 <Message variant='danger'>{errorMessage}</Message>

@@ -26,7 +26,7 @@
 
 .achievements-team-title {
   color: white;
-  font-family: AftaSerif, serif;
+  font-family: 'Afta serif', sans-serif;
   margin: 20px 0px 20px 0px;
 }
 
@@ -139,7 +139,7 @@ option {
 
 .login-form-title {
   color: white;
-  font-family: AftaSerif, serif;
+  font-family: 'Afta serif', sans-serif;
 }
 
 .login-row {
@@ -163,4 +163,160 @@ option {
 #formBasicEmail:focus,
 #formBasicPassword:focus {
   box-shadow: inset 0 -2px 0#dcb570;
+}
+
+th {
+  color: #c4c4c4 !important;
+}
+
+td {
+  color: white;
+}
+
+.container,
+#root {
+  background-color: black;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #dcb570 !important;
+  font-family: 'Afta serif', sans-serif;
+  text-transform: uppercase;
+}
+
+.form-label {
+  color: #c4c4c4 !important;
+  font-family: 'Afta serif', sans-serif;
+}
+
+.form-control {
+  color: white !important;
+}
+
+.form-control:focus {
+  box-shadow: inset 0 -2px 0 #dcb570 !important;
+}
+
+.arcana-btn {
+  border: 1px solid #dcb570 !important;
+  width: 45%;
+  margin: 0px 2%;
+  background-size: cover;
+  font-family: 'Afta serif', sans-serif;
+  color: #dcb570 !important;
+}
+
+.tournament-detail-btn-text {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 20px;
+  font-family: 'Afta serif', sans-serif;
+  color: #dcb570;
+}
+
+.tournament-detail-btn-icon {
+  font-size: 3.5em;
+  width: 100%;
+  margin-top: 15px;
+  color: #dcb570;
+}
+
+.arcana-link-btn {
+  background-color: black !important;
+  color: #dcb570 !important;
+  background-image: none;
+}
+
+.arcana-link-btn:hover {
+  color: black !important;
+  background-color: #dcb570 !important;
+  background-image: none;
+}
+
+.leaderboard-row {
+  border-bottom: 2px solid #dcb570 !important;
+}
+
+.leaderboard-banner {
+  color: black !important;
+  background-color: #dcb570 !important;
+  text-align: center;
+  font-weight: 900 !important;
+}
+
+tr {
+  border-bottom: 2px solid #dcb570;
+}
+
+th,
+td {
+  font-family: 'Afta serif', sans-serif;
+}
+
+th {
+  font-size: 1.1em !important;
+  font-weight: 600;
+  color: #dcb570 !important;
+}
+
+thead {
+  background: black;
+}
+
+.add-btn,
+.add-btn:hover,
+.add-btn:focus,
+.add-btn:active {
+  width: 40px;
+  border-radius: 50%;
+  color: black !important;
+  background-color: #dcb570 !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.remove-btn,
+.remove-btn:hover,
+.remove-btn:focus,
+.remove-btn:active {
+  width: 40px;
+  border-radius: 50%;
+  background-color: black !important;
+  color: #dcb570 !important;
+  background-image: none;
+  border: 2px solid #dcb570 !important;
+  box-shadow: none !important;
+}
+
+.player-selected {
+  background-color: #dcb570;
+  border-bottom: 2px solid black;
+}
+
+.player-unselected {
+  background-color: black;
+  border-bottom: 2px solid #dcb570;
+}
+
+.player-selected td {
+  font-weight: 600;
+  color: black;
+}
+
+.player-unselected td {
+  color: white;
+}
+
+.page-banner {
+  background-color: #dcb570;
+  font-family: 'Afta serif';
+  color: black;
+  text-align: center;
+  font-weight: 600;
 }
