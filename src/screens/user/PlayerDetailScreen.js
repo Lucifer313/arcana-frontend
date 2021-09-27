@@ -53,7 +53,10 @@ const PlayerDetailScreen = ({ match }) => {
       <Header />
       <div className='team-detail-container'>
         <Container
-          style={{ minHeight: '82vh' }}
+          style={{
+            minHeight: '82vh',
+            backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+          }}
           className='team-detail-container'
         >
           <Row>

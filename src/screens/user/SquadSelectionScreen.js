@@ -42,7 +42,12 @@ const SquadSelectionScreen = ({ history }) => {
   return (
     <>
       <div>
-        <Container style={{ minHeight: '82vh' }}>
+        <Container
+          style={{
+            minHeight: '82vh',
+            backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+          }}
+        >
           <Row>
             {allowed ? (
               <SquadSelector navigation={history} />

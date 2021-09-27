@@ -92,12 +92,17 @@ const ProfileScreen = ({ history }) => {
       setProfileImage(userInfo.profile_image)
       setImagePreview(`http://localhost:7000/${userInfo.profile_image}`)
     }
-  }, [userInfo, history])
+  }, [])
 
   return (
     <>
       <Header />
-      <Container style={{ minHeight: '82vh' }}>
+      <Container
+        style={{
+          minHeight: '82vh',
+          backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+        }}
+      >
         <Row>
           <Col>
             <Form className='mt-5'>
@@ -175,7 +180,7 @@ const ProfileScreen = ({ history }) => {
                   variant='primary'
                   onClick={handleUpdate}
                   style={{
-                    backgroundImage: `url(${'/assets/images/user/arcana_cracked_button.jpg'})`,
+                    backgroundColor: 'black',
                   }}
                 >
                   Update

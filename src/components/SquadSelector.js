@@ -176,7 +176,12 @@ const SquadSelector = ({ navigation }) => {
   return (
     <>
       <Header />
-      <Container className='my-2'>
+      <Container
+        className='my-2'
+        style={{
+          backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+        }}
+      >
         <Row>
           <Col>
             <p className='p-2 mb-0 page-banner'>
@@ -241,6 +246,7 @@ const SquadSelector = ({ navigation }) => {
             className='arcana-btn'
             style={{
               backgroundColor: 'black',
+              margin: '0px 2% 0px 0px',
             }}
             onClick={() => {
               dispatch({ type: RESET_PLAYER_SQUAD })
@@ -252,7 +258,8 @@ const SquadSelector = ({ navigation }) => {
             className='arcana-btn'
             onClick={squadVerification}
             style={{
-              backgroundImage: `url(${'/assets/images/user/arcana_cracked_button.jpg'})`,
+              backgroundColor: 'black',
+              margin: '0px 0px 0px 2%',
             }}
           >
             Submit
