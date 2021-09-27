@@ -61,7 +61,11 @@ const PlayerListScreen = () => {
     <>
       <Header />
       <div className='user-screen-container'>
-        <Container>
+        <Container
+          style={{
+            backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+          }}
+        >
           <Row className='filter-container'>
             <Col md={2}>
               <br />

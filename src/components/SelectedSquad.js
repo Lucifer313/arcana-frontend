@@ -25,16 +25,7 @@ const SelectedSquad = ({ squad, squadType, title }) => {
       <Table>
         <thead>
           <tr>
-            <th
-              colSpan={4}
-              className='p-2 text-center'
-              style={{
-                background: '#2196f3',
-                color: 'white',
-                fontSize: '1.1em',
-                borderRadius: '3px',
-              }}
-            >
+            <th colSpan={4} className='p-2 text-center page-banner'>
               {' '}
               {title}
             </th>
@@ -60,9 +51,9 @@ const SelectedSquad = ({ squad, squadType, title }) => {
               <td>{player.role}</td>
 
               {player.dayPoints === undefined || player.dayPoints === null ? (
-                <td style={{ color: 'red' }}>TBD</td>
+                <td style={{ color: 'white' }}>TBD</td>
               ) : (
-                <td style={{ color: 'blue' }}>
+                <td style={{ color: '#dcb570', fontWeight: '600' }}>
                   {Math.round(player.dayPoints * 100) / 100}
                 </td>
               )}

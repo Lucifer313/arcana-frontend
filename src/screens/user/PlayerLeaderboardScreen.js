@@ -38,7 +38,11 @@ const PlayerLeaderboardScreen = ({ history }) => {
     <>
       <Header />
       <h5 className='p-2 m-0 leaderboard-banner'>Leaderboard</h5>
-      <Container>
+      <Container
+        style={{
+          backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+        }}
+      >
         <Row>
           <Col>
             {loading ? (

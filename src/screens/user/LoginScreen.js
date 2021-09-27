@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 import Loader from '../../components/Loader'
 import Message from '../../components/Message'
-import Footer from '../../components/Layout/Admin/Footer'
+import Footer from '../../components/Layout/User/Footer'
 
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -56,22 +56,25 @@ const AdminLoginScreen = ({ history }) => {
 
   return (
     <>
-      <Container style={{ minHeight: '93vh' }}>
+      <Container
+        style={{
+          minHeight: '93vh',
+          backgroundImage: `url(${'/assets/images/user/arcana-landing-page.jpg'})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <Row>
           <Col>
             <Form className='col-md-6 offset-md-3 mt-5'>
               <img
-                src='/assets/images/user/arcana_logo_blue.png'
+                src='/assets/images/user/arcana_logo.png'
                 alt='arcana-logo'
                 style={{ width: '70%', marginLeft: '15%' }}
+                className='mb-5'
               />
-              <img
-                src='/assets/images/user/sword_shield_icon.svg'
-                alt='sword-icon'
-                style={{ width: '20%', marginLeft: '40%' }}
-                className='my-3'
-              />
-              <h1 className='my-2' style={{ fontWeight: '600' }}>
+
+              <h1 className='mb-2 mt-5' style={{ fontWeight: '600' }}>
                 Login
               </h1>
               {errorMessage ? (
@@ -80,7 +83,9 @@ const AdminLoginScreen = ({ history }) => {
                 <Message variant='danger'>{error}</Message>
               ) : null}
               <Form.Group controlId='formBasicEmail'>
-                <Form.Label>Email address</Form.Label>
+                <Form.Label style={{ color: 'white' }}>
+                  Email address
+                </Form.Label>
                 <Form.Control
                   type='email'
                   placeholder='Enter email'
@@ -89,7 +94,7 @@ const AdminLoginScreen = ({ history }) => {
                 />
               </Form.Group>
               <Form.Group controlId='formBasicPassword' className='mt-2'>
-                <Form.Label>Password</Form.Label>
+                <Form.Label style={{ color: 'white' }}>Password</Form.Label>
                 <Form.Control
                   type='password'
                   placeholder='Password'
@@ -100,24 +105,31 @@ const AdminLoginScreen = ({ history }) => {
               <Form.Group>{loading ? <Loader /> : null}</Form.Group>
               <Form.Group>
                 <Button
-                  variant='primary'
                   type='submit'
                   onClick={handleSubmit}
                   className='mt-4'
-                  style={{ width: '100%' }}
+                  style={{
+                    width: '100%',
+                    padding: '4%',
+                    backgroundSize: 'cover',
+                    backgroundImage: `url(${'/assets/images/user/arcana_button.png'})`,
+                  }}
                 >
-                  <i class='fa fa-sign-in' aria-hidden='true'></i>
                   Login
                 </Button>
-                <LinkContainer to='/register' className='mt-3'>
-                  <p style={{ color: '#2196f3' }}>
-                    Don't have an account? Register here
-                  </p>
+                <LinkContainer
+                  to='/register'
+                  className='mt-3'
+                  style={{ color: '#c4c4c4' }}
+                >
+                  <p>Don't have an account? Register here</p>
                 </LinkContainer>
-                <LinkContainer to='/forgot-password' className='mt-3'>
-                  <p style={{ color: '#2196f3 !important' }}>
-                    Forgot password? Click here
-                  </p>
+                <LinkContainer
+                  to='/forgot-password'
+                  className='mt-3'
+                  style={{ color: '#c4c4c4' }}
+                >
+                  <p>Forgot password? Click here</p>
                 </LinkContainer>
               </Form.Group>
             </Form>

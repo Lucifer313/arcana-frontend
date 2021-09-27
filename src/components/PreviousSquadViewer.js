@@ -43,13 +43,17 @@ const PreviousSquadViewer = ({ navigation, history }) => {
   return (
     <>
       <Header />
-      <Container>
+      <Container
+        style={{
+          backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+        }}
+      >
         <Col>
           <>
             {!previousSquadFilter ? (
               <Button
-                variant='success'
-                className='my-2'
+                className='my-2 mx-0 arcana-btn'
+                style={{ backgroundColor: 'black' }}
                 onClick={() => setPreviousSquadFilter(true)}
               >
                 Show Filter
@@ -57,16 +61,22 @@ const PreviousSquadViewer = ({ navigation, history }) => {
             ) : (
               <>
                 <Button
-                  variant='danger'
-                  className='my-2'
+                  className='my-2 arcana-btn'
+                  style={{
+                    backgroundColor: 'black',
+                    margin: '0px 2.5% 0px 0px',
+                  }}
                   onClick={() => setPreviousSquadFilter(false)}
                 >
                   Hide Filter
                 </Button>
                 <Button
                   style={{ float: 'right' }}
-                  variant='warning'
-                  className='my-2'
+                  className='my-2 arcana-btn'
+                  style={{
+                    backgroundColor: 'black',
+                    margin: '0px 0px 0px 2.5%',
+                  }}
                   onClick={() =>
                     getPreviousSquadHandler(tournament.days.length.toString())
                   }
@@ -78,13 +88,15 @@ const PreviousSquadViewer = ({ navigation, history }) => {
             {previousSquadFilter ? (
               <>
                 <Form.Group controlId='squadDay' className='my-3'>
-                  <Form.Label>View Squads of Previous Days</Form.Label>
+                  <Form.Label style={{ color: '#dcb570' }}>
+                    View Squads of Previous Days
+                  </Form.Label>
                   <Form.Control
                     as='select'
                     value={day}
                     onChange={(e) => getPreviousSquadHandler(e.target.value)}
                   >
-                    <option selected disabled>
+                    <option selected disabled style={{ color: '#dcb570 ' }}>
                       Select previous day
                     </option>
                     {tournament.days.map((t) => {
@@ -99,7 +111,7 @@ const PreviousSquadViewer = ({ navigation, history }) => {
                 <Loader />
               </div>
             ) : null}
-            <div style={{ minHeight: '74vh' }}>
+            <div style={{ minHeight: '60vh' }}>
               <SelectedSquad
                 squad={playingSquad}
                 squadType='playing'
@@ -107,27 +119,18 @@ const PreviousSquadViewer = ({ navigation, history }) => {
               />
             </div>
             <div>
-              <Button
-                variant='danger'
-                className='my-2'
-                onClick={() =>
-                  navigation ? navigation.goBack() : history.goBack()
-                }
-              >
-                Back
-              </Button>{' '}
               {!showSubstitueSquad ? (
                 <Button
-                  className='my-2'
-                  variant='success'
+                  className='my-2 arcana-btn'
+                  style={{ backgroundColor: 'black' }}
                   onClick={() => setShowSubstitueSquad(true)}
                 >
                   Show Subs
                 </Button>
               ) : (
                 <Button
-                  className='my-2'
-                  variant='danger'
+                  className='my-2 arcana-btn'
+                  style={{ backgroundColor: 'black' }}
                   onClick={() => setShowSubstitueSquad(false)}
                 >
                   Hide Subs

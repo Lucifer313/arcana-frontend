@@ -35,7 +35,12 @@ const MyTournamentScreen = ({ history }) => {
     <>
       <Header />
       <div className='user-screen-container'>
-        <Container style={{ minHeight: '82vh' }}>
+        <Container
+          style={{
+            minHeight: '82vh',
+            backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+          }}
+        >
           <Row>
             <Table striped hover>
               <thead>
