@@ -88,7 +88,6 @@ const AdminLoginScreen = ({ history }) => {
                 </Form.Label>
                 <Form.Control
                   type='email'
-                  placeholder='Enter email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -97,7 +96,6 @@ const AdminLoginScreen = ({ history }) => {
                 <Form.Label style={{ color: 'white' }}>Password</Form.Label>
                 <Form.Control
                   type='password'
-                  placeholder='Password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />

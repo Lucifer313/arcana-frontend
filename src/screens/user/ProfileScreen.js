@@ -94,6 +94,12 @@ const ProfileScreen = ({ history }) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [userInfo])
+
   return (
     <>
       <Header />

@@ -55,8 +55,13 @@ const ResetPasswordScreen = () => {
 
   return (
     <div>
-      <Header />
-      <Container style={{ minHeight: '82vh' }}>
+      <Container
+        style={{
+          minHeight: '100vh',
+          backgroundImage: `url(${'/assets/images/user/arcana-landing-page.jpg'})`,
+          backgroundSize: 'cover',
+        }}
+      >
         <Row>
           <Col lg={6} md={12} className='d-block mx-auto'>
             <Form>
@@ -73,20 +78,20 @@ const ResetPasswordScreen = () => {
                 <Message variant='danger'>{error}</Message>
               ) : null}
               <Form.Group className='my-3'>
-                <Form.Label>New Password</Form.Label>
+                <Form.Label style={{ color: 'white' }}>New Password</Form.Label>
                 <Form.Control
                   controlId='new-password'
-                  placeholder='Enter your new password'
                   type='text'
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 ></Form.Control>
               </Form.Group>
               <Form.Group className='my-3'>
-                <Form.Label>Confirm Password</Form.Label>
+                <Form.Label style={{ color: 'white' }}>
+                  Confirm Password
+                </Form.Label>
                 <Form.Control
                   controlId='confirm-password'
-                  placeholder='Enter your Confirm password'
                   type='text'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -94,9 +99,20 @@ const ResetPasswordScreen = () => {
               </Form.Group>
               <Form.Group>{resetting ? <Loader /> : null}</Form.Group>
               <Form.Group className='mt-3'>
-                <Button onClick={handleSubmit}>Reset</Button>{' '}
-                <LinkContainer to='/login'>
-                  <Button variant='danger'>Login</Button>
+                <Button
+                  onClick={handleSubmit}
+                  className='arcana-btn'
+                  style={{
+                    backgroundImage: `url(${'/assets/images/user/arcana_button.png'})`,
+                    margin: '0px 2% 0px 0px',
+                  }}
+                >
+                  Reset
+                </Button>{' '}
+                <LinkContainer to='/login' style={{ backgroundColor: 'black' }}>
+                  <Button variant='danger' className='arcana-btn'>
+                    Login
+                  </Button>
                 </LinkContainer>
               </Form.Group>
             </Form>
