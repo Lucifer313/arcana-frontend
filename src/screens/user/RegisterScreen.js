@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 import { useSelector, useDispatch } from 'react-redux'
 
-import Footer from '../../components/Layout/Admin/Footer'
+import Footer from '../../components/Layout/User/Footer'
 import Loader from '../../components/Loader'
 import Message from '../../components/Message'
 
@@ -25,7 +25,7 @@ const RegisterScreen = ({ history }) => {
   const [country, setCountry] = useState('')
 
   const [previewImage, setImagePreview] = useState(
-    '/assets/images/admin/preview_placeholder.png'
+    '/assets/images/user/multi-hero.gif'
   )
 
   const [errorMessage, setErrorMessage] = useState('')
@@ -91,7 +91,7 @@ const RegisterScreen = ({ history }) => {
     setConfirmPassword('')
     setCountry('')
     setUserProfile('')
-    setImagePreview('/assets/images/admin/preview_placeholder.png')
+    setImagePreview('/assets/images/user/multi-hero.gif')
   }
 
   const imageHandler = (e) => {
@@ -114,22 +114,23 @@ const RegisterScreen = ({ history }) => {
 
   return (
     <>
-      <Container style={{ minHeight: '82vh' }}>
+      <Container
+        style={{
+          minHeight: '82vh',
+          backgroundImage: `url(${'/assets/images/user/arcana-landing-page.jpg'})`,
+          backgroundSize: 'cover',
+        }}
+      >
         <img
-          src='/assets/images/user/arcana_logo_blue.png'
+          src='/assets/images/user/arcana_logo.png'
           alt='arcana-logo'
           style={{ width: '70%', marginLeft: '15%' }}
           className='mt-5'
         />
-        <img
-          src='/assets/images/user/sword_shield_icon.svg'
-          alt='sword-icon'
-          style={{ width: '20%', marginLeft: '40%' }}
-          className='my-4'
-        />
-        <h3>Register</h3>
+
+        <h3 className='mt-5'>Register</h3>
         <Row>
-          <Col md={6} sm={12} xs={12}>
+          <Col md={4} sm={12} xs={12}>
             <Form className='mb-5'>
               {errorMessage ? (
                 <Message variant='danger'>{errorMessage}</Message>
@@ -148,7 +149,6 @@ const RegisterScreen = ({ history }) => {
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder='Enter your First Name'
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
@@ -157,7 +157,6 @@ const RegisterScreen = ({ history }) => {
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder='Enter your Last Name'
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
@@ -166,7 +165,6 @@ const RegisterScreen = ({ history }) => {
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
                   type='email'
-                  placeholder='xyz@arcanaleague.com'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -175,7 +173,6 @@ const RegisterScreen = ({ history }) => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type='password'
-                  placeholder='Enter your Password'
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -184,7 +181,6 @@ const RegisterScreen = ({ history }) => {
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   type='password'
-                  placeholder='Confirm Password'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
@@ -201,7 +197,6 @@ const RegisterScreen = ({ history }) => {
                 <Form.Label>Country</Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder='Enter your country'
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                 />
@@ -210,7 +205,6 @@ const RegisterScreen = ({ history }) => {
                 <Form.Label>Alias</Form.Label>
                 <Form.Control
                   type='text'
-                  placeholder='Enter your Dota Alias'
                   value={alias}
                   onChange={(e) => setAlias(e.target.value)}
                 />
@@ -225,18 +219,22 @@ const RegisterScreen = ({ history }) => {
                 <Form.File
                   id='playerProfileUpload'
                   onChange={imageHandler}
-                  accept='.jpg, .jpeg, .png'
+                  accept='.jpg, .jpeg, .png, .gif'
                 />
               </Form.Group>
               <Form.Group>{registering ? <Loader /> : null}</Form.Group>
               <Form.Group className='mt-5'>
-                <Button variant='primary' onClick={handleSubmit}>
+                <Button
+                  className='arcana-btn'
+                  style={{
+                    backgroundSize: 'cover',
+                    backgroundImage: `url(${'/assets/images/user/arcana_button.png'})`,
+                  }}
+                  onClick={handleSubmit}
+                >
                   Register
                 </Button>
                 &nbsp; &nbsp; &nbsp;
-                <LinkContainer to='/login'>
-                  <Button variant='danger'>Back</Button>
-                </LinkContainer>
               </Form.Group>
             </Form>
           </Col>

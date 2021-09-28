@@ -19,7 +19,7 @@ const Header = () => {
         <LinkContainer to='/admin/'>
           <Navbar.Brand>
             <img
-              src='/assets/images/user/arcana_logo.png'
+              src='/assets/images/admin/arcana_a_logo_white.png'
               width='50px'
               alt='arcana-logo'
             />

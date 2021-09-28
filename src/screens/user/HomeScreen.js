@@ -66,22 +66,25 @@ const HomeScreen = ({ history }) => {
                     <td>
                       {myEnrolledTournaments.includes(tournament._id) ? (
                         <LinkContainer to={`/tournaments/${tournament._id}`}>
-                          <Button className='arcana-link-btn'>
+                          <Button
+                            className='arcana-link-btn'
+                            style={{
+                              backgroundSize: 'cover',
+                              backgroundImage: `url(${'/assets/images/user/arcana_button.png'})`,
+                            }}
+                          >
                             Visit <i class='fas fa-bolt'></i>
                           </Button>
                         </LinkContainer>
                       ) : (
                         <LinkContainer
                           to={`/tournaments/${tournament._id}/create-team`}
+                          className='arcana-link-btn'
+                          style={{
+                            backgroundColor: 'black',
+                          }}
                         >
-                          <Button
-                            variant='primary'
-                            style={{
-                              backgroundImage: `url(${'/assets/images/user/arcana_cracked_button.jpg'})`,
-                            }}
-                          >
-                            Join
-                          </Button>
+                          <Button>Join</Button>
                         </LinkContainer>
                       )}
                     </td>

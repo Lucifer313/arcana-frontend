@@ -50,13 +50,18 @@ const ForgotPasswordScreen = () => {
 
   return (
     <div>
-      <Header />
-      <Container style={{ minHeight: '82vh' }}>
+      <Container
+        style={{
+          minHeight: '100vh',
+          backgroundImage: `url(${'/assets/images/user/arcana-landing-page.jpg'})`,
+          backgroundSize: 'cover',
+        }}
+      >
         <Row>
           <Col lg={6} md={12} className='d-block mx-auto'>
             <Form>
               <h3 className='my-4'>Forgot Password</h3>
-              <p>
+              <p style={{ color: 'white' }}>
                 Enter your email address. We will send a link to reset your
                 password
               </p>
@@ -73,10 +78,11 @@ const ForgotPasswordScreen = () => {
                 <Message variant='danger'>{error}</Message>
               ) : null}
               <Form.Group>
-                <Form.Label>Email Address</Form.Label>
+                <Form.Label style={{ color: '#dcb570' }}>
+                  Your Registered Email Address
+                </Form.Label>
                 <Form.Control
                   controlId='forgot-email'
-                  placeholder='Enter your registered email address'
                   type='email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -84,10 +90,15 @@ const ForgotPasswordScreen = () => {
               </Form.Group>
               <Form.Group>{loading ? <Loader /> : null}</Form.Group>
               <Form.Group className='mt-3'>
-                <LinkContainer to='/login'>
-                  <Button variant='danger'>Back</Button>
-                </LinkContainer>{' '}
-                <Button onClick={handleSubmit}>Submit</Button>
+                <Button
+                  onClick={handleSubmit}
+                  className='arcana-btn'
+                  style={{
+                    backgroundImage: `url(${'/assets/images/user/arcana_button.png'})`,
+                  }}
+                >
+                  Submit
+                </Button>
               </Form.Group>
             </Form>
           </Col>
