@@ -3,6 +3,17 @@
   background-color: black;
 }
 
+li,
+.form-check-label {
+  color: white;
+}
+
+.form-check-input:checked {
+  background-color: #dcb570 !important;
+  border-color: #dcb570 !important;
+  color: black !important;
+}
+
 .team-logo-container {
   background: rgb(238, 237, 237);
   background: linear-gradient(
@@ -189,6 +200,10 @@ h6 {
   text-transform: uppercase;
 }
 
+p {
+  font-family: 'Afta serif', sans-serif;
+}
+
 .form-label {
   color: #c4c4c4;
   font-family: 'Afta serif', sans-serif;
@@ -216,7 +231,7 @@ option {
   width: 47%;
   background-size: cover;
   font-family: 'Afta serif', sans-serif;
-  color: #dcb570 !important;
+  color: #dcb570;
 }
 
 .tournament-detail-btn-text {
@@ -308,7 +323,6 @@ thead {
 }
 
 .player-unselected {
-  background-color: black;
   border-bottom: 2px solid #dcb570;
 }
 

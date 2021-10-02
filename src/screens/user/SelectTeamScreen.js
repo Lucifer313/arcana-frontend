@@ -190,41 +190,27 @@ const CreateTournamentTeamScreen = ({ history }) => {
                 />
               ) : (
                 <>
-                  <p className='pt-2 text-center mb-1'>
-                    Select 3 - 5 players from the following roles:&nbsp;
-                  </p>
-                  <p
-                    className='p-2 text-center'
-                    style={{
-                      background: 'red',
-                      color: 'white',
-                      borderRadius: '4px',
-                    }}
-                  >
-                    {role.map((r) => (
-                      <span>{r}&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    ))}
-                  </p>
                   {!showFilter ? (
                     <Button
-                      variant='primary'
+                      className='arcana-btn my-2'
+                      style={{ backgroundColor: 'black' }}
                       onClick={() => setShowFilter(true)}
                     >
-                      Show Filters
+                      Filters
                     </Button>
                   ) : (
                     <>
                       <Button
-                        variant='danger'
+                        className='arcana-btn my-2'
+                        style={{ backgroundColor: 'black' }}
                         onClick={() => setShowFilter(false)}
                       >
                         Hide Filters
                       </Button>
                       <Button
-                        variant='warning'
+                        className='arcana-btn my-2'
+                        style={{ backgroundColor: 'black', float: 'right' }}
                         onClick={clearFilter}
-                        className='my-2'
-                        style={{ float: 'right' }}
                       >
                         Clear
                       </Button>
@@ -255,6 +241,25 @@ const CreateTournamentTeamScreen = ({ history }) => {
                       </Form.Group>
                     </>
                   ) : null}
+                  <p
+                    className='pt-2 text-center mb-2'
+                    style={{ color: 'white' }}
+                  >
+                    Select 3 - 5 players from the following roles:&nbsp;
+                  </p>
+                  <p
+                    className='p-2 text-center m-0'
+                    style={{
+                      background: '#dcb570',
+                      color: 'black',
+                      fontWeight: '600',
+                    }}
+                  >
+                    {role.map((r) => (
+                      <span>{r}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    ))}
+                  </p>
+
                   <SelectTeamList
                     players={qualifiedPlayers}
                     role={role}
@@ -269,7 +274,8 @@ const CreateTournamentTeamScreen = ({ history }) => {
                     {role.includes('Hard Support', 'Soft Support') ? (
                       <>
                         <Button
-                          variant='warning'
+                          className='arcana-btn'
+                          style={{ backgroundColor: 'black' }}
                           onClick={() => setPreview(true)}
                         >
                           Preview
@@ -285,7 +291,8 @@ const CreateTournamentTeamScreen = ({ history }) => {
                     ) : role.includes('Offlane') ? (
                       <>
                         <Button
-                          variant='danger'
+                          className='arcana-btn'
+                          style={{ backgroundColor: 'black' }}
                           onClick={() =>
                             setRole(['Hard Support', 'Soft Support'])
                           }
@@ -293,7 +300,8 @@ const CreateTournamentTeamScreen = ({ history }) => {
                           Back
                         </Button>{' '}
                         <Button
-                          variant='warning'
+                          className='arcana-btn'
+                          style={{ backgroundColor: 'black' }}
                           onClick={() => setPreview(true)}
                         >
                           Preview
@@ -309,13 +317,15 @@ const CreateTournamentTeamScreen = ({ history }) => {
                     ) : role.includes('Carry', 'Mid') ? (
                       <>
                         <Button
-                          variant='danger'
+                          className='arcana-btn'
+                          style={{ backgroundColor: 'black' }}
                           onClick={() => setRole(['Offlane'])}
                         >
                           Back
                         </Button>{' '}
                         <Button
-                          variant='warning'
+                          className='arcana-btn'
+                          style={{ backgroundColor: 'black' }}
                           onClick={() => setPreview(true)}
                         >
                           Preview

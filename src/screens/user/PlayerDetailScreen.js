@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import Header from '../../components/Layout/User/Header'
 import Footer from '../../components/Layout/User/Footer'
-import './black-style.css'
+//import './black-style.css'
 import Logo from '../../components/Logo'
 
 const PlayerDetailScreen = ({ match }) => {

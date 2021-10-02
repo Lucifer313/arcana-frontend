@@ -50,8 +50,11 @@ const Disclaimer = ({ setSection }) => {
       </Form.Group>
       {enableButton ? (
         <Button
-          variant='primary'
-          className='my-3'
+          className='my-3 arcana-btn'
+          style={{
+            backgroundImage: `url(${'/assets/images/user/arcana_button.png'})`,
+            color: 'white',
+          }}
           onClick={() => setSection('Team-selection')}
         >
           CREATE TEAM

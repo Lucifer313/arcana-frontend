@@ -175,21 +175,12 @@ const SquadSelector = ({ navigation }) => {
 
   return (
     <>
-      <Header />
-      <Container
-        className='my-2'
-        style={{
-          backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
-        }}
-      >
-        <Row>
-          <Col>
-            <p className='p-2 mb-0 page-banner'>
-              Select your squad for Day: {tournament.days.length + 1}
-            </p>
-          </Col>
-        </Row>
-      </Container>
+      <Col className='my-2'>
+        <p className='p-2 mb-0 page-banner'>
+          Select your squad for Day: {tournament.days.length + 1}
+        </p>
+      </Col>
+
       <Col>
         {errorMessage !== '' ? (
           <Popup
@@ -266,7 +257,6 @@ const SquadSelector = ({ navigation }) => {
           </Button>
         </div>
       </Col>
-      <Footer />
     </>
   )
 }

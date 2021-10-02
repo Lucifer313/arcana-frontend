@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Col, Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
+import axios from 'axios'
 
 import { getMyTournaments, getSquadByDay } from '../actions/user-action'
 import Footer from './Layout/User/Footer'
@@ -35,6 +36,17 @@ const PreviousSquadViewer = ({ navigation, history }) => {
     }
   }, [tournament, tid, userInfo, dispatch])
 
+  useEffect(() => {
+    const getMatchData = async () => {
+      let matchDetails = await axios.get(
+        `https://api.opendota.com/api/matches/6033763787`
+      )
+      console.log(matchDetails)
+    }
+
+    getMatchData()
+  }, [])
+
   const getPreviousSquadHandler = (selectedDay) => {
     setDay(selectedDay)
     dispatch(getSquadByDay(userInfo._id, tid, selectedDay))
@@ -42,7 +54,6 @@ const PreviousSquadViewer = ({ navigation, history }) => {
 
   return (
     <>
-      <Header />
       <Container
         style={{
           backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
@@ -150,7 +161,6 @@ const PreviousSquadViewer = ({ navigation, history }) => {
           ) : null
         ) : null}
       </Container>
-      <Footer />
     </>
   )
 }

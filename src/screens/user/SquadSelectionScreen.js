@@ -42,6 +42,7 @@ const SquadSelectionScreen = ({ history }) => {
   return (
     <>
       <div>
+        <Header />
         <Container
           style={{
             minHeight: '82vh',
@@ -56,6 +57,7 @@ const SquadSelectionScreen = ({ history }) => {
             )}
           </Row>
         </Container>
+        <Footer />
       </div>
     </>
   )
