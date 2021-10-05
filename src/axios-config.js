@@ -1,5 +1,6 @@
 import axios from 'axios'
 import dotenv from 'dotenv'
+import 'react-bootstrap'
 
 dotenv.config()
 
