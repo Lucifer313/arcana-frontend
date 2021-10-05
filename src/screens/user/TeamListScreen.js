@@ -3,52 +3,39 @@ import { Container, Row, Col, Button } from 'react-bootstrap'
 import Footer from '../../components/Layout/User/Footer'
 import Header from '../../components/Layout/User/Header'
 
+import { useDispatch, useSelector } from 'react-redux'
+
+import TeamCard from '../../components/Cards/Team/TeamCard'
+
+import { filterTeams, getTeams, sortTeams } from '../../actions/team-actions'
 import FilterName from '../../components/Filters/FilterName'
 import FilterRegion from '../../components/Filters/FilterRegion'
 import Sorter from '../../components/Filters/Sorter'
-import './black-style.css'
+import { RESET_TEAM_FILTERS } from '../../constants/team-constants'
 
-import { useDispatch, useSelector } from 'react-redux'
+const TeamListScreen = () => {
+  const teamDetails = useSelector((state) => state.teamDetails)
+  const { teams, filteredTeams } = teamDetails
 
-import PlayerCard from '../../components/Cards/Player/PlayerCard'
-import {
-  filterPlayers,
-  getPlayers,
-  sortPlayers,
-} from '../../actions/player-action'
-import { RESET_PLAYER_FILTERS } from '../../constants/player-constants'
-
-const PlayerListScreen = () => {
-  const playerDetails = useSelector((state) => state.playerDetails)
-  const { players, filteredPlayers } = playerDetails
+  const dispatch = useDispatch()
 
   const [name, setName] = useState('')
   const [region, setRegion] = useState('Filter by Region')
   const [sort, setSort] = useState('Default')
-
   const [showFilter, setShowFilter] = useState(false)
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    if (players.length === 0) {
-      dispatch(getPlayers())
-    }
-  }, [])
-
   const handleRegionFilter = (e) => {
     setRegion(e.target.value)
-    dispatch(filterPlayers(e.target.value, name))
+    dispatch(filterTeams(e.target.value, name))
   }
 
   const handleNameFilter = (e) => {
     setName(e.target.value)
-    dispatch(filterPlayers(region, e.target.value))
+    dispatch(filterTeams(region, e.target.value))
   }
 
   const handleSorter = (e) => {
     setSort(e.target.value)
-    dispatch(sortPlayers(e.target.value))
+    dispatch(sortTeams(e.target.value))
   }
 
   const handleClearFilter = (e) => {
@@ -57,8 +44,14 @@ const PlayerListScreen = () => {
     setRegion('Filter by Region')
     console.log(region)
     setName('')
-    dispatch({ type: RESET_PLAYER_FILTERS })
+    dispatch({ type: RESET_TEAM_FILTERS })
   }
+  useEffect(() => {
+    if (teams.length === 0) {
+      dispatch(getTeams())
+    }
+  }, [])
+
   return (
     <>
       <Header />
@@ -68,29 +61,29 @@ const PlayerListScreen = () => {
             backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
           }}
         >
+          {!showFilter ? (
+            <Col md={12}>
+              <Button
+                onClick={() => setShowFilter(true)}
+                className='my-3'
+                style={{
+                  backgroundColor: 'black',
+                }}
+              >
+                SHOW FILTER
+              </Button>
+            </Col>
+          ) : null}
           <Row className='filter-container'>
-            {!showFilter ? (
-              <Col md={12}>
-                <Button
-                  onClick={() => setShowFilter(true)}
-                  className='my-3'
-                  style={{
-                    backgroundColor: 'black',
-                  }}
-                >
-                  SHOW FILTER
-                </Button>
-              </Col>
-            ) : null}
             {showFilter ? (
               <>
                 <Col md={2}>
                   <br />
                   <h5>
-                    Arcana Players:
+                    Arcana Teams:
                     {name !== '' || region !== 'Filter by Region'
-                      ? ' ' + filteredPlayers.length
-                      : ' ' + players.length}{' '}
+                      ? ' ' + filteredTeams.length
+                      : ' ' + teams.length}{' '}
                   </h5>
                 </Col>
                 <FilterName
@@ -129,29 +122,27 @@ const PlayerListScreen = () => {
           </Row>
           <Row>
             {name !== '' || region !== 'Filter by Region' || sort !== 'Default'
-              ? filteredPlayers.map((player) => (
+              ? filteredTeams.map((team) => (
                   <Col lg={3} md={6} sm={12}>
-                    <PlayerCard
-                      key={player._id}
-                      profile_image={player.profile_image}
-                      id={player._id}
-                      name={player.alias}
-                      role={player.role}
-                      team={player.team.name}
-                      team_logo={player.team.logo}
+                    <TeamCard
+                      key={team._id}
+                      logo={team.logo}
+                      id={team._id}
+                      name={team.name}
+                      region={team.region}
+                      bestPerformance={team.best_performance}
                     />
                   </Col>
                 ))
-              : players.map((player) => (
+              : teams.map((team) => (
                   <Col lg={3} md={6} sm={12}>
-                    <PlayerCard
-                      key={player._id}
-                      profile_image={player.profile_image}
-                      id={player._id}
-                      name={player.alias}
-                      role={player.role}
-                      team={player.team.name}
-                      team_logo={player.team.logo}
+                    <TeamCard
+                      key={team._id}
+                      logo={team.logo}
+                      id={team._id}
+                      name={team.name}
+                      region={team.region}
+                      bestPerformance={team.best_performance}
                     />
                   </Col>
                 ))}
@@ -163,4 +154,4 @@ const PlayerListScreen = () => {
   )
 }
 
-export default PlayerListScreen
+export default TeamListScreen

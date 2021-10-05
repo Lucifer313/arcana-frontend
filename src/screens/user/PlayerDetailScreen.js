@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button, Card } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+
+import dotenv from 'dotenv'
 
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -8,6 +10,8 @@ import Header from '../../components/Layout/User/Header'
 import Footer from '../../components/Layout/User/Footer'
 //import './black-style.css'
 import Logo from '../../components/Logo'
+
+dotenv.config()
 
 const PlayerDetailScreen = ({ match }) => {
   const playerDetails = useSelector((state) => state.playerDetails)
@@ -63,20 +67,25 @@ const PlayerDetailScreen = ({ match }) => {
             <Col className='offset-lg-2' lg={10} sm={12}>
               <h3 className='achievements-team-title'>
                 {alias}
-                <Button
-                  className='team-details-back-arrow'
+                {/*<Button
+                  className='team-details-back-arrow btn-link'
                   onClick={() => history.goBack()}
                 >
                   <i class='fas fa-times'></i>
-                </Button>
+                </Button>*/}
               </h3>
             </Col>
           </Row>
           <Row>
             <Col className='offset-lg-2' lg={3} md={6} sm={12}>
-              <div class='team-logo-container'>
+              <div
+                class='team-logo-container'
+                style={{
+                  backgroundImage: `url(${'/assets/images/user/ti10-2021.png'})`,
+                }}
+              >
                 <img
-                  src={`http://localhost:7000/${profileImage}`}
+                  src={process.env.REACT_APP_SERVER_URL + profileImage}
                   alt='team-logo'
                   className='team-detail-logo'
                 />

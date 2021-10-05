@@ -3,8 +3,8 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { useSelector } from 'react-redux'
-import Header from '../../../components/Layout/User/Header'
-import Footer from '../../../components/Layout/User/Footer'
+import Header from '../../components/Layout/User/Header'
+import Footer from '../../components/Layout/User/Footer'
 
 const TeamDetailScreen = ({ match }) => {
   const teamDetails = useSelector((state) => state.teamDetails)
@@ -24,8 +24,9 @@ const TeamDetailScreen = ({ match }) => {
       let team
       if (teams.length > 0) {
         //Since filter returns an array we only need first indexed object hence 0
-        team = await teams.filter((team) => team._id === match.params.id)[0]
-        setName(team.name)
+        team = await teams.filter((team) => team._id === match.params.tid)[0]
+        console.log(team)
+        //setName(team.name)
         setRegion(team.region)
         setCreationDate(team.creation_date)
         setLogo(team.logo)
@@ -64,14 +65,10 @@ const TeamDetailScreen = ({ match }) => {
             <Col className='offset-lg-2' lg={3} md={6} sm={12}>
               <div class='team-logo-container'>
                 <img
-                  src={`http://localhost:7000/${logo}`}
+                  src={process.env.REACT_APP_SERVER_URL + logo}
                   alt='team-logo'
                   className='team-detail-logo'
                 />
-              </div>
-              <div className='details-achievements'>
-                <h5 className='achievements-title'>Achievements</h5>
-                <div className='achievements-desc'>{achievements}</div>
               </div>
             </Col>
             <Col lg={5} md={6} sm={12}>
@@ -98,10 +95,6 @@ const TeamDetailScreen = ({ match }) => {
                   </tr>
                 </table>
                 <hr />
-                <h5 className='details-achievements-desc-title'>
-                  Team Description:
-                </h5>
-                <div className='details-description'>{description}</div>
               </div>
             </Col>
           </Row>

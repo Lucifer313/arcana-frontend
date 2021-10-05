@@ -39,9 +39,21 @@ const Header = () => {
                     {'  '}HOME
                   </Nav.Link>
                 </LinkContainer>
-                <LinkContainer to='/my-tournaments'>
+                <LinkContainer to='/players'>
+                  <Nav.Link>
+                    <i class='fas fa-user'></i>
+                    {'  '}PLAYERS
+                  </Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/teams'>
                   <Nav.Link>
                     <i class='fas fa-user-friends'></i>
+                    {'  '}TEAMS
+                  </Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/my-tournaments'>
+                  <Nav.Link>
+                    <i class='fas fa-chess'></i>
                     {'  '}MY TOURNAMENTS
                   </Nav.Link>
                 </LinkContainer>

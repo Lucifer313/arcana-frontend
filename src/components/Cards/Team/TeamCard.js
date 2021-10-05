@@ -9,7 +9,7 @@ const TeamCard = ({ logo, name, region, id, bestPerformance }) => {
     <Card className='my-4 team-card-container'>
       <Card.Img
         variant='top'
-        src={`http://localhost:7000/${logo}`}
+        src={process.env.REACT_APP_SERVER_URL + logo}
         className='team-card-logo'
       />
       <Card.Body className='team-card-body'>

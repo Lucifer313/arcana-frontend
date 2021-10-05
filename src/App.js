@@ -27,6 +27,8 @@ import ForgotPasswordScreen from './screens/user/ForgotPasswordScreen'
 import ResetPasswordScreen from './screens/user/ResetPasswordScreen'
 import PlayerListScreen from './screens/user/PlayerListScreen'
 import PlayerDetailScreen from './screens/user/PlayerDetailScreen'
+import TeamDetailScreen from './screens/user/TeamDetailScreen'
+import TeamListScreen from './screens/user/TeamListScreen'
 
 const App = () => {
   return (
@@ -108,6 +110,9 @@ const App = () => {
         />
         <Route path='/players' exact component={PlayerListScreen} />
         <Route path='/players/:pid' exact component={PlayerDetailScreen} />
+
+        <Route path='/teams' exact component={TeamListScreen} />
+        <Route path='/teams/:tid' exact component={TeamDetailScreen} />
       </Switch>
     </Router>
   )
