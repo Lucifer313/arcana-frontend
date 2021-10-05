@@ -18,9 +18,12 @@ import {
 } from '../../actions/player-action'
 import { RESET_PLAYER_FILTERS } from '../../constants/player-constants'
 
-const PlayerListScreen = () => {
+const PlayerListScreen = ({ history }) => {
   const playerDetails = useSelector((state) => state.playerDetails)
   const { players, filteredPlayers } = playerDetails
+
+  const userDetails = useSelector((state) => state.userDetails)
+  const { userInfo } = userDetails
 
   const [name, setName] = useState('')
   const [region, setRegion] = useState('Filter by Region')
@@ -59,6 +62,13 @@ const PlayerListScreen = () => {
     setName('')
     dispatch({ type: RESET_PLAYER_FILTERS })
   }
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [userInfo])
+
   return (
     <>
       <Header />

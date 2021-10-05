@@ -29,6 +29,7 @@ import PlayerListScreen from './screens/user/PlayerListScreen'
 import PlayerDetailScreen from './screens/user/PlayerDetailScreen'
 import TeamDetailScreen from './screens/user/TeamDetailScreen'
 import TeamListScreen from './screens/user/TeamListScreen'
+import RulesScreen from './screens/user/RulesScreen'
 
 const App = () => {
   return (
@@ -113,6 +114,8 @@ const App = () => {
 
         <Route path='/teams' exact component={TeamListScreen} />
         <Route path='/teams/:tid' exact component={TeamDetailScreen} />
+
+        <Route path='/tournaments/:tid/rules' exact component={RulesScreen} />
       </Switch>
     </Router>
   )

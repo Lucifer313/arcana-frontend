@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import dotenv from 'dotenv'
 
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+
 import Header from '../../components/Layout/User/Header'
 import Footer from '../../components/Layout/User/Footer'
 //import './black-style.css'
@@ -13,11 +13,12 @@ import Logo from '../../components/Logo'
 
 dotenv.config()
 
-const PlayerDetailScreen = ({ match }) => {
+const PlayerDetailScreen = ({ match, history }) => {
   const playerDetails = useSelector((state) => state.playerDetails)
   const { players } = playerDetails
 
-  let history = useHistory()
+  const userDetails = useSelector((state) => state.userDetails)
+  const { userInfo } = userDetails
 
   const [name, setName] = useState('')
   const [profileImage, setProfileImage] = useState('')
@@ -51,6 +52,12 @@ const PlayerDetailScreen = ({ match }) => {
 
     getTeamById()
   }, [])
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [userInfo])
 
   return (
     <>

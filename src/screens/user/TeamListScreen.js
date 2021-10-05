@@ -13,9 +13,12 @@ import FilterRegion from '../../components/Filters/FilterRegion'
 import Sorter from '../../components/Filters/Sorter'
 import { RESET_TEAM_FILTERS } from '../../constants/team-constants'
 
-const TeamListScreen = () => {
+const TeamListScreen = ({ history }) => {
   const teamDetails = useSelector((state) => state.teamDetails)
   const { teams, filteredTeams } = teamDetails
+
+  const userDetails = useSelector((state) => state.userDetails)
+  const { userInfo } = userDetails
 
   const dispatch = useDispatch()
 
@@ -51,6 +54,12 @@ const TeamListScreen = () => {
       dispatch(getTeams())
     }
   }, [])
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login')
+    }
+  }, [userInfo])
 
   return (
     <>
@@ -130,6 +139,7 @@ const TeamListScreen = () => {
                       id={team._id}
                       name={team.name}
                       region={team.region}
+                      tis={team.tis_won}
                       bestPerformance={team.best_performance}
                     />
                   </Col>
@@ -142,6 +152,7 @@ const TeamListScreen = () => {
                       id={team._id}
                       name={team.name}
                       region={team.region}
+                      tis={team.tis_won}
                       bestPerformance={team.best_performance}
                     />
                   </Col>

@@ -214,7 +214,15 @@ const RegisterScreen = ({ history }) => {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Profile Image</Form.Label>
+                <Form.Label>
+                  <p>
+                    Profile Image
+                    <br />
+                    <span style={{ color: '#DCB570' }}>
+                      Maximum upload size allowed: 1MB
+                    </span>
+                  </p>
+                </Form.Label>
                 <ImagePreview
                   path={previewImage}
                   alternate='logo-image'

@@ -59,7 +59,7 @@ const TournamentDetailScreen = ({ history }) => {
             style={{ padding: '0', borderBottom: '2px solid #DCB570' }}
           >
             <LinkContainer
-              to={`/tournaments/${tid}/arcana-leaderboard`}
+              to={`/tournaments/${tid}/rules/`}
               style={{
                 width: '100%',
                 minHeight: '27vh',
@@ -67,8 +67,8 @@ const TournamentDetailScreen = ({ history }) => {
               }}
             >
               <Button variant='warning' style={{}}>
-                <i className='fas fa-calendar-alt tournament-detail-btn-icon'></i>{' '}
-                <p className='tournament-detail-btn-text'>UPCOMING SCHEDULE</p>
+                <i className='fas fa-list-ul tournament-detail-btn-icon'></i>{' '}
+                <p className='tournament-detail-btn-text'>Tournament Rules</p>
               </Button>
             </LinkContainer>
           </Col>
