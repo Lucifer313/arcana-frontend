@@ -29,8 +29,6 @@ import PlayerListScreen from './screens/user/PlayerListScreen'
 import PlayerDetailScreen from './screens/user/PlayerDetailScreen'
 
 const App = () => {
-  dotenv.config()
-
   return (
     <Router>
       <Switch>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 
+import dotenv from 'dotenv'
+
 import Header from '../../../components/Layout/Admin/Header'
 import Footer from '../../../components/Layout/Admin/Footer'
 
@@ -14,6 +16,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import useLoginValidation from '../../../hooks/loginValidatorHook'
 import ImagePreview from '../../../components/ImagePreview'
 import { UPDATE_TEAM_RESET } from '../../../constants/team-constants'
+
+dotenv.config()
 
 const EditTeamScreen = ({ history, match }) => {
   const [name, setName] = useState('')
@@ -55,7 +59,7 @@ const EditTeamScreen = ({ history, match }) => {
         setTis(team.tis_won)
         setAchievements(team.achievements)
         setBestPerformance(team.best_performance)
-        setImagePreview(`http://localhost:7000/${team.logo}`)
+        setImagePreview(process.env.REACT_APP_SERVER_URL + team.logo)
         console.log('Logo: ' + team.logo)
       }
     }

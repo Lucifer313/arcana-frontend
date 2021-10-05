@@ -7,11 +7,14 @@ import Footer from '../../components/Layout/User/Footer'
 import Header from '../../components/Layout/User/Header'
 import Loader from '../../components/Loader'
 import Message from '../../components/Message'
+import dotenv from 'dotenv'
 import Popup from '../../components/Popup'
 import { LinkContainer } from 'react-router-bootstrap'
 import ImagePreview from '../../components/ImagePreview'
 import { updateUser } from '../../actions/user-action'
 import { USER_UPDATE_RESET } from '../../constants/user-constants'
+
+dotenv.config()
 
 const ProfileScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -90,7 +93,7 @@ const ProfileScreen = ({ history }) => {
       setCountry(userInfo.country)
       setDateOfBirth(userInfo.date_of_birth)
       setProfileImage(userInfo.profile_image)
-      setImagePreview(`http://localhost:7000/${userInfo.profile_image}`)
+      setImagePreview(process.env.REACT_APP_SERVER_URL + userInfo.profile_image)
     }
   }, [])
 

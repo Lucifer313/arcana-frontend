@@ -1,5 +1,8 @@
 import axios from 'axios'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export default axios.create({
-  baseURL: 'http://localhost:7000/',
+  baseURL: process.env.REACT_APP_SERVER_URL,
 })

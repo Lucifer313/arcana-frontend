@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
+import dotenv from 'dotenv'
+
 import { useSelector, useDispatch } from 'react-redux'
 
 import Footer from '../../components/Layout/User/Footer'
@@ -12,6 +14,8 @@ import ImagePreview from '../../components/ImagePreview'
 
 import { register } from '../../actions/user-action'
 import { USER_REGISTER_RESET } from '../../constants/user-constants'
+
+dotenv.config()
 
 const RegisterScreen = ({ history }) => {
   const [firstName, setFirstName] = useState('')

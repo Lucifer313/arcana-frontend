@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-
+import dotenv from 'dotenv'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Footer from '../../../components/Layout/Admin/Footer'
@@ -14,6 +14,8 @@ import useLoginValidation from '../../../hooks/loginValidatorHook'
 import { UPDATE_PLAYER_RESET } from '../../../constants/player-constants'
 import { updatePlayer } from '../../../actions/player-action'
 import ImagePreview from '../../../components/ImagePreview'
+
+dotenv.config()
 
 const EditPlayerScreen = ({ history, match }) => {
   const [birthDate, setBirthDate] = useState('')
@@ -129,7 +131,7 @@ const EditPlayerScreen = ({ history, match }) => {
         setCountry(player.country)
         setTis(player.tis_won)
         setRole(player.role)
-        setImagePreview(`http://localhost:7000/${player.profile_image}`)
+        setImagePreview(process.env.REACT_APP_SERVER_URL + player.profile_image)
       }
     }
 
