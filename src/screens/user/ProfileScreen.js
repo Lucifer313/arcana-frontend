@@ -22,8 +22,6 @@ const ProfileScreen = ({ history }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [alias, setAlias] = useState('')
-  const [country, setCountry] = useState('')
-  const [date_of_birth, setDateOfBirth] = useState('')
   const [profile_image, setProfileImage] = useState('')
 
   const [previewImage, setImagePreview] = useState(
@@ -50,13 +48,7 @@ const ProfileScreen = ({ history }) => {
   const handleUpdate = (e) => {
     e.preventDefault()
 
-    if (
-      firstName === '' ||
-      date_of_birth === '' ||
-      alias === '' ||
-      lastName === '' ||
-      country === ''
-    ) {
+    if (firstName === '' || alias === '' || lastName === '') {
       setErrorMessage('Please enter all the fields')
       window.scrollTo(0, 0)
     } else if (profile_image === '') {
@@ -70,8 +62,6 @@ const ProfileScreen = ({ history }) => {
       formData.append('last_name', lastName)
       formData.append('alias', alias)
       formData.append('profile_image', profile_image)
-      formData.append('date_of_birth', date_of_birth)
-      formData.append('country', country)
       formData.append('token', userInfo.token)
       //Dispatching the Create Team Action
       dispatch(updateUser(formData))
@@ -90,8 +80,6 @@ const ProfileScreen = ({ history }) => {
       setFirstName(userInfo.first_name)
       setLastName(userInfo.last_name)
       setAlias(userInfo.alias)
-      setCountry(userInfo.country)
-      setDateOfBirth(userInfo.date_of_birth)
       setProfileImage(userInfo.profile_image)
       setImagePreview(process.env.REACT_APP_SERVER_URL + userInfo.profile_image)
     }
@@ -151,23 +139,6 @@ const ProfileScreen = ({ history }) => {
                   placeholder='Enter your Alias'
                   value={alias}
                   onChange={(e) => setAlias(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId='userCountry' className='my-3'>
-                <Form.Label>Country</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter your Country'
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId='userDateofBirth' className='my-3'>
-                <Form.Label>Date of Birth</Form.Label>
-                <Form.Control
-                  type='date'
-                  value={date_of_birth}
-                  onChange={(e) => setDateOfBirth(e.target.value)}
                 />
               </Form.Group>
               <Form.Group>

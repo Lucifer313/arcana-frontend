@@ -20,13 +20,11 @@ dotenv.config()
 const RegisterScreen = ({ history }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [birthDate, setBirthDate] = useState('')
   const [alias, setAlias] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [userProfile, setUserProfile] = useState('')
-  const [country, setCountry] = useState('')
 
   const [previewImage, setImagePreview] = useState(
     '/assets/images/user/multi-hero.gif'
@@ -46,12 +44,10 @@ const RegisterScreen = ({ history }) => {
     e.preventDefault()
     if (
       firstName === '' ||
-      birthDate === '' ||
       alias === '' ||
       lastName === '' ||
       password === '' ||
-      confirmPassword === '' ||
-      country === ''
+      confirmPassword === ''
     ) {
       setErrorMessage('Please enter all the fields')
       window.scrollTo(0, 0)
@@ -77,8 +73,6 @@ const RegisterScreen = ({ history }) => {
       formData.append('alias', alias)
       formData.append('password', password)
       formData.append('profile_image', userProfile)
-      formData.append('date_of_birth', birthDate)
-      formData.append('country', country)
       //Dispatching the Create Team Action
       dispatch(register(formData))
       window.scrollTo(0, 0)
@@ -89,11 +83,10 @@ const RegisterScreen = ({ history }) => {
   const resetForm = () => {
     setFirstName('')
     setLastName('')
+    setEmail('')
     setAlias('')
-    setBirthDate('')
     setPassword('')
     setConfirmPassword('')
-    setCountry('')
     setUserProfile('')
     setImagePreview('/assets/images/user/multi-hero.gif')
   }
@@ -187,22 +180,6 @@ const RegisterScreen = ({ history }) => {
                   type='password'
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId='userBirthDate' className='my-3'>
-                <Form.Label>Birth Date</Form.Label>
-                <Form.Control
-                  type='date'
-                  value={birthDate}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId='userCountry' className='my-3'>
-                <Form.Label>Country</Form.Label>
-                <Form.Control
-                  type='text'
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId='playerAlias' className='my-3'>
