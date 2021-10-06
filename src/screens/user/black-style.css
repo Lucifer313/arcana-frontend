@@ -89,7 +89,7 @@ li,
 
 .filters,
 h5 {
-  color: white !important;
+  color: white;
   font-weight: 400 !important;
 }
 
@@ -195,7 +195,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #dcb570 !important;
+  color: #dcb570;
   font-family: 'Afta serif', sans-serif;
   text-transform: uppercase;
 }

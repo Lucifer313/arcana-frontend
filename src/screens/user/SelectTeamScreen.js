@@ -150,7 +150,11 @@ const CreateTournamentTeamScreen = ({ history }) => {
   return (
     <div>
       <Header />
-      <Container>
+      <Container
+        style={{
+          backgroundImage: `url(${'/assets/images/user/aegis-ti10.jpg'})`,
+        }}
+      >
         {success !== '' ? (
           <Popup
             title='Team creation'
@@ -275,15 +279,18 @@ const CreateTournamentTeamScreen = ({ history }) => {
                       <>
                         <Button
                           className='arcana-btn'
-                          style={{ backgroundColor: 'black' }}
+                          style={{
+                            backgroundColor: 'black',
+                          }}
                           onClick={() => setPreview(true)}
                         >
                           Preview
                         </Button>
                         <Button
                           variant='success'
+                          className='arcana-btn'
                           onClick={() => setRole(['Offlane'])}
-                          style={{ float: 'right' }}
+                          style={{ float: 'right', backgroundColor: 'black' }}
                         >
                           Next
                         </Button>{' '}
@@ -300,22 +307,25 @@ const CreateTournamentTeamScreen = ({ history }) => {
                           Back
                         </Button>{' '}
                         <Button
-                          className='arcana-btn'
-                          style={{ backgroundColor: 'black' }}
-                          onClick={() => setPreview(true)}
-                        >
-                          Preview
-                        </Button>
-                        <Button
-                          variant='success'
                           onClick={() => setRole(['Mid', 'Carry'])}
-                          style={{ float: 'right' }}
+                          className='arcana-btn'
+                          style={{
+                            float: 'right',
+                            backgroundColor: 'black',
+                          }}
                         >
                           Next
                         </Button>{' '}
                       </>
                     ) : role.includes('Carry', 'Mid') ? (
                       <>
+                        <Button
+                          className='arcana-btn my-2'
+                          style={{ backgroundColor: 'black', width: '100%' }}
+                          onClick={() => setPreview(true)}
+                        >
+                          Preview
+                        </Button>
                         <Button
                           className='arcana-btn'
                           style={{ backgroundColor: 'black' }}
@@ -325,15 +335,8 @@ const CreateTournamentTeamScreen = ({ history }) => {
                         </Button>{' '}
                         <Button
                           className='arcana-btn'
-                          style={{ backgroundColor: 'black' }}
-                          onClick={() => setPreview(true)}
-                        >
-                          Preview
-                        </Button>
-                        <Button
-                          variant='success'
                           onClick={() => setLiveSection('Team-prediction')}
-                          style={{ float: 'right' }}
+                          style={{ float: 'right', backgroundColor: 'black' }}
                         >
                           Next
                         </Button>
@@ -346,9 +349,9 @@ const CreateTournamentTeamScreen = ({ history }) => {
             {liveSection === 'Team-prediction' ? (
               <>
                 <h6
-                  className='text-center p-2'
+                  className='text-center p-2 my-2'
                   style={{
-                    background: '#51B155',
+                    background: 'black',
                     color: 'white',
                     margin: '0',
                   }}
@@ -358,9 +361,11 @@ const CreateTournamentTeamScreen = ({ history }) => {
                 <p
                   className='p-2'
                   style={{
-                    background: '#FF9C09',
-                    color: 'white',
+                    background: '#dcb570',
+                    color: 'black',
+                    fontWeight: 'bold',
                     margin: '0',
+                    width: '100%',
                   }}
                 >
                   Note: Remember, correct team prediction gives the maximum
@@ -387,15 +392,15 @@ const CreateTournamentTeamScreen = ({ history }) => {
                           <td>
                             {teamPrediction !== team._id ? (
                               <Button
-                                variant='primary'
+                                className='add-btn d-block mx-auto'
                                 onClick={() => setTeamPrediction(team._id)}
                                 style={{ width: '40px' }}
                               >
-                                <i class='fas fa-plus-circle'></i>
+                                <i class='fas fa-plus'></i>
                               </Button>
                             ) : (
                               <Button
-                                variant='danger'
+                                className='mx-auto d-block remove-btn'
                                 onClick={() => setTeamPrediction('')}
                                 style={{ width: '40px' }}
                               >
@@ -410,14 +415,19 @@ const CreateTournamentTeamScreen = ({ history }) => {
                 </div>
                 <div className='my-4'>
                   <Button
-                    variant='danger'
+                    className='arcana-btn'
+                    style={{ backgroundColor: 'black' }}
                     onClick={() => setLiveSection('Team-selection')}
                   >
                     Back
                   </Button>
                   <Button
-                    variant='success'
-                    style={{ float: 'right' }}
+                    className='arcana-btn'
+                    style={{
+                      float: 'right',
+                      color: 'white',
+                      backgroundImage: `url(${'/assets/images/user/arcana_button.png'})`,
+                    }}
                     onClick={submitArcanaTeam}
                   >
                     Create

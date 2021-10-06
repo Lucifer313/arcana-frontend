@@ -16,7 +16,11 @@ export default function TeamPreview({ onClose, team, remove }) {
         No player has been selected yet. Please select your players and then
         preview. them
       </h5>
-      <Button variant='danger' onClick={onClose}>
+      <Button
+        className='arcana-btn my-2'
+        style={{ backgroundColor: 'black' }}
+        onClick={onClose}
+      >
         Close
       </Button>
     </div>
@@ -24,16 +28,17 @@ export default function TeamPreview({ onClose, team, remove }) {
     <>
       <h5
         className='text-center my-2 p-2'
-        style={{ background: '#51B155', color: 'white', borderRadius: '4px' }}
+        style={{ background: '#dcb570', color: 'black' }}
       >
         My Arcana Team Preview
       </h5>
-      <p
+      <Button
         className='p-2'
-        style={{ background: '#FF9C09', color: 'white', borderRadius: '4px' }}
+        className='arcana-btn'
+        style={{ background: 'black', width: '100%' }}
       >
         Players selected: {previewPlayers.length}
-      </p>
+      </Button>
       <div style={{ height: '74vh', overflowY: 'auto' }}>
         <Table striped hover>
           <thead>
@@ -56,8 +61,8 @@ export default function TeamPreview({ onClose, team, remove }) {
                 </td>
                 <td>
                   <Button
-                    variant='danger'
                     onClick={() => remove(p._id)}
+                    className='remove-btn  d-block mx-auto'
                     style={{ width: '40px' }}
                   >
                     <i class='fas fa-times'></i>
@@ -68,7 +73,11 @@ export default function TeamPreview({ onClose, team, remove }) {
           </tbody>
         </Table>
       </div>
-      <Button variant='danger' onClick={onClose} className='my-2'>
+      <Button
+        className='arcana-btn my-2'
+        style={{ backgroundColor: 'black' }}
+        onClick={onClose}
+      >
         Close
       </Button>
     </>
