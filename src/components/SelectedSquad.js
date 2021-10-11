@@ -14,9 +14,14 @@ const SelectedSquad = ({ squad, squadType, title }) => {
   const userDetails = useSelector((state) => state.userDetails)
   const { previousSquad } = userDetails
 
-  let squadWithoutPoints = qualifiedPlayers.filter((player) =>
-    previousSquad.playingSquadIds.includes(player._id)
-  )
+  let squadWithoutPoints =
+    squadType == 'playing'
+      ? qualifiedPlayers.filter((player) =>
+          previousSquad.playingSquadIds.includes(player._id)
+        )
+      : qualifiedPlayers.filter((player) =>
+          previousSquad.reserveSquadIds.includes(player._id)
+        )
 
   squad = squad.length > 0 ? squad : squadWithoutPoints
 

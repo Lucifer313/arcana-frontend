@@ -23,7 +23,7 @@ const PreviousSquadViewer = ({ navigation, history }) => {
 
   let tournament = myTournaments.filter((t) => t._id === tid)[0]
 
-  const { playingSquad, reserveSquad } = previousSquad
+  const { playingSquad, reserveSquadIds, reserveSquad } = previousSquad
 
   let tournamentDays = tournament.days.length
 
@@ -152,7 +152,7 @@ const PreviousSquadViewer = ({ navigation, history }) => {
         </Col>
 
         {showSubstitueSquad ? (
-          reserveSquad && reserveSquad.length > 0 ? (
+          reserveSquadIds ? (
             <SelectedSquad
               squad={reserveSquad}
               squadType='reserve'

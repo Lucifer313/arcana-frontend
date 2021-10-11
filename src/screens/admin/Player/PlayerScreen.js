@@ -86,7 +86,7 @@ const PlayerScreen = ({ history }) => {
   return (
     <>
       <Header />
-      <Container style={{ minHeight: '82vh' }}>
+      <Container style={{ minHeight: '82vh' }} className='admin-container'>
         <Row className='mt-5'>
           <Col md={2}>
             <LinkContainer to='/admin/players/create'>
